@@ -1,1 +1,10 @@
-[]
+[
+	{
+		"name": "theme_info",
+		"theme_name": "Veda Liberatore",
+		"theme_author": "Vedabuilder",
+		"theme_version": "1.0",
+		"theme_documentation_url": "https:\/\/help.vedabuilder.com\/",
+		"theme_support_url": "https://vedabuilder.com"
+	}
+]
