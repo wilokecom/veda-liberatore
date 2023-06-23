@@ -49,15 +49,14 @@ It is automatically generated from Veda.
 
     <!--VEDA_HEADER_SCRIPTS_POSITION-->
     {% render 'veda-header-scripts' %}
-    <!--VEDA_NO_PLACEMENT_ADDON_POSITION-->
-    {% render 'veda-no-placement-addons' %}
 </head>
 <body>
-<div id="veda-root" style="opacity: 0" class="veda-container">
+<div id="veda-root" style="overflow: hidden; overflow: clip; display: flow-root; opacity: 0">
     {{ content_for_layout }}
     <!--VEDA_FOOTER_SCRIPTS_POSITION-->
     {% render 'veda-footer-scripts' %}
-
+    <!--VEDA_NO_PLACEMENT_ADDON_POSITION-->
+    {% render 'veda-no-placement-addons' %}
     <!--BEFORE_CLOSE_VEDA_ROOT-->
 </div><!--End of #veda-root-->
 </body>

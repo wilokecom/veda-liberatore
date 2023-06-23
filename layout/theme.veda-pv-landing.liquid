@@ -46,12 +46,9 @@ It is automatically generated from Veda.
     <!--VEDA_HEADER_SCRIPTS_POSITION-->
     {%- render 'veda-header-scripts' -%}
     {%- render 'veda-pv-header-scripts' -%}
-
-    <!--VEDA_NO_PLACEMENT_ADDON_POSITION-->
-    {%- render 'veda-no-placement-addons' -%}
 </head>
 <body>
-<div id="veda-root" class="veda-container">
+<div id="veda-root" style="overflow: hidden; overflow: clip; display: flow-root; opacity: 0">
     {% sections 'veda-pv-theme-header' %}
 
     {{ content_for_layout }}
@@ -60,6 +57,8 @@ It is automatically generated from Veda.
     {%- render 'veda-pv-footer-scripts' -%}
     {%- render 'veda-footer-scripts' -%}
     <!--BEFORE_CLOSE_VEDA_ROOT-->
+    <!--VEDA_NO_PLACEMENT_ADDON_POSITION-->
+    {%- render 'veda-no-placement-addons' -%}
 </div>
 </body>
 </html>
