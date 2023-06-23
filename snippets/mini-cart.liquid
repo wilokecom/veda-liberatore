@@ -1,0 +1,456 @@
+{%- style -%}
+	.veda-mini-cart-draw-active {
+    transform: translateX(0) !important;
+  }
+{%- endstyle -%}
+<div
+  data-id="id_veda_mini_cart"
+  data-testing="false"
+  class="pos:relative z:2 bgz:cover bgp:center"
+>
+  <span class="veda-cart-toggle-js pos:relative">
+    <span class="ml:10px mr:10px cur:pointer fz:inherit c:inherit">
+      <i class="far fa-shopping-cart"></i>
+    </span>
+    <div class="veda-cart-badge-js d:flex jc:center ai:center pos:absolute b:50% l:75% p:0_2px miw:16px h:16px fz:9px c:color-light-freeze bdrs:8px bgc:#eb4747 fw:500 op:0|e">
+      {{ cart.item_count }}
+    </div>
+  </span>
+  <div
+    class="mini-cart-js z:99999999 d:none"
+    data-id="mini-cart-js"
+  >
+    <div
+      class="mini-cart-close-cart-js mini-cart-container-overlay-js pos:fixed t:0 l:0 z:-1 w:100% h:100% bgc:color-gray9.4 z:-1 cur:pointer pe:none op:0 trs:0.4s"
+    ></div>
+    <div class="mini-cart-container-js veda-lazyload pos:fixed t:0 z:999999 w:360px@400px maw:100% h:100% bgc:color-light trs:all_0.3s z:1 bgz:cover bgp:center bxsh:0px_5px_15px_rgba(33,34,35,0.12) wc:transform r:0 trf:translateX(100%)"
+      data-cart-count="{{ cart.item_count }}"
+    >
+      <div class="d:flex fld:column jc:space-between h:100%">
+        <div class="d:flex jc:space-between ai:center flxs:0 w:100% p:5px_15px bdb:1px_solid_color-gray3">
+          <h3 class="fz:22px fw:500 m:0">
+            {{ 'veda.sections.cart.title' | t }}
+          </h3>
+          <span class="mini-cart-close-cart-js p:0_5px c:color-gray5 c:color-gray9|h! fz:25px cur:pointer trs:0.3s">
+            <i class="fal fa-times"></i>
+          </span>
+        </div>
+        <form
+          action="{{ routes.cart_url }}"
+          method="post"
+          id="cart-drawer-form"
+          class="veda-scrollbar ovy:auto ovx:hidden w:100% h:100%"
+          style="height:calc(100vh - 300px)"
+        >
+          {% if cart.item_count == 0 %}
+            <h4 class="p:20px_15px ta:center">
+              {{ 'veda.sections.cart.empty' | t }}
+            </h4>
+          {% else %}
+            {% for cart_item in cart.items %}
+              <div
+                {% if forloop.index == 1 %}
+                  class="group* pos:relative d:flex p:15px"
+                {% else %}
+                  class="group* pos:relative d:flex p:15px bdt:1px_solid_color-gray3"
+                {% endif %}
+              >
+                <div
+                  data-id="{{ cart_item.variant_id }}"
+                  class="mini-cart-btn-remove-item-js pos:absolute! t:15px r:15px fz:14px c:color-gray6 c:color-gray9|h! op:0@md op:1*group-hover trf:translateX(100px)@md trf:translateX(0)*group-hover trs:all_0.3s cur:pointer"
+                >
+                  <i class="far fa-trash-alt"></i>
+                </div>
+                {% assign aspectRatio = 120 %}
+                {% assign image_width = '' %}
+                {% assign imageRadius = '' %}
+                <div>
+                  <a
+                    href="{{ cart_item.url }}"
+                    class="veda-image-cover w:80px flxs:0 d:block cur:pointer ov:hidden"
+                    style="--aspect-ratio:{{ aspectRatio }};{{ image_width }};{{ imageRadius }}"
+                  >
+                    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+                    {% if cart_item.image.src != blank %}
+                      <img
+                        class="veda-lazyload {{ 'veda-lazyload miw:100%' }}"
+                        src="{{ cart_item.image.src | image_url: width: 10 }}"
+                        draggable="false"
+                        {% if _alt %}
+                          alt="{{ _alt }}"
+                        {% else %}
+                          alt="image"
+                        {% endif %}
+                        {% if cart_item.image.width %}
+                          data-intrinsic-width="{{ cart_item.image.width }}"
+                          width="{{ cart_item.image.width }}"
+                        {% endif %}
+                        {% if cart_item.image.height %}
+                          height="{{ cart_item.image.height }}"
+                          data-intrinsic-height="{{ cart_item.image.height }}"
+                        {% endif %}
+                        {% if _style %}
+                          style="{{ _style }}"
+                        {% endif %}
+                        loading="lazy"
+                      >
+                    {% else %}
+                      {% liquid
+                        assign pl = 'lifestyle-1'
+                        if _placeholder
+                          assign pl = _placeholder
+                        endif
+                        assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: 'veda-lazyload miw:100%'
+                        if _placeholder_class
+                          assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _placeholder_class
+                        endif
+                      %}
+                      {{ pl | placeholder_svg_tag: placeholder_class }}
+                    {% endif %}
+                  </a>
+                </div>
+                <div class="d:flex fld:column w:100% pl:15px pr:15px">
+                  <div style="order:{{ 0 }}">
+                    <a
+                      href="{{ cart_item.url }}"
+                      class="d:block fz:14px fw:500 c:color-gray9 ff:font-secondary"
+                    >
+                      {{ cart_item.title }}
+                    </a>
+                  </div>
+                  <div style="order:{{ 1 }}">
+                    <a
+                      href="{{ shop.url }}/collections/{{ cart_item.vendor | handle }}"
+                      class="d:block mt:5px fz:13px fw:400 c:color-gray7"
+                    >
+                      {{ cart_item.vendor }}
+                    </a>
+                  </div>
+                  <div style="order:{{ 2 }}">
+                    {% if builderMode %}
+                      <div
+                        class="mt:5px fz:16px ff:font-secondary c:color-gray9"
+                      >
+                        {{ cart_item.final_price | money }}
+                      </div>
+                    {% else %}
+                      {% if cart_item.original_price != cart_item.final_price %}
+                        <div class="d:flex ai:center">
+                          <ins class="mt:10px d:inline-block fw:400 ff:font-secondary fz:16px c:color-primary td:none mr:5px">
+                            {{ cart_item.final_price | money }}
+                          </ins>
+                          <del class="mt:10px fw:400 ff:font-secondary fz:16px c:color-gray6">
+                            {{ cart_item.original_price | money }}
+                          </del>
+                        </div>
+                      {% else %}
+                        <div class="mt:10px fz:16px ff:font-secondary c:color-gray9">
+                          {{ cart_item.original_price | money }}
+                        </div>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                  {% if cart_item.product.has_only_default_variant == false
+                    or cart_item.properties.size != 0
+                    or cart_item.selling_plan_allocation != null
+                  %}
+                    <div style="order:{{ 4 }}">
+                      <div>
+                        {% if cart_item.product.has_only_default_variant == false %}
+                          {% for option in cart_item.options_with_values %}
+                            <div class="d:flex mt:10px">
+                              {{ option.name }}: {{ option.value }}
+                            </div>
+                          {% endfor %}
+                        {% endif %}
+                        {% for property in cart_item.properties %}
+                          {% assign property_first_char = property.first | slice: 0 %}
+                          {% if property.last != blank and property_first_char != '_' %}
+                            <div class="d:flex mt:10px">
+                              <div>{{ property.first }}:</div>
+                              <div>
+                                {% if property.last contains '/uploads/' %}
+                                  <a href="{{ property.last }}" class="link" target="_blank">
+                                    {{ property.last | split: '/' | last }}
+                                  </a>
+                                {% else %}
+                                  {{ property.last }}
+                                {% endif %}
+                              </div>
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                      {% if cart_item.selling_plan_allocation.selling_plan.name %}
+                        <div class="mt:10px">
+                          {{ cart_item.selling_plan_allocation.selling_plan.name }}
+                        </div>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                  <div
+                    data-id="{{ cart_item.variant_id }}"
+                    class="veda-counter mt:10px d:flex w:fit-content h:30px fz:14px c:color-gray9 bd:1px_solid_color-gray3"
+                    data-options="{ value: {{ cart_item.quantity }} }"
+                    style="order:{{ 3 }}"
+                  >
+                    <div class="veda-counter__decrement d:flex jc:center ai:center w:20px h:100% ta:center cur:pointer lh:30px">
+                      <i class="fal fa-minus fz:13px"></i>
+                    </div>
+                    <input
+                      class="veda-counter__input w:40px h:100% ta:center lh:30px fw:400 bd:none! ta:center bgc:transparent"
+                      data-id="{{ cart_item.variant_id }}"
+                      type="number"
+                      aria-label="Counter"
+                      data-button="disabled"
+                    >
+                    <div class="veda-counter__increment d:flex jc:center ai:center w:20px h:100% ta:center cur:pointer lh:30px">
+                      <i class="fal fa-plus fz:13px"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </form>
+        <div class="pos:relative d:flex fld:column jc:flex-end flxs:0 w:100% bxsh:0px_5px_15px_color-gray9.2">
+          <div class="w:100% h:70px d:flex bdb:1px_solid_color-gray3">
+            <div
+              class="mini-cart-btn-note-js d:flex fld:column jc:center ai:center flxs:1 w:100% h:100% fz:pfs(13px,15px) c:color-gray9 bdr:1px_solid_color-gray3 bd:none!|lc cur:pointer bdrs:4px||be fz:14px||be fw:500||be"
+              data-tooltip-position="top"
+              data-tooltip-text="{{ 'veda.sections.cart.special_instrutions_for_seller' | t }}"
+            >
+              <span class="fz:18px">
+                <i class="far fa-pencil-alt"></i>
+              </span>
+              {{ 'veda.sections.cart.note_title' | t }}
+            </div>
+            <div
+              class="mini-cart-btn-shipping-js d:flex fld:column jc:center ai:center flxs:1 w:100% h:100% fz:pfs(13px,15px) c:color-gray9 bdr:1px_solid_color-gray3 bd:none!|lc cur:pointer bdrs:4px||be fz:14px||be fw:500||be"
+              data-tooltip-position="top"
+              data-tooltip-text="{{ 'veda.sections.cart.estimate_shipping_rates' | t }}"
+            >
+              <span class="fz:18px">
+                <i class="far fa-shipping-fast"></i>
+              </span>
+              {{ 'veda.sections.cart.shipping_title' | t }}
+            </div>
+            <div
+              class="mini-cart-btn-discount-js d:flex fld:column jc:center ai:center flxs:1 w:100% h:100% fz:pfs(13px,15px) c:color-gray9 bdr:1px_solid_color-gray3 bd:none!|lc cur:pointer bdrs:4px||be fz:14px||be fw:500||be"
+              data-tooltip-position="top"
+              data-tooltip-text="{{ 'veda.sections.cart.add_discount_code' | t }}"
+            >
+              <span class="fz:18px">
+                <i class="far fa-percent"></i>
+              </span>
+              {{ 'veda.sections.cart.coupon_code' | t }}
+            </div>
+          </div>
+          <div class="d:flex ai:center jc:space-between p:15px">
+            <div class="fz:18px fw:500 c:color-gray9">
+              {{ 'veda.sections.cart.subtotal' | t }}
+            </div>
+            <span class="fz:18px fw:500 c:color-gray9">
+              {{ cart.total_price | money }}
+            </span>
+          </div>
+          <div class="p:0_15px">
+            {% if cart.cart_level_discount_applications.size > 0 %}
+              <ul class="p:0! ls:none" role="list" aria-label="{{ 'veda.customer.order.discount' | t }}">
+                {% for discountItem in cart.cart_level_discount_applications %}
+                  <li class="mt:5px fz:15px ff:font-secondary c:color-gray8">
+                    {{ discountItem.title }}
+                    (-{{ discountItem.total_allocated_amount | money }})
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+          <button
+            type="submit"
+            class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h ml:15px mr:15px mb:15px d:flex jc:center ai:center"
+            form="cart-drawer-form"
+            name="checkout"
+          >
+            <span>
+              {{ 'veda.sections.cart.checkout' | t }}
+            </span>
+          </button>
+          {% liquid
+            if 'gray' == 'link'
+              assign default_class = 'rs d:inline-block td:none lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s '
+            else
+              assign default_class = 'rs d:inline-block td:none lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+            endif
+
+            assign default_for_bottom_class = ''
+            case 'gray'
+              when 'primary'
+                assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+              when 'secondary'
+                assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+              when 'dark'
+                assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+              when 'gray'
+                assign variant_class = ' bgc:color-gray3 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+              when 'light'
+                assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+              else
+                assign variant_class = ' c:color-gray9 c:color-primary|h'
+            endcase
+          %}
+          <a
+            {% if 'ml:15px mr:15px mb:15px ta:center' %}
+              class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'ml:15px mr:15px mb:15px ta:center' }}"
+            {% else %}
+              class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+            {% endif %}
+            {% if _new_tab %}
+              target="_blank"
+            {% endif %}
+            data-css="{{ footerItem.design.id }}"
+            href="{{ routes.cart_url }}"
+          >
+            <span>
+              {{ 'veda.sections.cart.view_cart' | t }}
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="mini-cart-slide-in-note-js pos:absolute b:0 l:0 p:20px_10px w:100% h:fit-content mah:100vh bgc:color-light bxsh:0px_5px_15px_rgba(33,34,35,0.12) z:3 trf:translateY(100%) trs:0.3s ovy:auto">
+        <div class="w:100% h:280px">
+          <label class="d:block mb:15px">
+            <span class="d:block fz:18px fw:500 ff:font-secondary c:color-gray9 mb:10px">
+              {{ 'veda.sections.cart.special_instrutions_for_seller' | t }}
+            </span>
+            <textarea
+              name="note"
+              class="rs mini-cart-note-js w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray6||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+              aria-label="Note"
+              rows="4"
+              placeholder="{{ 'veda.sections.cart.special_instrutions_for_seller' | t }}"
+            >
+                    {{ cart.note }}
+                  </textarea>
+          </label>
+          <button
+            type="submit"
+            class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h mini-cart-btn-save-note-js d:inline-flex ai:center"
+          >
+            <span>
+              {{ 'veda.sections.cart.save' | t }}
+            </span>
+          </button>
+          <button
+            type="button"
+            class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h mini-cart-btn-cancel-action-js mt:10px d:inline-flex ai:center"
+          >
+            <span>
+              {{ 'veda.sections.cart.cancel' | t }}
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="mini-cart-slide-in-shipping-js pos:absolute b:0 l:0 p:20px_10px w:100% h:fit-content mah:100vh bgc:color-light bxsh:0px_5px_15px_rgba(33,34,35,0.12) z:3 trf:translateY(100%) trs:0.3s ovy:auto">
+        <script type="application/json" class="shipping-money-format-js">
+          $ 1
+        </script>
+        <div class="w:100% h:380px">
+          <label class="mini-cart-shipping-select-country-js d:block mb:15px">
+            <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+              {{ 'veda.customer.addresses.country' | t }}
+            </span>
+            <select
+              class="address-country-shipping rs d:flex ai:center w:100% h:43px p:0_15px bd:1px_solid_color-gray3 fz:pfs(12px,15px) c:color-gray7 cur:pointer"
+              aria-label="Select country"
+              autocomplete="country"
+            >
+              {{ all_country_option_tags }}
+            </select>
+          </label>
+          <label class="address-province-container-shipping d:block mb:15px" style="display:none">
+            <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+              {{ 'veda.customer.addresses.province' | t }}
+            </span>
+            <select
+              class="address-province-shipping rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+              aria-label="Select province"
+              autocomplete="address-level1"
+            ></select>
+          </label>
+          <label class="d:block mb:15px">
+            <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+              {{ 'veda.customer.addresses.zip' | t }}
+            </span>
+            <input
+              type="text"
+              name="address[zip]"
+              class="address-province-shipping rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+              autocapitalize="characters"
+              autocomplete="postal-code"
+              aria-label="Zip code"
+            >
+          </label>
+          <button
+            type="submit"
+            class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h mini-cart-btn-submit-shipping-js d:inline-flex ai:center"
+          >
+            <span>
+              {{ 'veda.sections.cart.estimate_shipping_rates' | t }}
+            </span>
+          </button>
+          <button
+            type="button"
+            class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h mini-cart-btn-cancel-action-js mt:10px d:inline-flex ai:center"
+          >
+            <span>
+              {{ 'veda.sections.cart.cancel' | t }}
+            </span>
+          </button>
+          <div class="mini-cart-shipping-value mt:15px fz:16px c:color-gray9"></div>
+        </div>
+      </div>
+      <div class="mini-cart-slide-in-discount-js pos:absolute b:0 l:0 p:20px_10px w:100% h:fit-content mah:100vh bgc:color-light bxsh:0px_5px_15px_rgba(33,34,35,0.12) z:3 trf:translateY(100%) trs:0.3s ovy:auto">
+        <div class="w:100% h:230px">
+          <label class="d:block mb:15px">
+            <span class="d:block fz:18px fw:500 ff:font-secondary c:color-gray9 mb:10px">
+              {{ 'veda.sections.cart.add_discount_code' | t }}
+            </span>
+            <input
+              form="cart-drawer-form"
+              type="text"
+              name="discount"
+              aria-label="Discount"
+              class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray6||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+            >
+          </label>
+          <button
+            type="submit"
+            class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h mini-cart-btn-save-discount-js d:inline-flex ai:center"
+          >
+            <span>
+              {{ 'veda.sections.cart.save' | t }}
+            </span>
+          </button>
+          <button
+            type="button"
+            class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h mini-cart-btn-cancel-action-js mt:10px d:inline-flex ai:center"
+          >
+            <span>
+              {{ 'veda.sections.cart.cancel' | t }}
+            </span>
+          </button>
+        </div>
+      </div>
+      <div
+        class="mini-cart-overlay-js pos:absolute! t:0 l:0 w:100% h:100% d:flex jc:center ai:center bgc:color-gray9 op:0 z:2 pe:none"
+      ></div>
+      <div class="mini-cart-loading-js pos:absolute! t:0 l:0 w:100% h:100% d:flex jc:center ai:center z:2 op:0 pe:none">
+        <div class="pos:absolute t:0 l:0 w:100% h:100% bgc:color-light-freeze op:0.5"></div>
+        <div class="veda-spinner" style="--spinner-color:var(--color-primary);--spinner-size:30px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="preload" class="veda-page-script" as="script" href="{{ 'veda-mini-cart.js' | asset_url }}" />

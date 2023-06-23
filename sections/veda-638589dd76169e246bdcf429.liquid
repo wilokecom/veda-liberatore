@@ -1,0 +1,484 @@
+{% assign uniqueId = 'id_66d27f2a-ce0d-4685-860c-ecb4f90acb45' %}
+{% assign builderMode = false %}
+{% assign envatoMode = false %}
+{% liquid
+  if section.settings.VEDA_switch_1
+    assign backgroundFixed = 'fixed'
+  else
+    assign backgroundFixed = 'scroll'
+  endif
+
+  if section.settings.VEDA_select_2 == 'color'
+    assign backgroundColor = 'background-color: ' | append: section.settings.VEDA_color_1 | append: ';'
+  else
+    assign backgroundColor = ''
+  endif
+
+  if section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2
+    assign bgImage = section.settings.VEDA_image_2 | append: '&width=2000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  elsif section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2 == blank
+    assign bgImage = 'https://cdn.shopify.com/s/files/1/0552/5510/5616/files/udxhtnzxtq.png?v=1681903122&width=1000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  else
+    assign backgroundImage = ''
+  endif
+
+  assign sectionPadding = 'padding-top: ' | append: section.settings.VEDA_space_4 | append: 'px;padding-right: ' | append: section.settings.VEDA_space_3 | append: 'px;padding-bottom: ' | append: section.settings.VEDA_space_1 | append: 'px;padding-left: ' | append: section.settings.VEDA_space_2 | append: 'px;'
+
+  if section.settings.VEDA_select_1 == 'full_width'
+    assign containerType = 'container-fluid'
+  else
+    assign containerType = 'container'
+  endif
+
+  if section.settings.VEDA_slider_1 >= 0
+    assign containerGap = 'padding-left: ' | append: section.settings.VEDA_slider_1 | append: 'px; padding-right: ' | append: section.settings.VEDA_slider_1 | append: 'px;'
+  else
+    assign containerGap = ''
+  endif
+
+  if section.settings.section_settings___width >= 0
+    assign containerWidth = 'max-width: ' | append: section.settings.section_settings___width | append: 'px;'
+  else
+    assign containerWidth = ''
+  endif
+
+  if section.settings.VEDA_slider_2 >= 0
+    assign settingGap = section.settings.VEDA_slider_2 | divided_by: 2.0
+
+    assign settingGapVertical = section.settings.VEDA_slider_2
+  else
+    assign settingGap = ''
+
+    assign settingGapVertical = ''
+  endif
+
+  assign colGap = 'margin-top: ' | append: settingGapVertical | append: 'px; padding-left: ' | append: settingGap | append: 'px; padding-right: ' | append: settingGap | append: 'px;'
+
+  assign rowGap = 'margin-top: -' | append: settingGapVertical | append: 'px; margin-left: -' | append: settingGap | append: 'px; margin-right: -' | append: settingGap | append: 'px;'
+
+  assign sectionSeparator = ''
+
+  if section.settings.VEDA_switch_3
+    if section.settings.VEDA_slider_4
+      assign sectionSeparator = sectionSeparator | append: 'border-top: ' | append: section.settings.VEDA_slider_4 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+
+    if section.settings.VEDA_slider_5
+      assign sectionSeparator = sectionSeparator | append: 'border-bottom: ' | append: section.settings.VEDA_slider_5 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+  endif
+
+  if colGap and rowGap and builderMode and envatoMode
+  endif
+%}
+
+{% capture TabsNav %}
+  {% liquid
+    case section.settings.tabs_settings___align
+      when 'center'
+        assign alignStyle = 'jc:center'
+      when 'right'
+        assign alignStyle = 'jc:flex-end'
+      else
+        assign alignStyle = ''
+    endcase
+  %}
+  <div
+    class="veda-tabs__nav addon-disabled d:none@+md w:100% d:flex {{ alignStyle }}"
+    data-css="{{ section.settings["VEDA_styleBox_2"] }}"
+  >
+    {% for block in section.blocks %}
+      {% assign navItem = block.settings %}
+
+      <div
+        {% if forloop.index == 1 %}
+          class="veda-tabs__link addon-disabled veda-tabs__link--active"
+          data-css="{{ section.settings["VEDA_styleBox_6"] }}"
+        {% else %}
+          class="veda-tabs__link addon-disabled"
+          data-css="{{ section.settings["VEDA_styleBox_4"] }}"
+        {% endif %}
+      >
+        {{ navItem.content___title }}
+      </div>
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% capture TabsContent %}
+  <div class="veda-tabs__content addon-disabled" data-css="{{ section.settings["VEDA_styleBox_8"] }}">
+    {% for block in section.blocks %}
+      {% assign contentItem = block.settings %}
+
+      <div
+        {% if forloop.index == 1 %}
+          class="veda-tabs__collapse-button addon-disabled veda-tabs__collapse-button--active d:none@md d:flex ai:center jc:space-between p:10px_0 fz:16px fw:500 ff:font-secondary c:color-gray9 cur:pointer"
+          data-css="{{ section.settings["VEDA_styleBox_6"] }}"
+        {% else %}
+          class="veda-tabs__collapse-button addon-disabled d:none@md d:flex ai:center jc:space-between p:10px_0 fz:16px fw:500 ff:font-secondary c:color-gray9 cur:pointer"
+          data-css="{{ section.settings["VEDA_styleBox_4"] }}"
+        {% endif %}
+      >
+        <span>{{ contentItem.content___title }}</span>
+        <i class="fal fa-angle-down"></i>
+      </div>
+      <div
+        {% if forloop.index == 1 %}
+          class="veda-tabs__pane addon-disabled veda-tabs__pane--active"
+        {% else %}
+          class="veda-tabs__pane addon-disabled"
+        {% endif %}
+      >
+        {% case block.type %}
+          {% when 'content_description' %}
+            <div class="veda-content addon-disabled pb:10px@+md">{{ product.description }}</div>
+          {% when 'content_review' %}
+            {% liquid
+              assign class = 'pb:10px@+md cnt:(Please_add_a_review_add-on)|empty|be fz:16px|be c:color-gray9|be'
+            %}
+            <div class="{{ class }} addon-disabled"></div>
+          {% when 'content_rich_text' %}
+            <div class="veda-content addon-disabled pb:10px@+md">{{ contentItem.content___text }}</div>
+          {% else %}
+
+        {% endcase %}
+      </div>
+      <div class="h:1px@+md bgc:color-gray3@+md addon-disabled"></div>
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% capture Content %}
+  <div
+    class="veda-tabs addon-disabled veda-tabs--1"
+    tabs-data-css-active="{{ section.settings["VEDA_styleBox_5"] }}"
+    tabs-data-css="{{ section.settings["VEDA_styleBox_3"] }}"
+  >
+    {{ TabsNav }}
+    {{ TabsContent }}
+  </div>
+{% endcapture %}
+<section
+  data-id="{{ uniqueId }}"
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center"
+  style="{{ backgroundColor }}{{ backgroundImage }}{{ sectionPadding }}{{ sectionSeparator }}"
+>
+  <div
+    class="{{ containerType }}"
+    {% if section.settings.VEDA_slider_1
+      or section.settings.VEDA_slider_1 == 0
+      or section.settings.section_settings___width
+      or section.settings.section_settings___width == 0
+    %}
+      style="{{ containerGap }}{{ containerWidth }}"
+    {% endif %}
+  >
+    <div class="row mt:0!">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt:0!">
+        {{ Content }}
+      </div>
+    </div>
+  </div>
+  {% if section.settings.VEDA_select_2 == 'video' and section.settings.VEDA_video_1 %}
+    <div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+  {% endif %}
+  {% if section.settings.VEDA_switch_2 %}
+    <div
+      class="pos:absolute ins:0 z:-1"
+      style="background-color: {{ section.settings["VEDA_color_2"] }};backdrop-filter: blur({{ section.settings["VEDA_slider_3"] }}px)"
+    ></div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Product Details Tabs 1",
+  "blocks": [
+    {
+      "type": "content_description",
+      "name": "Content > Description",
+      "settings": [
+        {
+          "label": "Content > Title",
+          "id": "content___title",
+          "type": "liquid",
+          "default": "Title"
+        }
+      ]
+    },
+    {
+      "type": "content_review",
+      "name": "Content > Review",
+      "settings": [
+        {
+          "label": "Content > Title",
+          "id": "content___title",
+          "type": "liquid",
+          "default": "Title"
+        },
+        {
+          "type": "paragraph",
+          "content": "Please add a review addon.Read the instruction here: [https://app.vedabuilder.com/](https://app.vedabuilder.com/)"
+        }
+      ]
+    },
+    {
+      "type": "content_rich_text",
+      "name": "Content > Rich Text",
+      "settings": [
+        {
+          "label": "Content > Title",
+          "id": "content___title",
+          "type": "liquid",
+          "default": "Title"
+        },
+        {
+          "label": "Content > Text",
+          "id": "content___text",
+          "type": "liquid"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "label": "Section Settings > Container Width",
+      "id": "VEDA_select_1",
+      "type": "select",
+      "default": "boxed",
+      "options": [
+        {
+          "label": "Boxed",
+          "value": "boxed"
+        },
+        {
+          "label": "Full Width",
+          "value": "full_width"
+        },
+        {
+          "label": "Manual",
+          "value": "manual"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Width",
+      "id": "section_settings___width",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Gap",
+      "id": "VEDA_slider_1",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Column Gap",
+      "id": "VEDA_slider_2",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Background Type",
+      "id": "VEDA_select_2",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "Image",
+          "value": "image"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Video",
+          "value": "video"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_1",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_image_2",
+      "label": "Background Image"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_3",
+      "label": "Background Image"
+    },
+    {
+      "label": "Section Settings > Background Color",
+      "id": "VEDA_color_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Video",
+      "id": "VEDA_video_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Fixed",
+      "id": "VEDA_switch_1",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Size",
+      "id": "VEDA_select_3",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Enable Background Overlay",
+      "id": "VEDA_switch_2",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Overlay Color",
+      "id": "VEDA_color_2",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Overlay Blur",
+      "id": "VEDA_slider_3",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Separator",
+      "id": "VEDA_switch_3",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Separator Top",
+      "id": "VEDA_slider_4",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Bottom",
+      "id": "VEDA_slider_5",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Color",
+      "id": "VEDA_color_3",
+      "type": "text",
+      "default": "var(--color-gray2)"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_1",
+      "label": "Section Settings > Padding > Bottom"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_2",
+      "label": "Section Settings > Padding > Left"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_3",
+      "label": "Section Settings > Padding > Right"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_4",
+      "label": "Section Settings > Padding > Top"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_1",
+      "info": "Please DON'T edit this field.",
+      "label": "Tabs Settings > Tab Nav > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_2",
+      "info": "Please DON'T edit this field.",
+      "label": "Tabs Settings > Tab Nav > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_3",
+      "info": "Please DON'T edit this field.",
+      "label": "Tabs Settings > Link > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_4",
+      "info": "Please DON'T edit this field.",
+      "label": "Tabs Settings > Link > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_5",
+      "info": "Please DON'T edit this field.",
+      "label": "Tabs Settings > Link Active > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_6",
+      "info": "Please DON'T edit this field.",
+      "label": "Tabs Settings > Link Active > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_7",
+      "info": "Please DON'T edit this field.",
+      "label": "Tabs Settings > Content > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_8",
+      "info": "Please DON'T edit this field.",
+      "label": "Tabs Settings > Content > Id"
+    },
+    {
+      "label": "Tabs Settings > Align",
+      "id": "tabs_settings___align",
+      "type": "radio",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    }
+  ],
+  "tag": "div"
+}
+{% endschema %}

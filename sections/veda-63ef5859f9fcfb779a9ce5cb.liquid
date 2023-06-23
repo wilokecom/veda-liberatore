@@ -1,0 +1,532 @@
+{% assign uniqueId = 'id_d1651333-b223-4582-9805-23e073bd3728' %}
+{% assign builderMode = false %}
+{% assign envatoMode = false %}
+{% liquid
+  if section.settings.background_type == 'color'
+    assign backgroundColor = 'background-color: ' | append: section.settings.background_color | append: ';'
+  else
+    assign backgroundColor = ''
+  endif
+
+  assign bgImage = section.settings.background_image__src | append: '&width=10'
+
+  if section.settings.background_type == 'image'
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: 'scroll' | append: ';background-size: ' | append: section.settings.background_size | append: ';'
+  else
+    assign backgroundImage = ''
+  endif
+
+  assign sectionPadding = 'padding-top: ' | append: section.settings.padding__top | append: 'px;padding-right: ' | append: section.settings.padding__right | append: 'px;padding-bottom: ' | append: section.settings.padding__bottom | append: 'px;padding-left: ' | append: section.settings.padding__left | append: 'px;'
+
+  if builderMode and envatoMode
+  endif
+%}
+
+{% liquid
+  assign _data_confirm_message = false
+
+  assign _data_target = false
+
+  assign _aria_label = false
+
+  assign _data_index = false
+
+  assign _data_form_active = false
+
+  assign _form = false
+
+  assign _name = false
+
+  assign _id = false
+
+  assign _tooltip_position = false
+
+  assign _tooltip_text = false
+
+  assign _data_button_video_id = false
+%}
+
+<a
+  data-id="{{ uniqueId }}"
+  href="{{ section.settings["link"] }}"
+  {% if section.settings.new_tab %}
+    target="_blank"
+  {% endif %}
+  {% if section.settings.background_animation %}
+    class="veda-lazyload bg-animation d:block pos:relative z:1 bgz:cover bgp:center"
+  {% else %}
+    class="veda-lazyload d:block pos:relative z:1 bgz:cover bgp:center"
+  {% endif %}
+  style="{{ backgroundColor }}{{ backgroundImage }}{{ sectionPadding }}"
+>
+  <div class="d:flex ai:center jc:center ta:center">
+    {% if section.settings.button___enable and section.settings.button___position == 'left' %}
+      {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+      {% liquid
+        if section.settings.button___variant == 'link'
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+        else
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+        endif
+
+        assign default_for_bottom_class = ''
+
+        case section.settings.button___variant
+          when 'primary'
+            assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'secondary'
+            assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'dark'
+            assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+          when 'gray'
+            assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          when 'light'
+            assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          else
+            assign variant_class = ' c:color-gray9 c:color-primary|h'
+        endcase
+      %}
+
+      <button
+        type="{{ 'button' }}"
+        component="{{ 'button' }}"
+        {% if 'p:6px_15px! bdrs:3px' %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'p:6px_15px! bdrs:3px' }}"
+        {% else %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+        {% endif %}
+        {% if _data_confirm_message %}
+          data-confirm-message="{{ _data_confirm_message }}"
+        {% endif %}
+        {% if _data_target %}
+          data-target="{{ _data_target }}"
+        {% endif %}
+        {% if _aria_label %}
+          aria-label="{{ _aria_label }}"
+        {% endif %}
+        {% if _data_index %}
+          data-index="{{ _data_index }}"
+        {% endif %}
+        {% if _data_form_active %}
+          data-form-active="{{ _data_form_active }}"
+        {% endif %}
+        {% if _form %}
+          form="{{ _form }}"
+        {% endif %}
+        {% if _name %}
+          name="{{ _name }}"
+        {% endif %}
+        {% if _id %}
+          id="{{ _id }}"
+        {% endif %}
+        {% if _tooltip_position %}
+          data-tooltip-position="{{ _tooltip_position }}"
+        {% endif %}
+        {% if _tooltip_text %}
+          data-tooltip-text="{{ _tooltip_text }}"
+        {% endif %}
+        {% if _data_button_video_id %}
+          data-button-video-id="{{ _data_button_video_id }}"
+        {% endif %}
+        data-css="{{ section.settings["button___design__id"] }}"
+      >
+        {% if section.settings.button___icon_enable and section.settings.button___icon_position == 'left' %}
+          <span
+            {% if section.settings.button___text != '' %}
+              {% if '' %}
+                class="mr:10px {{ '' }}"
+              {% else %}
+                class="mr:10px"
+              {% endif %}
+            {% elsif '' %}
+              class="{{ '' }}"
+            {% endif %}
+            data-css="{{ section.settings["button___icon_design__id"] }}"
+          >
+            {{ section.settings.button___choose_icon }}
+          </span>
+        {% endif %}
+        <span>
+          {{ section.settings.button___text }}
+        </span>
+        {% if section.settings.button___icon_enable and section.settings.button___icon_position == 'right' %}
+          <span
+            {% if section.settings.button___text != '' %}
+              {% if '' %}
+                class="ml:10px {{ '' }}"
+              {% else %}
+                class="ml:10px"
+              {% endif %}
+            {% elsif '' %}
+              class="{{ '' }}"
+            {% endif %}
+            data-css="{{ section.settings["button___icon_design__id"] }}"
+          >
+            {{ section.settings.button___choose_icon }}
+          </span>
+        {% endif %}
+      </button>
+      {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+    {% endif %}
+    <div class="pl:20px pr:20px fz:16px c:color-gray8" data-css="{{ section.settings["message_design__id"] }}">
+      {{ section.settings.message }}
+    </div>
+    {% if section.settings.button___enable and section.settings.button___position == 'right' %}
+      {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+      {% liquid
+        if section.settings.button___variant == 'link'
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+        else
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+        endif
+
+        assign default_for_bottom_class = ''
+
+        case section.settings.button___variant
+          when 'primary'
+            assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'secondary'
+            assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'dark'
+            assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+          when 'gray'
+            assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          when 'light'
+            assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          else
+            assign variant_class = ' c:color-gray9 c:color-primary|h'
+        endcase
+      %}
+
+      <button
+        type="{{ 'button' }}"
+        component="{{ 'button' }}"
+        {% if 'p:6px_15px! bdrs:3px' %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'p:6px_15px! bdrs:3px' }}"
+        {% else %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+        {% endif %}
+        {% if _data_confirm_message %}
+          data-confirm-message="{{ _data_confirm_message }}"
+        {% endif %}
+        {% if _data_target %}
+          data-target="{{ _data_target }}"
+        {% endif %}
+        {% if _aria_label %}
+          aria-label="{{ _aria_label }}"
+        {% endif %}
+        {% if _data_index %}
+          data-index="{{ _data_index }}"
+        {% endif %}
+        {% if _data_form_active %}
+          data-form-active="{{ _data_form_active }}"
+        {% endif %}
+        {% if _form %}
+          form="{{ _form }}"
+        {% endif %}
+        {% if _name %}
+          name="{{ _name }}"
+        {% endif %}
+        {% if _id %}
+          id="{{ _id }}"
+        {% endif %}
+        {% if _tooltip_position %}
+          data-tooltip-position="{{ _tooltip_position }}"
+        {% endif %}
+        {% if _tooltip_text %}
+          data-tooltip-text="{{ _tooltip_text }}"
+        {% endif %}
+        {% if _data_button_video_id %}
+          data-button-video-id="{{ _data_button_video_id }}"
+        {% endif %}
+        data-css="{{ section.settings["button___design__id"] }}"
+      >
+        {% if section.settings.button___icon_enable and section.settings.button___icon_position == 'left' %}
+          <span
+            {% if section.settings.button___text != '' %}
+              {% if '' %}
+                class="mr:10px {{ '' }}"
+              {% else %}
+                class="mr:10px"
+              {% endif %}
+            {% elsif '' %}
+              class="{{ '' }}"
+            {% endif %}
+            data-css="{{ section.settings["button___icon_design__id"] }}"
+          >
+            {{ section.settings.button___choose_icon }}
+          </span>
+        {% endif %}
+        <span>
+          {{ section.settings.button___text }}
+        </span>
+        {% if section.settings.button___icon_enable and section.settings.button___icon_position == 'right' %}
+          <span
+            {% if section.settings.button___text != '' %}
+              {% if '' %}
+                class="ml:10px {{ '' }}"
+              {% else %}
+                class="ml:10px"
+              {% endif %}
+            {% elsif '' %}
+              class="{{ '' }}"
+            {% endif %}
+            data-css="{{ section.settings["button___icon_design__id"] }}"
+          >
+            {{ section.settings.button___choose_icon }}
+          </span>
+        {% endif %}
+      </button>
+      {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+    {% endif %}
+  </div>
+</a>
+{% schema %}
+{
+  "name": "Announcement Bar 1",
+  "blocks": [],
+  "settings": [
+    {
+      "label": "Button > Enable",
+      "id": "button___enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Button > Text",
+      "id": "button___text",
+      "type": "liquid",
+      "default": "Buy Now!"
+    },
+    {
+      "label": "Button > Variant",
+      "id": "button___variant",
+      "type": "select",
+      "default": "link",
+      "options": [
+        {
+          "label": "Link",
+          "value": "link"
+        },
+        {
+          "label": "Primary",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary",
+          "value": "secondary"
+        },
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Gray",
+          "value": "gray"
+        },
+        {
+          "label": "Light",
+          "value": "light"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "button___design__css",
+      "info": "Please DON'T edit this field.",
+      "label": "Button > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "button___design__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Button > Design > Id"
+    },
+    {
+      "label": "Button > Position",
+      "id": "button___position",
+      "type": "radio",
+      "default": "right",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Button > Icon"
+    },
+    {
+      "label": "Button > Enable",
+      "id": "button___icon_enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Button > Choose",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "button___choose_icon",
+      "type": "html",
+      "default": "<i class=\"far fa-atom\"></i>"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_1",
+      "info": "Please DON'T edit this field.",
+      "label": "Button > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "button___icon_design__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Button > Design > Id"
+    },
+    {
+      "label": "Button > Position",
+      "id": "button___icon_position",
+      "type": "radio",
+      "default": "right",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "label": "Background Type",
+      "id": "background_type",
+      "type": "select",
+      "default": "color",
+      "options": [
+        {
+          "label": "None",
+          "value": "none"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Image",
+          "value": "image"
+        }
+      ]
+    },
+    {
+      "label": "Background Color",
+      "id": "background_color",
+      "type": "text",
+      "default": "var(--color-gray1)"
+    },
+    {
+      "type": "number",
+      "id": "background_image__height",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "background_image__src",
+      "label": "Background Image"
+    },
+    {
+      "type": "number",
+      "id": "background_image__width",
+      "label": "Background Image"
+    },
+    {
+      "label": "Background Size",
+      "id": "background_size",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Background Fixed",
+      "id": "background_fixed",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Background Animation",
+      "id": "background_animation",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "type": "number",
+      "default": 15,
+      "id": "padding__bottom",
+      "label": "Padding > Bottom"
+    },
+    {
+      "type": "number",
+      "default": 15,
+      "id": "padding__left",
+      "label": "Padding > Left"
+    },
+    {
+      "type": "number",
+      "default": 15,
+      "id": "padding__right",
+      "label": "Padding > Right"
+    },
+    {
+      "type": "number",
+      "default": 15,
+      "id": "padding__top",
+      "label": "Padding > Top"
+    },
+    {
+      "label": "Message",
+      "info": "Useful: Using [ MyShopKit HTML Generator](https://myshopkit.app/shopify-color-codes/) to make up your text",
+      "id": "message",
+      "type": "liquid",
+      "default": "<p>Anniversary sales: up to $50 OFF</p>"
+    },
+    {
+      "label": "Open In New Tab",
+      "id": "new_tab",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Link",
+      "id": "link",
+      "type": "url"
+    },
+    {
+      "type": "text",
+      "id": "message_design__css",
+      "info": "Please DON'T edit this field.",
+      "label": "Message Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "message_design__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Message Design > Id"
+    }
+  ],
+  "tag": "div"
+}
+{% endschema %}

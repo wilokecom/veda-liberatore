@@ -1,0 +1,357 @@
+{% for cart_item in cart.items %}
+  {% capture ProductCartItem %}
+    {% liquid
+      if section.settings.VEDA_slider_3
+        assign imageRadius = 'border-radius:' | append: section.settings.VEDA_slider_3 | append: 'px;'
+      endif
+      
+      assign aspectRatio = 100
+      
+      if section.settings.table___aspect_ratio
+        assign aspectRatio = section.settings.table___aspect_ratio
+      endif
+    %}
+    <a
+      class="veda-image-cover d:block w:50% maw:140px mr:20px flxs:0 h:fit-content ov:hidden"
+      href="{{ cart_item.url }}"
+      aria-label="{{ cart_item.image.alt }}"
+      style="--aspect-ratio: {{ aspectRatio }};{{ imageRadius }}"
+    >
+      {% if cart_item.image.src != blank %}
+        <img
+          class="veda-lazyload {{ _class }}"
+          src="{{ cart_item.image.src | image_url: width: 10 }}"
+          draggable="false"
+          {% if cart_item.image.alt %}
+            alt="{{ cart_item.image.alt }}"
+          {% else %}
+            alt="image"
+          {% endif %}
+          {% if cart_item.image.width %}
+            data-intrinsic-width="{{ cart_item.image.width }}"
+            width="{{ cart_item.image.width }}"
+          {% endif %}
+          {% if cart_item.image.height %}
+            height="{{ cart_item.image.height }}"
+            data-intrinsic-height="{{ cart_item.image.height }}"
+          {% endif %}
+          loading="lazy"
+        >
+      {% else %}
+        {% liquid
+          assign pl = 'lifestyle-1'
+          
+          assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _class
+          
+        %}
+        {{ pl | placeholder_svg_tag: placeholder_class }}
+      {% endif %}
+    </a>
+    <div>
+      {% if true %}
+        <a
+          class="{{ 'd:block mb:5px fz:14px fw:400 ff:font-secondary c:color-gray7' }}"
+          href="{{ shop.url }}/collections/vendors?q={{ cart_item.vendor }}"
+        >
+          {{ cart_item.vendor }}
+        </a>
+      {% endif %}
+      
+      <a
+        href="{{ cart_item.url }}"
+        class="d:block ff:font-secondary fz:16px fw:500 mb:5px trs:0.3s"
+        data-css="{{ null }}"
+      >
+        {{ cart_item.title }}
+      </a>
+      {% if cart_item.product.has_only_default_variant == false
+      or cart_item.properties.size != 0
+      or cart_item.selling_plan_allocation != null
+      %}
+        <div>
+          {% if cart_item.product.has_only_default_variant == false %}
+            {% for option in cart_item.options_with_values %}
+              <div class="d:flex mb:5px" data-css="{{ null }}">{{ option.name }}: {{ option.value }}</div>
+            {% endfor %}
+          {% endif %}
+          
+          {% for property in cart_item.properties %}
+            {% liquid
+              assign property_first_char = property.first | slice: 0
+            %}
+            {% if property.last != blank and property_first_char != '_' %}
+              <div class="d:flex mb:5px" data-css="{{ null }}">
+                <div>{{ property.first }}:</div>
+                <div>
+                  {% if property.last contains '/uploads/' %}
+                    <a href="{{ property.last }}" class="link" target="_blank">
+                      {{ property.last | split: '/' | last }}
+                    </a>
+                  {% else %}
+                    {{ property.last }}
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        
+        <div class="mb:5px mb:0|e" data-css="{{ null }}">
+          {{ cart_item.selling_plan_allocation.selling_plan.name }}
+        </div>
+      {% endif %}
+      
+      <ul
+        class="ls:none p:0 m:0!"
+        role="list"
+        aria-label="{{ 'veda.customer.order.discount' | t }}"
+      >
+        {% for discount in cart_item.discounts %}
+          <li class="mb:5px">
+            {{ discount.title }}
+          </li>
+        {% endfor %}
+      </ul>
+      <div class="d:none@400px d:block">
+        {% if builderMode %}
+          <div class="fz:pfs(16px,20px) ff:font-secondary fw:500 c:color-gray9" data-css="{{ null }}">
+            {{ cart_item.final_line_price | money }}
+          </div>
+        {% else %}
+          {% if cart_item.original_line_price != cart_item.final_line_price %}
+            <div class="d:flex ai:center ff:font-secondary mb:5px">
+              <ins
+                class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray9 td:none mr:5px"
+                data-css="{{ null }}"
+              >
+                {{ cart_item.final_line_price | money }}
+              </ins>
+              <del
+                class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray6"
+                data-css="{{ null }}"
+              >
+                {{ cart_item.original_line_price | money }}
+              </del>
+            </div>
+          {% else %}
+            <span class="fz:pfs(16px,20px) fw:500 c:color-gray9 mb:5px" data-css="{{ null }}">
+              {{ cart_item.original_line_price | money }}
+            </span>
+          {% endif %}
+          
+          {% if cart_item.variant.available and cart_item.unit_price_measurement %}
+            <div class="fz:20px fw:500 c:color-gray9 mb:5px" data-css="{{ null }}">
+              {{ 'veda.products.product.price.unit_price' | t }}: {{ cart_item.variant.unit_price | money }}/&nbsp;
+              {{ 'veda.accessibility.unit_price_separator' | t }}
+              &nbsp;
+              {% if cart_item.variant.unit_price_measurement.reference_value != 1 %}
+                {{ cart_item.variant.unit_price_measurement.reference_value }}
+              {% endif %}
+              {{ cart_item.variant.unit_price_measurement.reference_unit }}
+            </div>
+          {% endif %}
+        {% endif %}
+        
+        <div
+          data-id="{{ cart_item.variant_id }}"
+          class="veda-counter d:flex w:pfs(100px,150px) mb:5px@+md bd:1px_solid_color-gray3 ov:hidden"
+          data-options="{ value: {{ cart_item.quantity }} }"
+          data-css="{{ null }}"
+        >
+          <div class="veda-counter__decrement d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+            <i class="fal fa-minus"></i>
+          </div>
+          <input
+            class="veda-counter__input p:0! w:100% h:40px fz:15px fw:500 ta:center c:color-gray9 bgc:transparent bd:none! o:none"
+            data-id="{{ cart_item.variant_id }}"
+            type="number"
+            data-button="disabled"
+          >
+          <div class="veda-counter__increment d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+            <i class="fal fa-plus"></i>
+          </div>
+        </div>
+      </div>
+      <a
+        data-id="{{ cart_item.variant_id }}"
+        class="cart-remove-item-js fz:13px cur:pointer!"
+        data-css="{{ null }}"
+      >
+        {{ 'veda.sections.cart.remove' | t }}
+      </a>
+    </div>
+  {% endcapture %}
+  <div class="d:flex bdt:1px_solid_color-gray4 bdb:1px_solid_color-gray4|lc" data-css="{{ null }}">
+    <div
+      class="d:flex flex:1 w:100% w:40%@md p:15px_0"
+      data-css="{{ null }}"
+    >
+      {{ ProductCartItem }}
+    </div>
+    <div
+      class="d:flex@400px ai:center d:none flex:0_0_auto w:40% w:20%@sm p:15px_0 fz:15px fw:500 c:color-gray9 ta:right@+md jc:flex-end@+md"
+      data-css="{{ null }}"
+    >
+      {% if builderMode %}
+        <div
+          class="fz:20px ff:font-secondary c:color-gray9 d:none d:block@md"
+          data-css="{{ null }}"
+        >
+          {{ cart_item.original_price | money }}
+        </div>
+      {% else %}
+        {% if cart_item.original_price != cart_item.final_price %}
+          <div class="d:flex ai:center ff:font-secondary">
+            <ins
+              class="d:inline-block@md d:none fw:500 ff:font-secondary fz:20px c:color-gray9 td:none mr:5px"
+              data-css="{{ null }}"
+            >
+              {{ cart_item.final_price | money }}
+            </ins>
+            <del
+              class="d:inline-block@md d:none fw:500 ff:font-secondary fz:20px c:color-gray6"
+              data-css="{{ null }}"
+            >
+              {{ cart_item.original_price | money }}
+            </del>
+          </div>
+        {% else %}
+          <div
+            class="d:inline-block@md d:none fz:20px fw:500 ff:font-secondary c:color-gray9"
+            data-css="{{ null }}"
+          >
+            {{ cart_item.original_price | money }}
+          </div>
+        {% endif %}
+      {% endif %}
+      
+      <div class="d:flex fld:column ai:flex-end d:none@md">
+        {% if builderMode %}
+          <div class="fz:pfs(16px,20px) ff:font-secondary fw:500 c:color-gray9" data-css="{{ null }}">
+            {{ cart_item.final_line_price | money }}
+          </div>
+        {% else %}
+          {% if cart_item.original_line_price != cart_item.final_line_price %}
+            <div class="d:flex ai:center ff:font-secondary mb:5px">
+              <ins
+                class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray9 td:none mr:5px"
+                data-css="{{ null }}"
+              >
+                {{ cart_item.final_line_price | money }}
+              </ins>
+              <del
+                class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray6"
+                data-css="{{ null }}"
+              >
+                {{ cart_item.original_line_price | money }}
+              </del>
+            </div>
+          {% else %}
+            <span class="fz:pfs(16px,20px) fw:500 c:color-gray9 mb:5px" data-css="{{ null }}">
+              {{ cart_item.original_line_price | money }}
+            </span>
+          {% endif %}
+          
+          {% if cart_item.variant.available and cart_item.unit_price_measurement %}
+            <div class="fz:20px fw:500 c:color-gray9 mb:5px" data-css="{{ null }}">
+              {{ 'veda.products.product.price.unit_price' | t }}: {{ cart_item.variant.unit_price | money }}/&nbsp;
+              {{ 'veda.accessibility.unit_price_separator' | t }}
+              &nbsp;
+              {% if cart_item.variant.unit_price_measurement.reference_value != 1 %}
+                {{ cart_item.variant.unit_price_measurement.reference_value }}
+              {% endif %}
+              {{ cart_item.variant.unit_price_measurement.reference_unit }}
+            </div>
+          {% endif %}
+        {% endif %}
+        
+        <div
+          data-id="{{ cart_item.variant_id }}"
+          class="veda-counter d:flex w:pfs(100px,150px) mb:5px@+md bd:1px_solid_color-gray3 ov:hidden"
+          data-options="{ value: {{ cart_item.quantity }} }"
+          data-css="{{ null }}"
+        >
+          <div class="veda-counter__decrement d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+            <i class="fal fa-minus"></i>
+          </div>
+          <input
+            class="veda-counter__input p:0! w:100% h:40px fz:15px fw:500 ta:center c:color-gray9 bgc:transparent bd:none! o:none"
+            data-id="{{ cart_item.variant_id }}"
+            type="number"
+            data-button="disabled"
+          >
+          <div class="veda-counter__increment d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+            <i class="fal fa-plus"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d:flex@md d:none ai:center flex:0_0_auto w:40% w:20%@sm p:15px_0"
+      data-css="{{ null }}"
+    >
+      <div
+        data-id="{{ cart_item.variant_id }}"
+        class="veda-counter d:flex w:pfs(100px,150px) mb:5px@+md bd:1px_solid_color-gray3 ov:hidden"
+        data-options="{ value: {{ cart_item.quantity }} }"
+        data-css="{{ null }}"
+      >
+        <div class="veda-counter__decrement d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+          <i class="fal fa-minus"></i>
+        </div>
+        <input
+          class="veda-counter__input p:0! w:100% h:40px fz:15px fw:500 ta:center c:color-gray9 bgc:transparent bd:none! o:none"
+          data-id="{{ cart_item.variant_id }}"
+          type="number"
+          data-button="disabled"
+        >
+        <div class="veda-counter__increment d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+          <i class="fal fa-plus"></i>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d:flex@md d:none ai:center jc:flex-end flex:0_0_auto w:20% p:15px_0 ta:right"
+      data-css="{{ null }}"
+    >
+      {% if builderMode %}
+        <div class="fz:pfs(16px,20px) ff:font-secondary fw:500 c:color-gray9" data-css="{{ null }}">
+          {{ cart_item.final_line_price | money }}
+        </div>
+      {% else %}
+        {% if cart_item.original_line_price != cart_item.final_line_price %}
+          <div class="d:flex ai:center ff:font-secondary mb:5px">
+            <ins
+              class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray9 td:none mr:5px"
+              data-css="{{ null }}"
+            >
+              {{ cart_item.final_line_price | money }}
+            </ins>
+            <del
+              class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray6"
+              data-css="{{ null }}"
+            >
+              {{ cart_item.original_line_price | money }}
+            </del>
+          </div>
+        {% else %}
+          <span class="fz:pfs(16px,20px) fw:500 c:color-gray9 mb:5px" data-css="{{ null }}">
+            {{ cart_item.original_line_price | money }}
+          </span>
+        {% endif %}
+        
+        {% if cart_item.variant.available and cart_item.unit_price_measurement %}
+          <div class="fz:20px fw:500 c:color-gray9 mb:5px" data-css="{{ null }}">
+            {{ 'veda.products.product.price.unit_price' | t }}: {{ cart_item.variant.unit_price | money }}/&nbsp;
+            {{ 'veda.accessibility.unit_price_separator' | t }}
+            &nbsp;
+            {% if cart_item.variant.unit_price_measurement.reference_value != 1 %}
+              {{ cart_item.variant.unit_price_measurement.reference_value }}
+            {% endif %}
+            {{ cart_item.variant.unit_price_measurement.reference_unit }}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}

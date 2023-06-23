@@ -1,0 +1,460 @@
+<div class="cart-checkout-js w:100% d:flex jc:flex-end">
+  <div class="w:100% maw:400px@400px">
+    <div class="w:100% h:70px d:flex mt:20px bdb:1px_solid_color-gray3">
+      
+      {% for block in section.blocks %}
+        {% assign actionItem = block.settings %}
+        
+        {% case block.type %}
+          {% when 'actions_note' %}
+            <div
+              class="mini-cart-btn-note-js d:flex fld:column jc:center ai:center flxs:1 w:100% h:100% fz:pfs(13px,15px) c:color-gray9 bdr:1px_solid_color-gray3 bd:none!|lc cur:pointer bdrs:4px||be fz:13px||be"
+              data-tooltip-position="top"
+              data-tooltip-text="{{ 'veda.sections.cart.special_instrutions_for_seller' | t }}"
+              
+            >
+              <span class="fz:18px" >
+                <i class="far fa-pencil-alt"></i>
+              </span>
+              <span class="ff:font-secondary">{{ 'veda.sections.cart.note_title' | t }}</span>
+            </div>
+          {% when 'actions_shipping' %}
+            <div
+              class="mini-cart-btn-shipping-js d:flex fld:column jc:center ai:center flxs:1 w:100% h:100% fz:pfs(13px,15px) c:color-gray9 bdr:1px_solid_color-gray3 bd:none!|lc cur:pointer bdrs:4px||be fz:13px||be"
+              data-tooltip-position="top"
+              data-tooltip-text="{{ 'veda.sections.cart.estimate_shipping_rates' | t }}"
+            >
+              <span class="fz:18px" >
+                <i class="far fa-shipping-fast"></i>
+              </span>
+              <span class="ff:font-secondary">{{ 'veda.sections.cart.shipping_title' | t }}</span>
+            </div>
+          {% when 'actions_discount' %}
+            <div
+              class="mini-cart-btn-discount-js d:flex fld:column jc:center ai:center flxs:1 w:100% h:100% fz:pfs(13px,15px) c:color-gray9 bdr:1px_solid_color-gray3 bd:none!|lc cur:pointer bdrs:4px||be fz:13px||be"
+              
+              data-tooltip-position="top"
+              data-tooltip-text="{{ 'veda.sections.cart.add_discount_code' | t }}"
+            >
+              <span class="fz:18px" >
+                <i class="far fa-percent"></i>
+              </span>
+              <span class="ff:font-secondary">{{ 'veda.sections.cart.coupon_code' | t }}</span>
+            </div>
+        
+        {% endcase %}
+      {% endfor %}
+    </div>
+    <div
+      class="mini-cart-note-js p:20px_0 w:100% h:fit-content bgc:color-light z:3 trs:0.3s d:none"
+    >
+      <label class="d:block mb:15px">
+        <span
+          class="d:block fz:18px fw:500 ff:font-secondary c:color-gray9 mb:10px"
+        >
+          {{ 'veda.sections.cart.special_instrutions_for_seller' | t }}
+        </span>
+        <textarea
+          name="note"
+          class="rs mini-cart-note-js w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray6||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+          rows="4"
+          placeholder="{{ 'veda.sections.cart.special_instrutions_for_seller' | t }}"
+        >{{ cart.note }}</textarea>
+      </label>
+      {% liquid
+        if section.settings.submit_button___variant == 'link'
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+        else
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+        endif
+        
+        assign default_for_bottom_class = ''
+        
+        case section.settings.submit_button___variant
+          when 'primary'
+            assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'secondary'
+            assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'dark'
+            assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+          when 'gray'
+            assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          when 'light'
+            assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          else
+            assign variant_class = ' c:color-gray9 c:color-primary|h'
+        endcase
+      %}
+      
+      <button
+        type="{{ 'submit' }}"
+        {% if 'mini-cart-btn-save-note-js' %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-save-note-js' }}"
+        {% else %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+        {% endif %}
+      >
+        <span>
+          {{ 'veda.sections.cart.save' | t }}
+        </span>
+      </button>
+      
+      {% liquid
+        if section.settings.cancel_button___variant == 'link'
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+        else
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+        endif
+        
+        assign default_for_bottom_class = ''
+        
+        case section.settings.cancel_button___variant
+          when 'primary'
+            assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'secondary'
+            assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'dark'
+            assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+          when 'gray'
+            assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          when 'light'
+            assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          else
+            assign variant_class = ' c:color-gray9 c:color-primary|h'
+        endcase
+      %}
+      
+      <button
+        type="button"
+        {% if 'mini-cart-btn-cancel-action-js ml:10px ml:10px' %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-cancel-action-js ml:10px ml:10px' }}"
+        {% else %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+        {% endif %}
+      >
+        <span>
+          {{ 'veda.sections.cart.cancel' | t }}
+        </span>
+      </button>
+    </div>
+    <div
+      class="mini-cart-shipping-js p:20px_0 w:100% h:fit-content bgc:color-light z:3 trs:0.3s d:none"
+    >
+      <script type="application/json" class="{{ 'shipping-money-format-js' }}">
+        {{ 100 | money }}
+      </script>
+      <label class="mini-cart-shipping-select-country-js d:block mb:15px">
+        <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+          {{ 'veda.customer.addresses.country' | t }}
+        </span>
+        <select
+          id="address-country-shipping"
+          class="rs d:flex ai:center w:100% h:43px p:12px_15px bd:1px_solid_color-gray3 fz:pfs(12px,15px) c:color-gray7 cur:pointer"
+          autocomplete="country"
+        >
+            {{ all_country_option_tags }}
+        </select>
+      </label>
+      <label class="address-province-container-shipping d:block mb:15px" style="display:none">
+        <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+          {{ 'veda.customer.addresses.province' | t }}
+        </span>
+        <select
+          id="address-province-shipping"
+          class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+          autocomplete="address-level1"
+        ></select>
+      </label>
+      <label
+          class="d:block mb:15px"
+      >
+        <span
+            class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+        >
+          {{ 'veda.customer.addresses.zip' | t }}
+        </span>
+        <input
+            class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+          type="{{ 'text' }}"
+          name="{{ 'address[zip]' }}"
+          {% if form.zip %}
+            value="{{ form.zip }}"
+          {% endif %}
+          {% if 'postal-code' %}
+            autocomplete="{{ 'postal-code' }}"
+          {% endif %}
+          {% if 'characters' %}
+            autocapitalize="{{ 'characters' }}"
+          {% endif %}
+        >
+      </label>
+      
+      {% liquid
+        if section.settings.submit_button___variant == 'link'
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+        else
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+        endif
+        
+        assign default_for_bottom_class = ''
+        
+        case section.settings.submit_button___variant
+          when 'primary'
+            assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'secondary'
+            assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'dark'
+            assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+          when 'gray'
+            assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          when 'light'
+            assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          else
+            assign variant_class = ' c:color-gray9 c:color-primary|h'
+        endcase
+      %}
+      
+      <button
+        type="{{ 'submit' }}"
+        {% if 'mini-cart-btn-submit-shipping-js d:inline-flex ai:center' %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-submit-shipping-js d:inline-flex ai:center' }}"
+        {% else %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+        {% endif %}
+      >
+        <span>
+          {{ 'veda.sections.cart.estimate_shipping_rates' | t }}
+        </span>
+      </button>
+      
+      {% liquid
+        if section.settings.cancel_button___variant == 'link'
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+        else
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+        endif
+        
+        assign default_for_bottom_class = ''
+        
+        case section.settings.cancel_button___variant
+          when 'primary'
+            assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'secondary'
+            assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'dark'
+            assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+          when 'gray'
+            assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          when 'light'
+            assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          else
+            assign variant_class = ' c:color-gray9 c:color-primary|h'
+        endcase
+      %}
+      
+      <button
+        type="button"
+        {% if 'mini-cart-btn-cancel-action-js ml:10px' %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-cancel-action-js ml:10px' }}"
+        {% else %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+        {% endif %}
+      >
+        <span>
+          {{ 'veda.sections.cart.cancel' | t }}
+        </span>
+      </button>
+      
+      <div class="mini-cart-shipping-value mt:15px fz:16px c:color-gray9"></div>
+    </div>
+    <div
+      class="mini-cart-discount-js p:20px_0 w:100% h:fit-content bgc:color-light z:3 trs:0.3s d:none"
+    >
+      <label class="d:block mb:15px">
+        <span
+          class="d:block fz:18px fw:500 ff:font-secondary mb:10px"
+        >
+          {{ 'veda.sections.cart.add_discount_code' | t }}
+        </span>
+        <input
+          form="cart-drawer-form"
+          type="text"
+          name="discount"
+          class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray6||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+        >
+      </label>
+      {% liquid
+        if section.settings.submit_button___variant == 'link'
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+        else
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+        endif
+        
+        assign default_for_bottom_class = ''
+        
+        case section.settings.submit_button___variant
+          when 'primary'
+            assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'secondary'
+            assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'dark'
+            assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+          when 'gray'
+            assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          when 'light'
+            assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          else
+            assign variant_class = ' c:color-gray9 c:color-primary|h'
+        endcase
+      %}
+      
+      <button
+        type="{{ 'submit' }}"
+        {% if 'mini-cart-btn-save-discount-js' %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-save-discount-js' }}"
+        {% else %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+        {% endif %}
+      >
+        <span>
+          {{ 'veda.sections.cart.save' | t }}
+        </span>
+      </button>
+      
+      {% liquid
+        if section.settings.cancel_button___variant == 'link'
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+        else
+          assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+        endif
+        
+        assign default_for_bottom_class = ''
+        
+        case section.settings.cancel_button___variant
+          when 'primary'
+            assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'secondary'
+            assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+          when 'dark'
+            assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+          when 'gray'
+            assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          when 'light'
+            assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+          else
+            assign variant_class = ' c:color-gray9 c:color-primary|h'
+        endcase
+      %}
+      
+      <button
+        type="{{ 'button' }}"
+        {% if 'mini-cart-btn-cancel-action-js ml:10px' %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-cancel-action-js ml:10px' }}"
+        {% else %}
+          class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+        {% endif %}
+        
+      >
+        <span>
+          {{ 'veda.sections.cart.cancel' | t }}
+        </span>
+      </button>
+    </div>
+    
+    {% for block in section.blocks %}
+      {% assign checkOutItem = block.settings %}
+      
+      {% case block.type %}
+        {% when 'check_out_price' %}
+          <div class="d:flex ai:center jc:space-between">
+            <div class="mt:20px fz:15px ff:font-secondary fw:500">
+              {{ 'veda.sections.cart.subtotal' | t }}
+            </div>
+            <span
+              class="mt:20px fz:20px ff:font-secondary fw:500"
+              
+            >
+              {{ cart.total_price | money }}
+            </span>
+          </div>
+          <div>
+            {% if cart.cart_level_discount_applications.size > 0 %}
+              <ul class="p:0! ls:none" aria-label="{{ 'veda.customer.order.discount' | t }}">
+                {% for discountItem in cart.cart_level_discount_applications %}
+                  <li class="mt:5px fz:15px ff:font-secondary" data-css="{{ discountItem.discount_design.id }}">
+                    {{ discountItem.title }}(-{{ discountItem.total_allocated_amount | money }})
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% when 'check_out_text' %}
+          <div class="mt:10px fz:14px c:color-gray7" >
+            {% if cart.taxes_included and shop.shipping_policy.body != blank %}
+              {{ 'veda.sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+            {% elsif cart.taxes_included %}
+              {{ 'veda.sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+            {% elsif shop.shipping_policy.body != blank %}
+              {{
+              'veda.sections.cart.taxes_and_shipping_policy_at_checkout_html'
+              | t: link: shop.shipping_policy.url
+              }}
+            {% else %}
+              {{ 'veda.sections.cart.taxes_and_shipping_at_checkout' | t }}
+            {% endif %}
+          </div>
+        {% when 'check_out_button' %}
+          {% liquid
+            if checkOutItem.check_out___variant == 'link'
+              assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+            else
+              assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+            endif
+            
+            assign default_for_bottom_class = ''
+            
+            case checkOutItem.check_out___variant
+              when 'primary'
+                assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+              when 'secondary'
+                assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+              when 'dark'
+                assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+              when 'gray'
+                assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+              when 'light'
+                assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+              else
+                assign variant_class = ' c:color-gray9 c:color-primary|h'
+            endcase
+          %}
+          
+          <button
+            type="{{ 'submit' }}"
+            component="{{ 'check_out' }}"
+            {% if 'w:100% mt:20px' %}
+              class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'w:100% mt:20px' }}"
+            {% else %}
+              class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+            {% endif %}
+            {% if 'cart-drawer-form' %}
+              form="{{ 'cart-drawer-form' }}"
+            {% endif %}
+            {% if 'checkout' %}
+              name="{{ 'checkout' }}"
+            {% endif %}
+            {% if 'checkout' %}
+              id="{{ 'checkout' }}"
+            {% endif %}
+            
+          >
+            <span>
+              {{ "veda.sections.cart.checkout" | t }}
+            </span>
+          </button>
+        {% else %}
+      
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>

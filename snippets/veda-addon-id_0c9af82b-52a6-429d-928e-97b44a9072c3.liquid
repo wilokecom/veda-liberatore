@@ -1,0 +1,46 @@
+{% comment %}
+You SHOULD NOT modify source code in this page because
+It is automatically generated from Veda
+{% endcomment %}
+<!--VEDA_CSS_HERE-->
+
+<div data-id="id_0c9af82b-52a6-429d-928e-97b44a9072c3" style="padding-top: px;padding-right: px;padding-bottom: px;padding-left: px;" class="fz:14px">
+  
+    {% if builderMode %}      {% if "review" == 'star_rating' %}        <div class="compare-rating-js">
+          <div
+            style="width: 115px"
+            data-tooltip-text="This data is fake (the real data will be displayed at your shop)"
+            data-tooltip-position="top"
+          >
+            <img
+              src="https://cdn.shopify.com/s/files/1/0552/5510/5616/files/zotbcnfosj.png?v=1676545494&width=300"
+              width="300"
+              height="300"
+              alt="image addon 1"
+              loading="lazy"
+            >
+          </div>
+        </div>
+      {% else %}        <div class="d:inline-flex ai:center p:10px bdrs:8px bgc:#2C36DC" style="background-color: {{ '#333' }}">
+  <img
+    class="mr:10px w:50px bdrs:6px"
+    src="{{ 'https://cdn.shopify.com/app-store/listing_images/60fca9c7f3400ddd43004e94b1355691/icon/CIvfosz0lu8CEAE=.png' }}"
+    width="50"
+    height="50"
+    alt="addon placeholder"
+    loading="lazy"
+  >
+  <span class="c:color-light-freeze fz:16px ff:font-secondary pr:10px">{{ 'Product Reviews' }}</span>
+</div>
+
+      {% endif %}    {% else %}      {% case "review" %}        {% when 'review' %}          <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
+        {% when 'star_rating' %}          <div class="compare-rating-js">
+            {% if request.page_type == 'product' %}              {% if productItem %}                <span class="shopify-product-reviews-badge" data-id="{{ productItem.id }}"></span>
+              {% else %}                <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+              {% endif %}            {% else %}              <span class="shopify-product-reviews-badge" data-id="{{ productItem.id }}"></span>
+            {% endif %}          </div>
+      {% endcase %}    {% endif %}  
+</div>
+
+
+<link rel="preload" as="script" class="veda-page-script" href="{{ 'veda-addon-id_0c9af82b-52a6-429d-928e-97b44a9072c3.js' | asset_url }}" />

@@ -1,0 +1,403 @@
+<section
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center"
+  style="padding: 50px 0;"
+>
+  <div
+    class="container"
+  >
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d:flex jc:center">
+            <div class="pos:relative d:flex ai:center jc:space-between">
+                <div class="d:flex fld:column w:100%">
+                    <h2 component="heading" class="fw:500" style="text-align: start;">
+                        {{ "veda.customer.account.title" | t }}
+                    </h2>
+                    <a component="heading" href="{{ routes.account_url }}" class="ff:font-secondary fz:16px fw:500 c:color-gray9 c:color-gray9|h! td:underline" data-css="" style="text-align: start;">
+                        {{ "veda.customer.account.return" | t }}      
+                    </a>
+                    <div component="heading" class="pt:20px fz:0" style="text-align: start;">
+                        <div class="d:inline-block! w:50px h:2px bgc:color-gray3"></div>
+                    </div>
+                    <div component="heading" style="height: 50px;"></div>    
+                </div>
+            </div>
+            <div class="d:flex@md">
+                <div
+                    class="w:100%@+md! mih:100% d:flex fld:column jc:center pr:30px@md"
+                    style="width: 75%"
+                >
+                    <h3
+                        class="fw:500"
+                    >
+                        {{ 'veda.customer.order.title' | t: name: order.name }}
+                    </h3>
+                    <div class="mb:30px fz:15px c:color-gray7">
+                    {% liquid
+                        assign order_date = order.created_at | date: '%b %d, %Y at %I:%M %P'
+                    %}
+                    {{ 'veda.customer.order.date_html' | t: date: order_date }}
+                    </div>
+                    {% if order.cancelled %}
+                    {% liquid
+                        assign cancelled_at = order.cancelled_at | date: '%b %d, %Y at %I:%M %P'
+                    %}
+                    <div class="mb:30px fz:15px c:color-gray7">
+                        {{ 'veda.customer.order.cancelled_html' | t: date: cancelled_at }}
+                    </div>
+                    <div class="mb:30px fz:15px c:color-gray7">
+                        {{ 'veda.customer.order.cancelled_reason' | t: reason: order.cancel_reason_label }}
+                    </div>
+                    {% endif %}
+                    <table class="table-responsive-768">
+                        <thead>
+                            <tr
+                            >
+                            <td class="p:20px_15px! fz:14px fw:500 ff:font-secondary c:color-gray7 tt:uppercase bd:1px_solid_color-gray5">
+                                {{ 'veda.customer.order.product' | t }}
+                            </td>
+                            <td class="p:20px_15px! fz:14px fw:500 ff:font-secondary c:color-gray7 tt:uppercase bd:1px_solid_color-gray5">
+                                {{ 'veda.customer.order.sku' | t }}
+                            </td>
+                            <td class="p:20px_15px! fz:14px fw:500 ff:font-secondary c:color-gray7 tt:uppercase bd:1px_solid_color-gray5">
+                                {{ 'veda.customer.order.price' | t }}
+                            </td>
+                            <td class="p:20px_15px! fz:14px fw:500 ff:font-secondary c:color-gray7 tt:uppercase bd:1px_solid_color-gray5">
+                                {{ 'veda.customer.order.quantity' | t }}
+                            </td>
+                            <td class="ta:right p:20px_15px! fz:14px fw:500 ff:font-secondary c:color-gray7 tt:uppercase bd:1px_solid_color-gray5">
+                                {{ 'veda.customer.order.total' | t }}
+                            </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order_line_item in order.line_items %}
+                            {% liquid
+                                if order_line_item.sku
+                                assign skuStyle = ''
+                                else
+                                assign skuStyle = ' d:none!@+md'
+                                endif
+                            %}
+                            <tr>
+                                <td
+                                data-th="{{ 'veda.customer.order.product' | t }}"
+                                class=" ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                >
+                                {% if order_line_item.url != blank %}
+                                    <a class="fw:500 c:color-gray8 td:underline!" href="{{ order_line_item.url }}">
+                                    {{ order_line_item.title }}
+                                    </a>
+                                {% else %}
+                                    <p>{{ order_line_item.title }}</p>
+                                {% endif %}
+                                {% liquid
+                                    assign property_size = order_line_item.properties | size
+                                %}
+                                {% unless order_line_item.selling_plan_allocation == null and property_size == 0 %}
+                                    <div>
+                                    {% unless order_line_item.product.has_only_default_variant %}
+                                        <span>
+                                        {{ order_line_item.variant.title }}
+                                        </span>
+                                    {% endunless %}
+                                    {% unless order_line_item.selling_plan_allocation == null %}
+                                        <span>
+                                        {{ order_line_item.selling_plan_allocation.selling_plan.name }}
+                                        </span>
+                                    {% endunless %}
+                                    {% if property_size != 0 %}
+                                        {% for property in order_line_item.properties %}
+                                        {% liquid
+                                            assign property_first_char = property.first | slice: 0
+                                        %}
+                                        {% if property.last != blank and property_first_char != '_' %}
+                                            <span>
+                                            {{ property.first }}:&nbsp;
+                                            {% if property.last contains '/uploads/' %}
+                                                <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                                            {% else %}
+                                                {{ property.last }}
+                                            {% endif %}
+                                            </span>
+                                        {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </div>
+                                {% endunless %}
+
+                                {% if order_line_item.line_level_discount_allocations != blank %}
+                                    <ul role="list" aria-label="{{ 'veda.customer.order.discount' | t }}">
+                                    {% for discount_allocation in order_line_item.line_level_discount_allocations %}
+                                        <li>
+                                        <svg aria-hidden="true" focusable="false" viewBox="0 0 12 12">
+                                            <use href="#icon-discount" />
+                                        </svg>
+                                        {{ discount_allocation.discount_application.title }} (-
+                                        {{ discount_allocation.amount | money }}
+                                        )
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                </td>
+                                <td
+                                data-th="{{ 'veda.customer.order.sku' | t }}"
+                                class="ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5{{ skuStyle }}"
+                                >
+                                {{ order_line_item.sku }}
+                                </td>
+                                <td
+                                data-th="{{ 'veda.customer.order.price' | t }}"
+                                class="ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                >
+                                {% if order_line_item.original_price
+                                    and order_line_item.final_price
+                                    and order_line_item.unit_price_measurement
+                                    and order_line_item.final_price
+                                %}
+                                    {% if order_line_item.original_price != order_line_item.final_price
+                                    or order_line_item.unit_price_measurement
+                                    %}
+                                    <dl>
+                                        {% if order_line_item.original_price != order_line_item.final_price %}
+                                        <dt>
+                                            <span>{{ 'veda.products.product.price.regular_price' | t }}</span>
+                                        </dt>
+                                        <dd class="regular-price">
+                                            <s>{{ order_line_item.original_price | money }}</s>
+                                        </dd>
+                                        <dt>
+                                            <span>{{ 'veda.products.product.price.sale_price' | t }}</span>
+                                        </dt>
+                                        <dd>
+                                            <span>{{ order_line_item.final_price | money }}</span>
+                                        </dd>
+                                        {% else %}
+                                        <dt>
+                                            <span>{{ 'veda.products.product.price.regular_price' | t }}</span>
+                                        </dt>
+                                        <dd>
+                                            {{ order_line_item.original_price | money }}
+                                        </dd>
+                                        {% endif %}
+                                        {% if order_line_item.unit_price_measurement %}
+                                        <dt>
+                                            <span>{{ 'veda.products.product.price.unit_price' | t }}</span>
+                                        </dt>
+                                        <dd>
+                                            <span>
+                                            {% capture unit_price_separator %}
+                                                <span aria-hidden="true">/</span
+                                                ><span> {{ 'veda.accessibility.unit_price_separator' | t }}&nbsp;</span>
+                                            {% endcapture %}
+                                            {% capture unit_price_base_unit %}
+                                                {% if order_line_item.unit_price_measurement.reference_value != 1 %}
+                                                {{ order_line_item.unit_price_measurement.reference_value }}
+                                                {% endif %}
+                                                {{ order_line_item.unit_price_measurement.reference_unit }}
+                                            {% endcapture %}
+                                            <span data-unit-price>{{ order_line_item.unit_price | money }}</span>
+                                            {{ unit_price_separator }}
+                                            {{ unit_price_base_unit }}
+                                            </span>
+                                        </dd>
+                                        {% endif %}
+                                    </dl>
+                                    {% else %}
+                                    <span>{{ order_line_item.final_price | money }}</span>
+                                    {% endif %}
+                                {% else %}
+                                    {{ order_line_item.unit_price | money }}
+                                {% endif %}
+                                </td>
+                                <td
+                                data-th="{{ 'veda.customer.order.quantity' | t }}"
+                                class="ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                >
+                                {{ order_line_item.quantity }}
+                                </td>
+                                <td
+                                data-th="{{ 'veda.customer.order.total' | t }}"
+                                class="ta:right ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                >
+                                {% if order_line_item.original_price
+                                    and order_line_item.final_price
+                                    and order_line_item.unit_price_measurement
+                                    and order_line_item.final_price
+                                %}
+                                    {% if order_line_item.original_line_price != order_line_item.final_line_price %}
+                                    <dl>
+                                        <dt>
+                                        <span>{{ 'veda.products.product.price.regular_price' | t }}</span>
+                                        </dt>
+                                        <dd class="regular-price">
+                                        <s>{{ order_line_item.original_line_price | money }}</s>
+                                        </dd>
+                                        <dt>
+                                        <span>{{ 'veda.products.product.price.sale_price' | t }}</span>
+                                        </dt>
+                                        <dd>
+                                        <span>{{ order_line_item.final_line_price | money }}</span>
+                                        </dd>
+                                    </dl>
+                                    {% else %}
+                                    {{ order_line_item.original_line_price | money }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ order_line_item.final_line_price | money }}
+                                {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                            <td
+                                colspan="4"
+                                class="d:none!@+md ff:font-secondary fw:500 p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                            >
+                                {{ 'veda.customer.order.subtotal' | t }}
+                            </td>
+                            <td
+                                data-th="{{ 'veda.customer.order.subtotal' | t }}"
+                                class="ta:right ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                            >
+                                {{ order.line_items_subtotal_price | money }}
+                            </td>
+                            </tr>
+                            {% if order.cart_level_discount_applications %}
+                            <tr>
+                                {% for discount_application in order.cart_level_discount_applications %}
+                                <td colspan="4" class="d:none!@+md ff:font-secondary fw:500 p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5">
+                                    {{ 'veda.customer.order.discount' | t }}
+                                    <span class="cart-discount">
+                                    <svg aria-hidden="true" focusable="false" viewBox="0 0 12 12">
+                                        <use href="#icon-discount" />
+                                    </svg>
+                                    {{ discount_application.title }}
+                                    </span>
+                                </td>
+                                <td
+                                    data-th="{{ 'veda.customer.order.discount' | t }}"
+                                    class="ta:right ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                >
+                                    <div>
+                                    <span>-{{ discount_application.total_allocated_amount | money }}</span>
+                                    <span class="cart-discount">
+                                        <svg aria-hidden="true" focusable="false" viewBox="0 0 12 12">
+                                        <use href="#icon-discount" />
+                                        </svg>
+                                        {{ discount_application.title }}
+                                    </span>
+                                    </div>
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            {% endif %}
+                            {% for shipping_method in order.shipping_methods %}
+                            <tr>
+                                <td
+                                colspan="4"
+                                class="d:none!@+md ff:font-secondary fw:500 p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                >
+                                {{ 'veda.customer.order.shipping' | t }} ({{ shipping_method.title }})
+                                </td>
+                                <td
+                                data-th="{{ 'veda.customer.order.shipping' | t }}({{ shipping_method.title }})"
+                                class="ta:right ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                >
+                                {% if shipping_method %}
+                                    {{ shipping_method.price | money }}
+                                {% else %}
+                                    {{ order.shipping_price | money }}
+                                {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for tax_line in order.tax_lines %}
+                            <tr>
+                                <td
+                                class="d:none!@+md ff:font-secondary fw:500 p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                colspan="4"
+                                >
+                                {{ 'veda.customer.order.tax' | t }} ({{ tax_line.title }}
+                                {{ tax_line.rate | times: 100 }}%)
+                                </td>
+                                <td
+                                data-th="{{ 'veda.customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)"
+                                class="ta:right ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                >
+                                {{ tax_line.price | money }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% if order.total_duties %}
+                            <tr>
+                                <td
+                                class="d:none!@+md ff:font-secondary fw:500 p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                colspan="4"
+                                >
+                                {{ 'veda.customer.order.total_duties' | t }}
+                                </td>
+                                <td
+                                data-th="{{ 'veda.customer.order.total_duties' | t }}"
+                                class="ta:right ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                >
+                                {{ order.total_duties | money }}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            <tr class="fz:22px">
+                            <td
+                                class="d:none!@+md ff:font-secondary fw:500 p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                colspan="4"
+                            >
+                                {{ 'veda.customer.order.total' | t }}
+                            </td>
+                            <td
+                                data-th="{{ 'veda.customer.order.total' | t }}"
+                                class="ta:right ff:font-secondary|be fw:500|be p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                colspan="1"
+                            >
+                                {{ order.total_price | money }}
+                            </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div
+                    class="pos:relative w:100%@+md! mih:100% mt:30px@+md fz:15px ff:font-secondary c:color-gray8"
+                    style="width: 25%"
+                >
+                    <h4 class="fw:500 mb:35px">
+                        {{ "veda.customer.order.billing_address" | t }}
+                    </h4>
+                    <div>
+                    <span class="mt:15px">
+                        {{ "veda.customer.order.payment_status" | t }} :
+                    </span>
+                    <span class="mt:15px">
+                        {{ order.financial_status_label }}
+                    </span>
+                    </div>
+                    <div>{{ order.billing_address | format_address }}</div>
+                    <h4 class="fw:500 mt:20px mb:30px">
+                        {{ "veda.customer.order.shipping_address" | t }}
+                    </h4>
+                    <div>
+                    <span class="mt:15px" >
+                        {{ "veda.customer.order.fulfillment_status" | t }} :
+                    </span>
+                    <span class="mt:15px">
+                        {{ order.fulfillment_status_label }}
+                    </span>
+                    </div>
+                    <div>
+                        {{ order.billing_address | format_address }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>

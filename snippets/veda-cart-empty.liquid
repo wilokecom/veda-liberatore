@@ -1,0 +1,121 @@
+<div class="empty-cart-js d:flex fld:column ai:center w:100%">
+		{% for block in section.blocks %}
+			{% assign emptyItem = block.settings %}
+			
+			{% case block.type %}
+				{% when 'empty_data_text' %}
+					<h3 class="mt:50px fz:35px fw:700 c:color-gray9">
+						{{ 'veda.sections.cart.empty' | t }}
+					</h3>
+				{% when 'empty_data_image' %}
+					{% liquid
+						assign imageRadius = ''
+						
+						if emptyItem.VEDA_slider_1
+							assign imageRadius = 'border-radius:' | append: emptyItem.VEDA_slider_1 | append: 'px;'
+						endif
+						
+						assign aspectRatio = 100
+						
+						if emptyItem.VEDA_slider_2
+							assign aspectRatio = emptyItem.VEDA_slider_2
+						endif
+						
+						assign imageWidth = ''
+						
+						if emptyItem.empty_data___width
+							assign imageWidth = 'width:' | append: emptyItem.empty_data___width | append: 'px;'
+						endif
+					%}
+					<div
+						class="veda-image-cover d:block w:250px ov:hidden"
+						style="--aspect-ratio: {{ aspectRatio }};{{ imageRadius }}{{ imageWidth }}"
+					>
+						{% if emptyItem.empty_data___image.src != blank %}
+							<img
+								class="veda-lazyload {{ 'veda-lazyload obf:contain!' }}"
+								src="{{ emptyItem.empty_data___image.src | image_url: width: 10 }}"
+								draggable="false"
+								{% if _alt %}
+									alt="{{ _alt }}"
+								{% else %}
+									alt="image"
+								{% endif %}
+								{% if emptyItem.empty_data___image.width %}
+									data-intrinsic-width="{{ emptyItem.empty_data___image.width }}"
+									width="{{ emptyItem.empty_data___image.width }}"
+								{% endif %}
+								{% if emptyItem.empty_data___image.height %}
+									height="{{ emptyItem.empty_data___image.height }}"
+									data-intrinsic-height="{{ emptyItem.empty_data___image.height }}"
+								{% endif %}
+								{% if _style %}
+									style="{{ _style }}"
+								{% endif %}
+								loading="lazy"
+							>
+						{% else %}
+							{% liquid
+								assign pl = 'lifestyle-1'
+								
+								if _placeholder
+									assign pl = _placeholder
+								endif
+								
+								assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: 'veda-lazyload obf:contain!'
+								
+								if _placeholder_class
+									assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _placeholder_class
+								endif
+							%}
+							{{ pl | placeholder_svg_tag: placeholder_class }}
+						{% endif %}
+					</div>
+				{% when 'empty_data_button' %}
+					{% liquid
+						if emptyItem.empty_data___variant == 'link'
+							assign default_class = 'rs d:inline-block td:none lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s '
+						else
+							assign default_class = 'rs d:inline-block td:none lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+						endif
+						
+						assign default_for_bottom_class = ''
+						
+						case emptyItem.empty_data___variant
+							when 'primary'
+								assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+							when 'secondary'
+								assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+							when 'dark'
+								assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+							when 'gray'
+								assign variant_class = ' bgc:color-gray3 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+							when 'light'
+								assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+							else
+								assign variant_class = ' c:color-gray9 c:color-primary|h'
+						endcase
+					%}
+					
+					<a
+						component="{{ 'empty_data' }}"
+						{% if 'mt:30px' %}
+							class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mt:30px' }}"
+						{% else %}
+							class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+						{% endif %}
+						{% if emptyItem.empty_data___new_tab %}
+							target="_blank"
+						{% endif %}
+						data-css="{{ null }}"
+						href="{{ emptyItem.empty_data___link }}"
+					>
+						<span>
+              {{ "veda.general.continue_shopping" | t }}
+            </span>
+					</a>
+				{% else %}
+			
+			{% endcase %}
+		{% endfor %}
+	</div>

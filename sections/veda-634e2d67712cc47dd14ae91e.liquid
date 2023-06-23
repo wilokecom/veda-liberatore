@@ -1,0 +1,785 @@
+{% assign uniqueId = 'id_e5e42e51-3291-40f9-81fa-288b19bec147' %}
+{% assign builderMode = false %}
+{% assign envatoMode = false %}
+{% liquid
+  if section.settings.VEDA_switch_1
+    assign backgroundFixed = 'fixed'
+  else
+    assign backgroundFixed = 'scroll'
+  endif
+
+  if section.settings.VEDA_select_2 == 'color'
+    assign backgroundColor = 'background-color: ' | append: section.settings.VEDA_color_1 | append: ';'
+  else
+    assign backgroundColor = ''
+  endif
+
+  if section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2
+    assign bgImage = section.settings.VEDA_image_2 | append: '&width=2000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  elsif section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2 == blank
+    assign bgImage = 'https://cdn.shopify.com/s/files/1/0552/5510/5616/files/udxhtnzxtq.png?v=1681903122&width=1000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  else
+    assign backgroundImage = ''
+  endif
+
+  assign sectionPadding = 'padding-top: ' | append: section.settings.VEDA_space_4 | append: 'px;padding-right: ' | append: section.settings.VEDA_space_3 | append: 'px;padding-bottom: ' | append: section.settings.VEDA_space_1 | append: 'px;padding-left: ' | append: section.settings.VEDA_space_2 | append: 'px;'
+
+  if section.settings.VEDA_select_1 == 'full_width'
+    assign containerType = 'container-fluid'
+  else
+    assign containerType = 'container'
+  endif
+
+  if section.settings.VEDA_slider_1 >= 0
+    assign containerGap = 'padding-left: ' | append: section.settings.VEDA_slider_1 | append: 'px; padding-right: ' | append: section.settings.VEDA_slider_1 | append: 'px;'
+  else
+    assign containerGap = ''
+  endif
+
+  if section.settings.section_settings___width >= 0
+    assign containerWidth = 'max-width: ' | append: section.settings.section_settings___width | append: 'px;'
+  else
+    assign containerWidth = ''
+  endif
+
+  if section.settings.VEDA_slider_2 >= 0
+    assign settingGap = section.settings.VEDA_slider_2 | divided_by: 2.0
+
+    assign settingGapVertical = section.settings.VEDA_slider_2
+  else
+    assign settingGap = ''
+
+    assign settingGapVertical = ''
+  endif
+
+  assign colGap = 'margin-top: ' | append: settingGapVertical | append: 'px; padding-left: ' | append: settingGap | append: 'px; padding-right: ' | append: settingGap | append: 'px;'
+
+  assign rowGap = 'margin-top: -' | append: settingGapVertical | append: 'px; margin-left: -' | append: settingGap | append: 'px; margin-right: -' | append: settingGap | append: 'px;'
+
+  assign sectionSeparator = ''
+
+  if section.settings.VEDA_switch_3
+    if section.settings.VEDA_slider_4
+      assign sectionSeparator = sectionSeparator | append: 'border-top: ' | append: section.settings.VEDA_slider_4 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+
+    if section.settings.VEDA_slider_5
+      assign sectionSeparator = sectionSeparator | append: 'border-bottom: ' | append: section.settings.VEDA_slider_5 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+  endif
+
+  if colGap and rowGap and builderMode and envatoMode
+  endif
+%}
+
+{% capture SectionHeading %}
+  {% liquid
+    assign headingPadding = 'padding-top: ' | append: section.settings.heading___padding__top | append: 'px;padding-right: ' | append: section.settings.heading___padding__right | append: 'px;padding-bottom: ' | append: section.settings.VEDA_space_5 | append: 'px;padding-left: ' | append: section.settings.heading___padding__left | append: 'px;'
+
+    assign headingDividerMargin = 'margin-top: ' | append: section.settings.VEDA_space_9 | append: 'px;margin-right: ' | append: section.settings.VEDA_space_8 | append: 'px;margin-bottom: ' | append: section.settings.VEDA_space_6 | append: 'px;margin-left: ' | append: section.settings.VEDA_space_7 | append: 'px;'
+  %}
+  {% if section.settings.heading___enable %}
+    <div
+      class="d:flex fld:column w:100%"
+      style="text-align: {{ section.settings["heading___align"] }};{{ headingPadding }}"
+    >
+      {% if section.settings.heading___title %}
+        <h2
+          class="ff:font-secondary fz:pfs(25px,36px) fw:500"
+          data-css="{{ section.settings["VEDA_styleBox_2"] }}"
+        >
+          {% if section.settings.heading___manual %}
+            {{ section.settings.heading___title }}
+          {% else %}
+            {% if template.name == 'product' %}
+              {% liquid
+                assign current_collection = null
+
+                assign collectionsSize = product.collections | size
+
+                if collection
+                  assign current_collection = collection
+                elsif product and collectionsSize > 0
+                  assign current_collection = product.collections.first
+                endif
+              %}
+              {% if current_collection %}
+                {% if current_collection.handle %}
+                  {{ current_collection.title }}
+                {% endif %}
+              {% endif %}
+              {{ product.title }}
+            {% elsif template.name == 'collection' and collection.handle %}
+              {% if current_tags %}
+                {{ current_tags | join: ' + ' }}
+              {% else %}
+                {{ collection.title }}
+              {% endif %}
+            {% elsif template.name == 'blog' %}
+              {% if current_tags %}
+                {{ current_tags | join: ' + ' }}
+              {% else %}
+                {{ blog.title }}
+              {% endif %}
+            {% elsif template == 'article' %}
+              {{ blog.title }}
+            {% elsif template == 'customers/addresses' %}
+              {{ page_title }}
+            {% elsif template contains 'page' %}
+              {% if page.title != blank %}
+                {{ page.title }}
+              {% else %}
+                {{ page_title }}
+              {% endif %}
+            {% elsif template contains 'search' %}
+              {{ 'veda.general.search.heading' | t: count: search.results_count, terms: search.terms }}
+            {% else %}
+              {{ page_title }}
+            {% endif %}
+          {% endif %}
+        </h2>
+      {% endif %}
+      {% if section.settings.heading___divider != 'none' %}
+        <div
+          class="mt:10px mb:10px fz:0"
+          style="text-align: {{ section.settings["heading___align"] }};{{ headingDividerMargin }}"
+        >
+          {% case section.settings.heading___divider %}
+            {% when 'wave' %}
+              <div class="d:inline-block">
+                <svg
+                  width="56px"
+                  height="7px"
+                  viewBox="0 0 56 7"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  fill="none"
+                >
+                  <g transform="translate(-288.000000, -4390.000000)" class="stk:color-gray3" style="stroke: {{ section.settings["heading___divider_color"] }}">
+                      <g transform="translate(135.000000, 4033.000000)">
+                          <g transform="translate(0.000000, 48.000000)">
+                              <g transform="translate(153.000000, 310.000000)">
+                                  <path d="M0,0 C4.64733427,0 4.65894638,2 9.33333333,2 C14.0077203,2 13.9400367,0 18.6666667,0 C23.3932966,0 23.3301172,2 28,2 C32.6698828,2 32.6447946,0 37.3333333,0 C42.0218721,0 41.9540981,2 46.6666667,2 C51.3792353,2 51.3554302,0 56,0"></path>
+                                  <path d="M0,3 C4.64733427,3 4.65894638,5 9.33333333,5 C14.0077203,5 13.9400367,3 18.6666667,3 C23.3932966,3 23.3301172,5 28,5 C32.6698828,5 32.6447946,3 37.3333333,3 C42.0218721,3 41.9540981,5 46.6666667,5 C51.3792353,5 51.3554302,3 56,3"></path>
+                              </g>
+                          </g>
+                      </g>
+                  </g>
+                </svg>
+              </div>
+            {% when 'mountain' %}
+              <div class="d:inline-block">
+                <svg
+                  width="60px"
+                  height="9px"
+                  viewBox="0 0 60 9"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g transform="translate(-3.000000, -47.000000)" stroke-width="2" class="stk:color-gray3" style="stroke: {{ section.settings["heading___divider_color"] }}">
+                          <g transform="translate(0.000000, 45.000000)">
+                              <polyline points="4 9 9.8 4 15.6 9 21.4 4 27.2 9 33 4 38.8 9 44.6 4 50.4 9 56.2 4 62 9"></polyline>
+                          </g>
+                      </g>
+                  </g>
+                </svg>
+              </div>
+            {% else %}
+              <div
+                class="d:inline-block! w:50px h:2px bgc:color-gray3"
+                style="background-color: {{ section.settings["heading___divider_color"] }}"
+              ></div>
+          {% endcase %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endcapture %}
+{% capture Content %}
+  {% capture separator %}
+    <span
+      aria-hidden="true"
+      class="p:4px fz:10px c:color-gray6"
+      data-css="{{ section.settings["VEDA_styleBox_8"] }}"
+    >
+      {{ section.settings.breadcrumb___separator }}
+    </span>
+  {% endcapture %}
+
+  {% capture home %}
+    <a
+      href="{{ routes.root_url }}"
+      class="p:4px fz:15px c:color-gray9 trs:0.3s"
+      title="{{ section.settings["VEDA_text_1"] }}"
+      data-css="{{ section.settings["VEDA_styleBox_6"] }}"
+    >
+      {{ section.settings.VEDA_text_1 }}
+    </a>
+  {% endcapture %}
+
+  {% if template != 'index' %}
+    <nav
+      role="navigation"
+      aria-label="breadcrumbs"
+    >
+      <div data-css="{{ section.settings["VEDA_styleBox_4"] }}">
+        <div
+          class="d:flex ai:center mih:100% {{ containerType }}"
+          {% if section.settings.VEDA_slider_1
+            or section.settings.VEDA_slider_1 == 0
+            or section.settings.section_settings___width
+            or section.settings.section_settings___width == 0
+          %}
+            style="justify-content: {{ section.settings["VEDA_radioGroup_1"] }}; {{ containerGap }}{{ containerWidth }}"
+          {% else %}
+            style="justify-content: {{ section.settings["VEDA_radioGroup_1"] }};"
+          {% endif %}
+        >
+          {% if template.name != 'product' %}
+            {{ home }}
+          {% endif %}
+
+          {% if template.name == 'product' %}
+            {{ home }}
+            {% liquid
+              assign current_collection = null
+
+              assign collectionsSize = product.collections | size
+
+              if collection
+                assign current_collection = collection
+              elsif product and collectionsSize > 0
+                assign current_collection = product.collections.first
+              endif
+            %}
+            {% if current_collection %}
+              {{ separator }}
+              {% if current_collection.handle %}
+                {% capture url %}/collections/{{ current_collection.handle }}{% endcapture %}
+                <a
+                  href="{{ url }}"
+                  class="p:4px fz:15px c:color-gray9 trs:0.3s"
+                  data-css="{{ section.settings["VEDA_styleBox_6"] }}"
+                >
+                  {{ current_collection.title }}
+                </a>
+              {% endif %}
+            {% endif %}
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+              {{ product.title }}
+            </span>
+          {% elsif template.name == 'collection' and collection.handle %}
+            {{ separator }}
+            {% if current_tags %}
+              {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+              <a
+                href="{{ url }}"
+                class="p:4px fz:15px c:color-gray9 trs:0.3s"
+                data-css="{{ section.settings["VEDA_styleBox_6"] }}"
+              >
+                {{ collection.title }}
+              </a>
+              {{ separator }}
+              <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+                {{ current_tags | join: ' + ' }}
+              </span>
+            {% else %}
+              <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+                {{ collection.title }}
+              </span>
+            {% endif %}
+          {% elsif template.name == 'blog' %}
+            {{ separator }}
+            {% if current_tags %}
+              <a
+                href="{{ blog.url }}"
+                class="p:4px fz:15px c:color-gray9 trs:0.3s"
+                data-css="{{ section.settings["VEDA_styleBox_6"] }}"
+              >
+                {{ blog.title }}
+              </a>
+              {{ separator }}
+              <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+                {{ current_tags | join: ' + ' }}
+              </span>
+            {% else %}
+              <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+                {{ blog.title }}
+              </span>
+            {% endif %}
+          {% elsif template.name == 'article' %}
+            {{ separator }}
+            <a
+              href="{{ blog.url }}"
+              class="p:4px fz:15px c:color-gray9 trs:0.3s"
+              data-css="{{ section.settings["VEDA_styleBox_6"] }}"
+            >
+              {{ blog.title }}
+            </a>
+          {% elsif template.name == 'customers/addresses' %}
+            {{ separator }}
+            <a
+              href="{{ routes.account_url }}"
+              class="p:4px fz:15px c:color-gray9 trs:0.3s"
+              data-css="{{ section.settings["VEDA_styleBox_6"] }}"
+            >
+              {{ section.settings.VEDA_text_2 }}
+            </a>
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+              {{ page_title }}
+            </span>
+          {% elsif template contains 'page' %}
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+              {% if page.title != blank %}
+                {{ page.title }}
+              {% else %}
+                {{ page_title }}
+              {% endif %}
+            </span>
+          {% elsif template contains 'search' %}
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+              {{ 'veda.general.search.heading' | t: count: search.results_count, terms: search.terms }}
+            </span>
+          {% else %}
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+              {{ page_title }}
+            </span>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+  {% endif %}
+{% endcapture %}
+
+{% capture BackgroundVideoAndOverlay %}
+  {% if section.settings.VEDA_select_2 == 'video' and section.settings.VEDA_video_1 %}
+    <div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+  {% endif %}
+  {% if section.settings.VEDA_switch_2 %}
+    <div
+      class="pos:absolute ins:0 z:-1"
+      style="background-color: {{ section.settings["VEDA_color_2"] }};backdrop-filter: blur({{ section.settings["VEDA_slider_3"] }}px)"
+    ></div>
+  {% endif %}
+{% endcapture %}
+
+<section
+  data-id="{{ uniqueId }}"
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center"
+  style="{{ backgroundColor }}{{ backgroundImage }}{{ sectionPadding }}{{ sectionSeparator }}"
+>
+  <div
+    class="{{ containerType }}"
+    {% if section.settings.VEDA_slider_1
+      or section.settings.VEDA_slider_1 == 0
+      or section.settings.section_settings___width
+      or section.settings.section_settings___width == 0
+    %}
+      style="{{ containerGap }}{{ containerWidth }}"
+    {% endif %}
+  >
+    {{ SectionHeading }}
+  </div>
+  {{ Content }}
+  {% if section.settings.VEDA_select_2 == 'video' and section.settings.VEDA_video_1 %}
+    <div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+  {% endif %}
+  {% if section.settings.VEDA_switch_2 %}
+    <div
+      class="pos:absolute ins:0 z:-1"
+      style="background-color: {{ section.settings["VEDA_color_2"] }};backdrop-filter: blur({{ section.settings["VEDA_slider_3"] }}px)"
+    ></div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Breadcrumb 2",
+  "blocks": [],
+  "settings": [
+    {
+      "label": "Section Settings > Container Width",
+      "id": "VEDA_select_1",
+      "type": "select",
+      "default": "boxed",
+      "options": [
+        {
+          "label": "Boxed",
+          "value": "boxed"
+        },
+        {
+          "label": "Full Width",
+          "value": "full_width"
+        },
+        {
+          "label": "Manual",
+          "value": "manual"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Width",
+      "id": "section_settings___width",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Gap",
+      "id": "VEDA_slider_1",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Column Gap",
+      "id": "VEDA_slider_2",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Background Type",
+      "id": "VEDA_select_2",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "Image",
+          "value": "image"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Video",
+          "value": "video"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_1",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_image_2",
+      "label": "Background Image"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_3",
+      "label": "Background Image"
+    },
+    {
+      "label": "Section Settings > Background Color",
+      "id": "VEDA_color_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Video",
+      "id": "VEDA_video_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Fixed",
+      "id": "VEDA_switch_1",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Size",
+      "id": "VEDA_select_3",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Enable Background Overlay",
+      "id": "VEDA_switch_2",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Overlay Color",
+      "id": "VEDA_color_2",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Overlay Blur",
+      "id": "VEDA_slider_3",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Separator",
+      "id": "VEDA_switch_3",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Separator Top",
+      "id": "VEDA_slider_4",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Bottom",
+      "id": "VEDA_slider_5",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Color",
+      "id": "VEDA_color_3",
+      "type": "text",
+      "default": "var(--color-gray2)"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_1",
+      "label": "Section Settings > Padding > Bottom"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_2",
+      "label": "Section Settings > Padding > Left"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_3",
+      "label": "Section Settings > Padding > Right"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_4",
+      "label": "Section Settings > Padding > Top"
+    },
+    {
+      "label": "Heading > Enable",
+      "id": "heading___enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Heading > Manual",
+      "id": "heading___manual",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Heading > Title",
+      "id": "heading___title",
+      "type": "liquid"
+    },
+    {
+      "label": "Heading > Divider",
+      "id": "heading___divider",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "None",
+          "value": "none"
+        },
+        {
+          "label": "Line",
+          "value": "line"
+        },
+        {
+          "label": "Wave",
+          "value": "wave"
+        },
+        {
+          "label": "Mountain",
+          "value": "mountain"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Heading > Design"
+    },
+    {
+      "label": "Heading > Align",
+      "id": "heading___align",
+      "type": "radio",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_1",
+      "info": "Please DON'T edit this field.",
+      "label": "Heading > Title Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_2",
+      "info": "Please DON'T edit this field.",
+      "label": "Heading > Title Design > Id"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_5",
+      "label": "Heading > Padding > Bottom"
+    },
+    {
+      "type": "number",
+      "id": "heading___padding__left",
+      "label": "Heading > Padding > Left"
+    },
+    {
+      "type": "number",
+      "id": "heading___padding__right",
+      "label": "Heading > Padding > Right"
+    },
+    {
+      "type": "number",
+      "id": "heading___padding__top",
+      "label": "Heading > Padding > Top"
+    },
+    {
+      "type": "header",
+      "content": "Heading > Divider Design"
+    },
+    {
+      "label": "Heading > Divider Color",
+      "id": "heading___divider_color",
+      "type": "text"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_6",
+      "label": "Heading > Divider Margin > Bottom"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_7",
+      "label": "Heading > Divider Margin > Left"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_8",
+      "label": "Heading > Divider Margin > Right"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_9",
+      "label": "Heading > Divider Margin > Top"
+    },
+    {
+      "label": "Breadcrumb > Home Page Title",
+      "id": "VEDA_text_1",
+      "type": "liquid",
+      "default": "{{ 'veda.general.breadcrumbs.home' | t }}"
+    },
+    {
+      "label": "Breadcrumb > Customer Page Title",
+      "id": "VEDA_text_2",
+      "type": "liquid",
+      "default": "{{ 'veda.customer.account.page_title' | t }}"
+    },
+    {
+      "label": "Breadcrumb > Separator",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "breadcrumb___separator",
+      "type": "html",
+      "default": "<i class=\"far fa-chevron-right\"></i>"
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumb > Design"
+    },
+    {
+      "label": "Breadcrumb > Align",
+      "id": "VEDA_radioGroup_1",
+      "type": "radio",
+      "default": "flex-start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "flex-start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "flex-end"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_3",
+      "info": "Please DON'T edit this field.",
+      "label": "Breadcrumb > Breadcrumb > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_4",
+      "info": "Please DON'T edit this field.",
+      "label": "Breadcrumb > Breadcrumb > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_5",
+      "info": "Please DON'T edit this field.",
+      "label": "Breadcrumb > Item > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_6",
+      "info": "Please DON'T edit this field.",
+      "label": "Breadcrumb > Item > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_7",
+      "info": "Please DON'T edit this field.",
+      "label": "Breadcrumb > Separator > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_8",
+      "info": "Please DON'T edit this field.",
+      "label": "Breadcrumb > Separator > Id"
+    }
+  ],
+  "tag": "div"
+}
+{% endschema %}

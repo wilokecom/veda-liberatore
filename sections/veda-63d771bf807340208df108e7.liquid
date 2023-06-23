@@ -1,0 +1,1226 @@
+{% assign uniqueId = 'id_6af92ae0-b33b-47ce-87b5-94ec8ada0767' %}
+{% assign builderMode = false %}
+{% assign envatoMode = false %}
+{% liquid
+  if section.settings.VEDA_switch_1
+    assign backgroundFixed = 'fixed'
+  else
+    assign backgroundFixed = 'scroll'
+  endif
+
+  if section.settings.VEDA_select_1 == 'color'
+    assign backgroundColor = 'background-color: ' | append: section.settings.VEDA_color_1 | append: ';'
+  else
+    assign backgroundColor = ''
+  endif
+
+  if section.settings.VEDA_select_1 == 'image' and section.settings.VEDA_image_2
+    assign bgImage = section.settings.VEDA_image_2 | append: '&width=2000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_2 | append: ';'
+  elsif section.settings.VEDA_select_1 == 'image' and section.settings.VEDA_image_2 == blank
+    assign bgImage = 'https://cdn.shopify.com/s/files/1/0552/5510/5616/files/udxhtnzxtq.png?v=1681903122&width=1000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_2 | append: ';'
+  else
+    assign backgroundImage = ''
+  endif
+
+  assign sectionPadding = 'padding-top: ' | append: section_settings.padding.top | append: 'px;padding-right: ' | append: section_settings.padding.right | append: 'px;padding-bottom: ' | append: section_settings.padding.bottom | append: 'px;padding-left: ' | append: section_settings.padding.left | append: 'px;'
+
+  if section_settings.container_width == 'full_width'
+    assign containerType = 'container-fluid'
+  else
+    assign containerType = 'container'
+  endif
+
+  if section_settings.container_gap >= 0
+    assign containerGap = 'padding-left: ' | append: section_settings.container_gap | append: 'px; padding-right: ' | append: section_settings.container_gap | append: 'px;'
+  else
+    assign containerGap = ''
+  endif
+
+  if section_settings.width >= 0
+    assign containerWidth = 'max-width: ' | append: section_settings.width | append: 'px;'
+  else
+    assign containerWidth = ''
+  endif
+
+  if section_settings.column_gap >= 0
+    assign settingGap = section_settings.column_gap | divided_by: 2.0
+
+    assign settingGapVertical = section_settings.column_gap
+  else
+    assign settingGap = ''
+
+    assign settingGapVertical = ''
+  endif
+
+  assign colGap = 'margin-top: ' | append: settingGapVertical | append: 'px; padding-left: ' | append: settingGap | append: 'px; padding-right: ' | append: settingGap | append: 'px;'
+
+  assign rowGap = 'margin-top: -' | append: settingGapVertical | append: 'px; margin-left: -' | append: settingGap | append: 'px; margin-right: -' | append: settingGap | append: 'px;'
+
+  assign sectionSeparator = ''
+
+  if section_settings.enable_separator
+    if section_settings.separator_top
+      assign sectionSeparator = sectionSeparator | append: 'border-top: ' | append: section_settings.separator_top | append: 'px solid ' | append: section_settings.separator_color | append: ';'
+    endif
+
+    if section_settings.separator_bottom
+      assign sectionSeparator = sectionSeparator | append: 'border-bottom: ' | append: section_settings.separator_bottom | append: 'px solid ' | append: section_settings.separator_color | append: ';'
+    endif
+  endif
+
+  if colGap and rowGap and builderMode and envatoMode
+  endif
+%}
+
+{% capture Videos %}
+  <div class="veda-videos-{{ uniqueId }}-js">
+    {% for block in section.blocks %}
+      {% assign videoItem = block.settings %}
+
+      {% if videoItem.content___enable and block.type == 'content_video' %}
+        <div
+          data-video-id="{{ videoItem.id }}"
+          class="veda-video-js pos:fixed t:0 l:0 w:100% h:100% z:999999 d:flex ai:center jc:center v:hidden"
+        >
+          <div class="veda-video-overlay-js pos:absolute ins:0 z:-1 bgc:color-gray9.4"></div>
+          <div class="veda-video-content-js trf:scale(0.5) op:0 trs:0.3s w:100% p:10px_45px_10px_10px maw:1300px">
+            <div class="pos:relative bgc:color-light">
+              <div class="veda-video-close-js pos:absolute t:0 l:100% ml:5px w:30px h:30px bgc:color-light c:color-gray9 fz:22px d:flex ai:center jc:center cur:pointer">
+                <i class="fal fa-times"></i>
+              </div>
+              <div
+                class="veda-embed-responsive veda-embed-js"
+                {% if videoItem.content___auto_play %}
+                  data-src="{{ videoItem.content___video_url }}?autoplay=1&mute=1"
+                {% else %}
+                  data-src="{{ videoItem.content___video_url }}"
+                {% endif %}
+              ></div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+<section
+  data-id="{{ uniqueId }}"
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center us:none ov:hidden"
+  style="{{ backgroundColor }}{{ backgroundImage }}"
+>
+  <div class="inner-js pos:absolute t:50% l:50% trf:translate(-50%,-50%) w:20%">
+    {% for block in section.blocks %}
+      {% assign item = block.settings %}
+
+      {% if item.content___enable %}
+        {% assign compCss = '' %}
+        {% if item.component_design %}
+          {% assign compCss = item.VEDA_styleBox_1 %}
+        {% endif %}
+        {% assign designDecode = compCss | base64_decode %}
+        {% assign fixAlign = 'flex-start' %}
+        {% if designDecode contains "'text-align':'center'" %}
+          {% assign fixAlign = 'center' %}
+        {% elsif designDecode contains "'text-align':'right'" %}
+          {% assign fixAlign = 'flex-end' %}
+        {% endif %}
+        {% case block.type %}
+          {% when 'content_title' %}
+            <div
+              data-item-id="{{ item.id }}"
+              class="veda-transformable pos:absolute t:40% l:20px d:inline-flex fz:26px fw:500 ff:font-secondary c:color-gray9"
+              data-css="{{ item.VEDA_styleBox_2 }}"
+              style="top: {{ item.content___top }}; left: {{ item.content___left }}; width: {{ item.content___width }}; height: {{ item.content___height }}; transform: rotate({{ item.content___rotate }}); justify-content: {{ fixAlign }}"
+            >
+              <span
+                class="veda-textfit w:fit-content h:fit-content op:0"
+                style="font-size: {{ item.content___font_size }}"
+              >
+                {{ item.content___title }}
+              </span>
+            </div>
+          {% when 'content_text' %}
+            <div
+              data-item-id="{{ item.id }}"
+              class="veda-transformable pos:absolute t:40% l:20px d:inline-flex fz:16px"
+              data-css="{{ item.VEDA_styleBox_2 }}"
+              style="top: {{ item.content___top }}; left: {{ item.content___left }}; width: {{ item.content___width }}; height: {{ item.content___height }}; transform: rotate({{ item.content___rotate }}); justify-content: {{ fixAlign }}"
+            >
+              <span
+                class="veda-textfit w:fit-content h:fit-content op:0"
+                style="font-size: {{ item.content___font_size }}"
+              >
+                {{ item.content___text }}
+              </span>
+            </div>
+          {% when 'content_icon' %}
+            <div
+              data-item-id="{{ item.id }}"
+              class="veda-transformable pos:absolute t:40% l:20px d:inline-flex fz:30px"
+              data-css="{{ item.VEDA_styleBox_2 }}"
+              style="top: {{ item.content___top }}; left: {{ item.content___left }}; width: {{ item.content___width }}; height: {{ item.content___height }}; transform: rotate({{ item.content___rotate }}); justify-content: {{ fixAlign }}"
+            >
+              <span
+                class="veda-textfit w:fit-content h:fit-content op:0 fz:inherit*i"
+                style="font-size: {{ item.content___font_size }}"
+              >
+                {{ item.content___icon }}
+              </span>
+            </div>
+          {% when 'content_shape' %}
+            <div
+              data-item-id="{{ item.id }}"
+              class="veda-transformable pos:absolute t:40% l:20px w:200px h:200px d:inline-block ov:hidden"
+              data-css="{{ item.VEDA_styleBox_2 }}"
+              style="top: {{ item.content___top }}; left: {{ item.content___left }}; width: {{ item.content___width }}; height: {{ item.content___height }}; transform: rotate({{ item.content___rotate }})"
+            >
+              <div
+                {% if item.content___shape == 'square' %}
+                  class="bgc:color-primary bgz:cover bgp:center w:100% h:100%"
+                  style="background-color: {{ item.content___color }}; background-image: url('{{ item.VEDA_image_5 }}')"
+                {% elsif item.content___shape == 'circle' %}
+                  class="bgc:color-primary bgz:cover bgp:center w:100% h:100% bdrs:50%"
+                  style="background-color: {{ item.content___color }}; background-image: url('{{ item.VEDA_image_5 }}')"
+                {% elsif item.content___shape == 'triangle' %}
+                  class="bgc:color-primary bgz:cover bgp:center w:100% h:100%"
+                  style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%); background-color: {{ item.content___color }}; background-image: url('{{ item.VEDA_image_5 }}')"
+                {% elsif item.content___shape == 'trapezoid' %}
+                  class="bgc:color-primary bgz:cover bgp:center w:100% h:100%"
+                  style="clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); background-color: {{ item.content___color }}; background-image: url('{{ item.VEDA_image_5 }}')"
+                {% elsif item.content___shape == 'parallelogram' %}
+                  class="bgc:color-primary bgz:cover bgp:center w:100% h:100%"
+                  style="clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%); background-color: {{ item.content___color }}; background-image: url('{{ item.VEDA_image_5 }}')"
+                {% elsif item.content___shape == 'pentagon' %}
+                  class="bgc:color-primary bgz:cover bgp:center w:100% h:100%"
+                  style="clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); background-color: {{ item.content___color }}; background-image: url('{{ item.VEDA_image_5 }}')"
+                {% elsif item.content___shape == 'hexagon' %}
+                  class="bgc:color-primary bgz:cover bgp:center w:100% h:100%"
+                  style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); background-color: {{ item.content___color }}; background-image: url('{{ item.VEDA_image_5 }}')"
+                {% elsif item.content___shape == 'heptagon' %}
+                  class="bgc:color-primary bgz:cover bgp:center w:100% h:100%"
+                  style="clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%); background-color: {{ item.content___color }}; background-image: url('{{ item.VEDA_image_5 }}')"
+                {% endif %}
+              ></div>
+            </div>
+          {% when 'content_image' %}
+            <div
+              data-item-id="{{ item.id }}"
+              class="veda-transformable pos:absolute t:40% l:20px d:inline-block w:200px h:200px ov:hidden"
+              data-css="{{ item.VEDA_styleBox_2 }}"
+              style="top: {{ item.content___top }}; left: {{ item.content___left }}; width: {{ item.content___width }}; height: {{ item.content___height }}; transform: rotate({{ item.content___rotate }})"
+            >
+              <a draggable="false" class="d:block w:100% h:100%" href="{{ item.content___link }}">
+                {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+                {% if item.content___image__src != blank %}
+                  <img
+                    class="veda-lazyload {{ 'w:100% h:100% obf:cover' }}"
+                    src="{{ item.content___image__src | append: '&width=10' }}"
+                    draggable="false"
+                    {% if _alt %}
+                      alt="{{ _alt }}"
+                    {% else %}
+                      alt="image"
+                    {% endif %}
+                    {% if item.content___image__width %}
+                      data-intrinsic-width="{{ item.content___image__width }}"
+                      width="{{ item.content___image__width }}"
+                    {% endif %}
+                    {% if item.content___image__height %}
+                      height="{{ item.content___image__height }}"
+                      data-intrinsic-height="{{ item.content___image__height }}"
+                    {% endif %}
+                    {% if _style %}
+                      style="{{ _style }}"
+                    {% endif %}
+                    loading="lazy"
+                  >
+                {% else %}
+                  {% liquid
+                    assign pl = 'lifestyle-1'
+
+                    if _placeholder
+                      assign pl = _placeholder
+                    endif
+
+                    assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: 'w:100% h:100% obf:cover'
+
+                    if _placeholder_class
+                      assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _placeholder_class
+                    endif
+                  %}
+                  {{ pl | placeholder_svg_tag: placeholder_class }}
+                {% endif %}
+                {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+              </a>
+            </div>
+          {% when 'content_countdown' %}
+            <div
+              data-item-id="{{ item.id }}"
+              class="veda-transformable pos:absolute t:40% l:20px d:inline-block w:500px h:200px"
+              data-css="{{ item.VEDA_styleBox_2 }}"
+              style="top: {{ item.content___top }}; left: {{ item.content___left }}; width: {{ item.content___width }}; height: {{ item.content___height }}; transform: rotate({{ item.content___rotate }})"
+            >
+              {% assign widthNumber = 1 %}
+              {% if item.content___width %}
+                {% assign widthNumber = item.content___width | replace: '%', '' %}
+              {% endif %}
+              {% assign labelClass = 'd:flex ai:center jc:center w:100% h:40% c:color-gray3 p:2px p:5px_10%@sm' %}
+              {% assign numberClass = 'd:flex ai:center jc:center w:100% h:60% fz:inherit c:color-light p:2px p:5px_10%@sm' %}
+              {% capture labelSize %}font-size: calc({{ widthNumber }} / 2 * 1%){% endcapture %}
+              <div
+                class="veda-countdown d:flex ff:font-secondary h:100%"
+                data-options="{ timestamp: {{ item.content___deadline }} }"
+              >
+                <div
+                  class="flx:1 d:flex fld:column w:25% m:3px ta:center h:100% bgc:color-gray9"
+                  data-css="{{ item.VEDA_styleBox_4 }}"
+                >
+                  <span
+                    class="{{ labelClass }}"
+                    data-css="{{ item.VEDA_styleBox_6 }}"
+                    style="order: {{ item.VEDA_flexOrder_1 }}"
+                  >
+                    <span class="veda-textfit op:0">{{ 'veda.general.days' | t }}</span>
+                  </span>
+                  <span
+                    class="{{ numberClass }}"
+                    data-css="{{ item.VEDA_styleBox_8 }}"
+                    style="order: {{ item.VEDA_flexOrder_2 }}"
+                  >
+                    <span class="veda-countdown__days veda-textfit op:0"></span>
+                  </span>
+                </div>
+                <div
+                  class="flx:1 d:flex fld:column w:25% m:3px ta:center h:100% bgc:color-gray9"
+                  data-css="{{ item.VEDA_styleBox_4 }}"
+                >
+                  <span
+                    class="{{ labelClass }}"
+                    data-css="{{ item.VEDA_styleBox_6 }}"
+                    style="order: {{ item.VEDA_flexOrder_1 }}"
+                  >
+                    <span class="veda-textfit op:0">{{ 'veda.general.hours' | t }}</span>
+                  </span>
+                  <span
+                    class="{{ numberClass }}"
+                    data-css="{{ item.VEDA_styleBox_8 }}"
+                    style="order: {{ item.VEDA_flexOrder_2 }}"
+                  >
+                    <span class="veda-countdown__hours veda-textfit op:0"></span>
+                  </span>
+                </div>
+                <div
+                  class="flx:1 d:flex fld:column w:25% m:3px ta:center h:100% bgc:color-gray9"
+                  data-css="{{ item.VEDA_styleBox_4 }}"
+                >
+                  <span
+                    class="{{ labelClass }}"
+                    data-css="{{ item.VEDA_styleBox_6 }}"
+                    style="order: {{ item.VEDA_flexOrder_1 }}"
+                  >
+                    <span class="veda-textfit op:0">{{ 'veda.general.minutes' | t }}</span>
+                  </span>
+                  <span
+                    class="{{ numberClass }}"
+                    data-css="{{ item.VEDA_styleBox_8 }}"
+                    style="order: {{ item.VEDA_flexOrder_2 }}"
+                  >
+                    <span class="veda-countdown__minutes veda-textfit op:0"></span>
+                  </span>
+                </div>
+                <div
+                  class="flx:1 d:flex fld:column w:25% m:3px ta:center h:100% bgc:color-gray9"
+                  data-css="{{ item.VEDA_styleBox_4 }}"
+                >
+                  <span
+                    class="{{ labelClass }}"
+                    data-css="{{ item.VEDA_styleBox_6 }}"
+                    style="order: {{ item.VEDA_flexOrder_1 }}"
+                  >
+                    <span class="veda-textfit op:0">{{ 'veda.general.seconds' | t }}</span>
+                  </span>
+                  <span
+                    class="{{ numberClass }}"
+                    data-css="{{ item.VEDA_styleBox_8 }}"
+                    style="order: {{ item.VEDA_flexOrder_2 }}"
+                  >
+                    <span class="veda-countdown__seconds veda-textfit op:0"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          {% when 'content_button' %}
+            <a
+              draggable="false"
+              data-item-id="{{ item.id }}"
+              class="veda-transformable pos:absolute t:40% l:20px d:inline-flex ai:center jc:center fz:26px fw:500 ff:font-secondary bgc:color-primary c:color-light-freeze c:color-light-freeze|h pt:pfs(5px,15px) pr:pfs(10px,20px) pb:pfs(5px,15px) pl:pfs(10px,20px) ta:center"
+              href="{{ item.content___link }}"
+              data-css="{{ item.VEDA_styleBox_2 }}"
+              style="top: {{ item.content___top }}; left: {{ item.content___left }}; width: {{ item.content___width }}; height: {{ item.content___height }}; transform: rotate({{ item.content___rotate }})"
+            >
+              <span class="veda-textfit op:0" style="font-size: {{ item.content___font_size }}">
+                {{ item.content___button_text }}
+              </span>
+            </a>
+          {% when 'content_video' %}
+            <div
+              data-item-id="{{ item.id }}"
+              class="veda-video-content-js veda-transformable pos:absolute t:40% l:20px d:inline-block w:300px h:168px"
+              data-css="{{ item.VEDA_styleBox_2 }}"
+              style="top: {{ item.content___top }}; left: {{ item.content___left }}; width: {{ item.content___width }}; height: {{ item.content___height }}; transform: rotate({{ item.content___rotate }})"
+            >
+              {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+              {% if item.content___image__src != blank %}
+                <img
+                  class="veda-lazyload {{ 'w:100% h:100% obf:cover' }}"
+                  src="{{ item.content___image__src | append: '&width=10' }}"
+                  draggable="false"
+                  {% if _alt %}
+                    alt="{{ _alt }}"
+                  {% else %}
+                    alt="image"
+                  {% endif %}
+                  {% if item.content___image__width %}
+                    data-intrinsic-width="{{ item.content___image__width }}"
+                    width="{{ item.content___image__width }}"
+                  {% endif %}
+                  {% if item.content___image__height %}
+                    height="{{ item.content___image__height }}"
+                    data-intrinsic-height="{{ item.content___image__height }}"
+                  {% endif %}
+                  {% if _style %}
+                    style="{{ _style }}"
+                  {% endif %}
+                  loading="lazy"
+                >
+              {% else %}
+                {% liquid
+                  assign pl = 'lifestyle-1'
+
+                  if _placeholder
+                    assign pl = _placeholder
+                  endif
+
+                  assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: 'w:100% h:100% obf:cover'
+
+                  if _placeholder_class
+                    assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _placeholder_class
+                  endif
+                %}
+                {{ pl | placeholder_svg_tag: placeholder_class }}
+              {% endif %}
+              {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+              <div class="pos:absolute ins:0 z:9 d:flex fld:column ai:center jc:center ta:center bgc:color-gray9-freeze.2">
+                <div
+                  data-button-video-id="{{ item.id }}"
+                  data-css="{{ item.VEDA_styleBox_10 }}"
+                  class="veda-video-button-js pos:relative d:flex ai:center jc:center miw:40px w:15% maw:80px bgc:color-light-freeze.3 c:color-light-freeze bdrs:50% fz:18px cur:pointer"
+                >
+                  <div class="pt:100%"></div>
+                  <div class="pos:absolute t:50% l:50% trf:translate(-50%,-50%)">
+                    <i class="fas fa-play"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% else %}
+
+        {% endcase %}
+      {% endif %}
+    {% endfor %}
+    <div class="pt:100%"></div>
+  </div>
+  <div class="pe:none" style="padding-top: {{ section.settings["aspect_ratio"] }}%"></div>
+  {% if section.settings.VEDA_select_1 == 'video' and section.settings.VEDA_video_1 %}
+    <div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+  {% endif %}
+  {% if section.settings.VEDA_switch_2 %}
+    <div
+      class="pos:absolute ins:0 z:-1"
+      style="background-color: {{ section.settings["VEDA_color_2"] }};backdrop-filter: blur({{ section.settings["VEDA_slider_1"] }}px)"
+    ></div>
+  {% endif %}
+
+  {% if builderMode and section.settings.enable_grid %}
+    <div class="pos:absolute t:0 l:50% trf:translateX(-50%) h:100% pe:none container">
+      <div class="row row-cols-12 h:100%">
+        {% for i in (1..12) %}
+          <div class="col h:100%">
+            <div class="h:100% bdl:1px_solid_#60f9ef bdr:1px_solid_#60f9ef"></div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+  {{ Videos }}
+</section>
+{% schema %}
+{
+  "name": "Banner jewelry 4",
+  "blocks": [
+    {
+      "type": "content_title",
+      "name": "Content > Title",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Title",
+          "id": "content___title",
+          "type": "liquid",
+          "default": "Title"
+        },
+        {
+          "type": "header",
+          "content": "Content > Design"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        },
+        {
+          "label": "Content > Top",
+          "id": "content___top",
+          "type": "text"
+        },
+        {
+          "label": "Content > Left",
+          "id": "content___left",
+          "type": "text"
+        },
+        {
+          "label": "Content > Width",
+          "id": "content___width",
+          "type": "text"
+        },
+        {
+          "label": "Content > Height",
+          "id": "content___height",
+          "type": "text"
+        },
+        {
+          "label": "Content > Rotate",
+          "id": "content___rotate",
+          "type": "text"
+        },
+        {
+          "label": "Content > Font Size",
+          "id": "content___font_size",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "content_text",
+      "name": "Content > Text",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Text",
+          "id": "content___text",
+          "type": "liquid",
+          "default": "<p>Lorem ipsum dolor sit amet</p>"
+        },
+        {
+          "type": "header",
+          "content": "Content > Design"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        },
+        {
+          "label": "Content > Top",
+          "id": "content___top",
+          "type": "text"
+        },
+        {
+          "label": "Content > Left",
+          "id": "content___left",
+          "type": "text"
+        },
+        {
+          "label": "Content > Width",
+          "id": "content___width",
+          "type": "text"
+        },
+        {
+          "label": "Content > Height",
+          "id": "content___height",
+          "type": "text"
+        },
+        {
+          "label": "Content > Rotate",
+          "id": "content___rotate",
+          "type": "text"
+        },
+        {
+          "label": "Content > Font Size",
+          "id": "content___font_size",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "content_image",
+      "name": "Content > Image",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "type": "number",
+          "id": "content___image__height",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "content___image__src",
+          "label": "Image"
+        },
+        {
+          "type": "number",
+          "id": "content___image__width",
+          "label": "Image"
+        },
+        {
+          "label": "Content > Link",
+          "id": "content___link",
+          "type": "url"
+        },
+        {
+          "type": "header",
+          "content": "Content > Design"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        },
+        {
+          "label": "Content > Top",
+          "id": "content___top",
+          "type": "text"
+        },
+        {
+          "label": "Content > Left",
+          "id": "content___left",
+          "type": "text"
+        },
+        {
+          "label": "Content > Width",
+          "id": "content___width",
+          "type": "text"
+        },
+        {
+          "label": "Content > Height",
+          "id": "content___height",
+          "type": "text"
+        },
+        {
+          "label": "Content > Rotate",
+          "id": "content___rotate",
+          "type": "text"
+        },
+        {
+          "label": "Content > Font Size",
+          "id": "content___font_size",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "content_button",
+      "name": "Content > Button",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Text",
+          "id": "content___button_text",
+          "type": "liquid",
+          "default": "Button"
+        },
+        {
+          "label": "Content > Link",
+          "id": "content___link",
+          "type": "url"
+        },
+        {
+          "type": "header",
+          "content": "Content > Design"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        },
+        {
+          "label": "Content > Top",
+          "id": "content___top",
+          "type": "text"
+        },
+        {
+          "label": "Content > Left",
+          "id": "content___left",
+          "type": "text"
+        },
+        {
+          "label": "Content > Width",
+          "id": "content___width",
+          "type": "text"
+        },
+        {
+          "label": "Content > Height",
+          "id": "content___height",
+          "type": "text"
+        },
+        {
+          "label": "Content > Rotate",
+          "id": "content___rotate",
+          "type": "text"
+        },
+        {
+          "label": "Content > Font Size",
+          "id": "content___font_size",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "content_icon",
+      "name": "Content > Icon",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Icon",
+          "info": "[Get icon](https://fontawesome.com/v5/search)",
+          "id": "content___icon",
+          "type": "html",
+          "default": "<i class=\"far fa-atom\"></i>"
+        },
+        {
+          "type": "header",
+          "content": "Content > Design"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        },
+        {
+          "label": "Content > Top",
+          "id": "content___top",
+          "type": "text"
+        },
+        {
+          "label": "Content > Left",
+          "id": "content___left",
+          "type": "text"
+        },
+        {
+          "label": "Content > Width",
+          "id": "content___width",
+          "type": "text"
+        },
+        {
+          "label": "Content > Height",
+          "id": "content___height",
+          "type": "text"
+        },
+        {
+          "label": "Content > Rotate",
+          "id": "content___rotate",
+          "type": "text"
+        },
+        {
+          "label": "Content > Font Size",
+          "id": "content___font_size",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "content_shape",
+      "name": "Content > Shape",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Shape",
+          "id": "content___shape",
+          "type": "select",
+          "default": "square",
+          "options": [
+            {
+              "label": "Square",
+              "value": "square"
+            },
+            {
+              "label": "Circle",
+              "value": "circle"
+            },
+            {
+              "label": "Triangle",
+              "value": "triangle"
+            },
+            {
+              "label": "Trapezoid",
+              "value": "trapezoid"
+            },
+            {
+              "label": "Parallelogram",
+              "value": "parallelogram"
+            },
+            {
+              "label": "Pentagon",
+              "value": "pentagon"
+            },
+            {
+              "label": "Hexagon",
+              "value": "hexagon"
+            },
+            {
+              "label": "Heptagon",
+              "value": "heptagon"
+            }
+          ]
+        },
+        {
+          "label": "Content > Color",
+          "id": "content___color",
+          "type": "text"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_image_4",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_image_5",
+          "label": "Image"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_image_6",
+          "label": "Image"
+        },
+        {
+          "type": "header",
+          "content": "Content > Design"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        },
+        {
+          "label": "Content > Top",
+          "id": "content___top",
+          "type": "text"
+        },
+        {
+          "label": "Content > Left",
+          "id": "content___left",
+          "type": "text"
+        },
+        {
+          "label": "Content > Width",
+          "id": "content___width",
+          "type": "text"
+        },
+        {
+          "label": "Content > Height",
+          "id": "content___height",
+          "type": "text"
+        },
+        {
+          "label": "Content > Rotate",
+          "id": "content___rotate",
+          "type": "text"
+        },
+        {
+          "label": "Content > Font Size",
+          "id": "content___font_size",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "content_countdown",
+      "name": "Content > Countdown",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Deadline",
+          "id": "content___deadline",
+          "type": "text",
+          "default": "1707357881000"
+        },
+        {
+          "type": "header",
+          "content": "Content > Design"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_3",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Item > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_4",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Item > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_5",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Label > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_6",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Label > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_7",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Count > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_8",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Count > Id"
+        },
+        {
+          "type": "text",
+          "default": "0",
+          "id": "VEDA_flexOrder_1",
+          "label": "Content > Sortable > Label"
+        },
+        {
+          "type": "text",
+          "default": "1",
+          "id": "VEDA_flexOrder_2",
+          "label": "Content > Sortable > Count"
+        },
+        {
+          "label": "Content > Top",
+          "id": "content___top",
+          "type": "text"
+        },
+        {
+          "label": "Content > Left",
+          "id": "content___left",
+          "type": "text"
+        },
+        {
+          "label": "Content > Width",
+          "id": "content___width",
+          "type": "text"
+        },
+        {
+          "label": "Content > Height",
+          "id": "content___height",
+          "type": "text"
+        },
+        {
+          "label": "Content > Rotate",
+          "id": "content___rotate",
+          "type": "text"
+        },
+        {
+          "label": "Content > Font Size",
+          "id": "content___font_size",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "content_video",
+      "name": "Content > Video",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "type": "number",
+          "id": "content___image__height",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "content___image__src",
+          "label": "Image"
+        },
+        {
+          "type": "number",
+          "id": "content___image__width",
+          "label": "Image"
+        },
+        {
+          "label": "Content > Url",
+          "id": "content___video_url",
+          "type": "text"
+        },
+        {
+          "label": "Content > Auto Play",
+          "id": "content___auto_play",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Content > Design"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_9",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Play Button Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_10",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Play Button Design > Id"
+        },
+        {
+          "label": "Content > Top",
+          "id": "content___top",
+          "type": "text"
+        },
+        {
+          "label": "Content > Left",
+          "id": "content___left",
+          "type": "text"
+        },
+        {
+          "label": "Content > Width",
+          "id": "content___width",
+          "type": "text"
+        },
+        {
+          "label": "Content > Height",
+          "id": "content___height",
+          "type": "text"
+        },
+        {
+          "label": "Content > Rotate",
+          "id": "content___rotate",
+          "type": "text"
+        },
+        {
+          "label": "Content > Font Size",
+          "id": "content___font_size",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "label": "Background > Background Type",
+      "id": "VEDA_select_1",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "Image",
+          "value": "image"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Video",
+          "value": "video"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_1",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_image_2",
+      "label": "Background Image"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_3",
+      "label": "Background Image"
+    },
+    {
+      "label": "Background > Background Color",
+      "id": "VEDA_color_1",
+      "type": "text",
+      "default": "#fff"
+    },
+    {
+      "label": "Background > Background Video",
+      "id": "VEDA_video_1",
+      "type": "text"
+    },
+    {
+      "label": "Background > Background Fixed",
+      "id": "VEDA_switch_1",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Background > Background Size",
+      "id": "VEDA_select_2",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Background > Enable Background Overlay",
+      "id": "VEDA_switch_2",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Background > Background Overlay Color",
+      "id": "VEDA_color_2",
+      "type": "text",
+      "default": "#fff"
+    },
+    {
+      "label": "Background > Background Overlay Blur",
+      "id": "VEDA_slider_1",
+      "type": "number"
+    },
+    {
+      "label": "Aspect Ratio",
+      "id": "aspect_ratio",
+      "type": "number",
+      "default": 55
+    },
+    {
+      "label": "Enable Grid",
+      "id": "enable_grid",
+      "type": "checkbox",
+      "default": false
+    }
+  ],
+  "tag": "div"
+}
+{% endschema %}

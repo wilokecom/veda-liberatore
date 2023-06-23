@@ -1,0 +1,828 @@
+{% assign uniqueId = 'id_044aa2c8-2fe6-48a2-a712-62849014bb25' %}
+{% assign builderMode = false %}
+{% assign envatoMode = false %}
+{% liquid
+  if section.settings.VEDA_switch_1
+    assign backgroundFixed = 'fixed'
+  else
+    assign backgroundFixed = 'scroll'
+  endif
+
+  if section.settings.VEDA_select_2 == 'color'
+    assign backgroundColor = 'background-color: ' | append: section.settings.VEDA_color_1 | append: ';'
+  else
+    assign backgroundColor = ''
+  endif
+
+  if section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2
+    assign bgImage = section.settings.VEDA_image_2 | append: '&width=10'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  elsif section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2 == blank
+    assign bgImage = 'https://cdn.shopify.com/s/files/1/0552/5510/5616/files/udxhtnzxtq.png?v=1681903122&width=1000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  else
+    assign backgroundImage = ''
+  endif
+
+  assign sectionPadding = 'padding-top: ' | append: section.settings.VEDA_space_4 | append: 'px;padding-right: ' | append: section.settings.VEDA_space_3 | append: 'px;padding-bottom: ' | append: section.settings.VEDA_space_1 | append: 'px;padding-left: ' | append: section.settings.VEDA_space_2 | append: 'px;'
+
+  if section.settings.VEDA_select_1 == 'full_width'
+    assign containerType = 'container-fluid'
+  else
+    assign containerType = 'container'
+  endif
+
+  assign containerGap = ''
+
+  if section.settings.section_settings___width >= 0
+    assign containerWidth = 'max-width: ' | append: section.settings.section_settings___width | append: 'px;'
+  else
+    assign containerWidth = ''
+  endif
+
+  if section.settings.VEDA_slider_2 >= 0
+    assign settingGap = section.settings.VEDA_slider_2 | divided_by: 2.0
+
+    assign settingGapVertical = section.settings.VEDA_slider_2
+  else
+    assign settingGap = ''
+
+    assign settingGapVertical = ''
+  endif
+
+  assign sectionSeparator = ''
+
+  if section.settings.VEDA_switch_3
+    if section.settings.VEDA_slider_4
+      assign sectionSeparator = sectionSeparator | append: 'border-top: ' | append: section.settings.VEDA_slider_4 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+
+    if section.settings.VEDA_slider_5
+      assign sectionSeparator = sectionSeparator | append: 'border-bottom: ' | append: section.settings.VEDA_slider_5 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+  endif
+
+  if settingGap and settingGapVertical
+  endif
+%}
+{% capture Content %}
+  <div class="d:flex fld:column w:100%">
+    {% for block in section.blocks %}
+      {% assign contentItem = block.settings %}
+
+      {% if contentItem.content___enable %}
+        {% capture attr %}
+          data-css="{{ contentItem.VEDA_styleBox_2 }}" class="fz:65px c:color-gray9-freeze fw:500" style="text-align:
+          {{ contentItem.content___align }}"
+        {% endcapture %}
+        {% capture title %}
+          {{ contentItem.content___title }}
+        {% endcapture %}
+        {% case block.type %}
+          {% when 'content_title' %}
+            {% if contentItem.content___title_tag_name == 'h2' %}
+              <h2 {{ attr }}>{{ title }}</h2>
+            {% elsif contentItem.content___title_tag_name == 'h3' %}
+              <h3 {{ attr }}>{{ title }}</h3>
+            {% elsif contentItem.content___title_tag_name == 'h4' %}
+              <h4 {{ attr }}>{{ title }}</h4>
+            {% elsif contentItem.content___title_tag_name == 'h5' %}
+              <h5 {{ attr }}>{{ title }}</h5>
+            {% elsif contentItem.content___title_tag_name == 'h6' %}
+              <h6 {{ attr }}>{{ title }}</h6>
+            {% endif %}
+          {% when 'content_text' %}
+            <div
+              data-css="{{ contentItem.VEDA_styleBox_4 }}"
+              style="text-align: {{ contentItem.content___align }}"
+              class="fz:16px c:color-gray9-freeze"
+            >
+              {{ contentItem.content___text }}
+            </div>
+          {% when 'content_icon' %}
+            <div
+              data-css="{{ contentItem.VEDA_styleBox_6 }}"
+              style="text-align: {{ contentItem.content___align }}"
+              class="fz:34px"
+            >
+              {{ contentItem.content___icon }}
+            </div>
+          {% when 'content_space' %}
+            <div style="height: {{ contentItem.content___space }}px"></div>
+          {% else %}
+            {% assign contentDividerPadding = 'padding-top: '
+              | append: contentItem.VEDA_space_8
+              | append: 'px;padding-right: '
+              | append: contentItem.VEDA_space_7
+              | append: 'px;padding-bottom: '
+              | append: contentItem.VEDA_space_5
+              | append: 'px;padding-left: '
+              | append: contentItem.VEDA_space_6
+              | append: 'px;'
+            %}
+            <div
+              class="pt:20px fz:0"
+              style="text-align: {{ contentItem.content___align }};{{ contentDividerPadding }}"
+            >
+              {% if contentItem.content___divider == 'wave' %}
+                <div class="d:inline-block">
+                  <svg
+                    width="56px"
+                    height="7px"
+                    viewBox="0 0 56 7"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    fill="none"
+                  >
+                    <g transform="translate(-288.000000, -4390.000000)" class="stk:color-gray3" style="stroke: {{ contentItem.content___divider_color }}">
+                        <g transform="translate(135.000000, 4033.000000)">
+                            <g transform="translate(0.000000, 48.000000)">
+                                <g transform="translate(153.000000, 310.000000)">
+                                    <path d="M0,0 C4.64733427,0 4.65894638,2 9.33333333,2 C14.0077203,2 13.9400367,0 18.6666667,0 C23.3932966,0 23.3301172,2 28,2 C32.6698828,2 32.6447946,0 37.3333333,0 C42.0218721,0 41.9540981,2 46.6666667,2 C51.3792353,2 51.3554302,0 56,0"></path>
+                                    <path d="M0,3 C4.64733427,3 4.65894638,5 9.33333333,5 C14.0077203,5 13.9400367,3 18.6666667,3 C23.3932966,3 23.3301172,5 28,5 C32.6698828,5 32.6447946,3 37.3333333,3 C42.0218721,3 41.9540981,5 46.6666667,5 C51.3792353,5 51.3554302,3 56,3"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                  </svg>
+                </div>
+              {% elsif contentItem.content___divider == 'mountain' %}
+                <div class="d:inline-block">
+                  <svg
+                    width="60px"
+                    height="9px"
+                    viewBox="0 0 60 9"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g transform="translate(-3.000000, -47.000000)" stroke-width="2" class="stk:color-gray3" style="stroke: {{ contentItem.content___divider_color }}">
+                            <g transform="translate(0.000000, 45.000000)">
+                                <polyline points="4 9 9.8 4 15.6 9 21.4 4 27.2 9 33 4 38.8 9 44.6 4 50.4 9 56.2 4 62 9"></polyline>
+                            </g>
+                        </g>
+                    </g>
+                  </svg>
+                </div>
+              {% else %}
+                <div
+                  class="d:inline-block! w:50px h:2px bgc:color-gray3"
+                  style="background-color: {{ contentItem.content___divider_color }}"
+                ></div>
+              {% endif %}
+            </div>
+        {% endcase %}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+<section
+  data-id="{{ uniqueId }}"
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center"
+  style="{{ backgroundColor }}{{ backgroundImage }}{{ sectionPadding }}"
+>
+  <div
+    class="{{ containerType }}"
+    {% if section.settings.VEDA_slider_1
+      or section.settings.VEDA_slider_1 == 0
+      or section.settings.section_settings___width
+      or section.settings.section_settings___width == 0
+    %}
+      style="{{ containerGap }}{{ containerWidth }}"
+    {% endif %}
+  >
+    {{ Content }}
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    {% liquid
+      if section.settings.button___variant == 'link'
+        assign default_class = 'rs d:inline-block td:none lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s '
+      else
+        assign default_class = 'rs d:inline-block td:none lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+      endif
+
+      assign default_for_bottom_class = ''
+
+      case section.settings.button___variant
+        when 'primary'
+          assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'secondary'
+          assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'dark'
+          assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+        when 'gray'
+          assign variant_class = ' bgc:color-gray3 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        when 'light'
+          assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        else
+          assign variant_class = ' c:color-gray9 c:color-primary|h'
+      endcase
+    %}
+
+    <a
+      component="{{ 'button' }}"
+      {% if 'mt:10px' %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mt:10px' }}"
+      {% else %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+      {% endif %}
+      {% if section.settings.button___new_tab %}
+        target="_blank"
+      {% endif %}
+      data-css="{{ section.settings["VEDA_styleBox_8"] }}"
+      href="{{ section.settings["button___link"] }}"
+    >
+      {% if section.settings.button___icon_enable and section.settings.button___icon_position == 'left' %}
+        <span
+          class="mr:10px"
+          data-css="{{ section.settings["button___icon_design__id"] }}"
+        >
+          {{ section.settings.button___choose_icon }}
+        </span>
+      {% endif %}
+      <span>
+        {{ section.settings.button___text }}
+      </span>
+      {% if section.settings.button___icon_enable and section.settings.button___icon_position == 'right' %}
+        <span
+          class="ml:10px"
+          data-css="{{ section.settings["button___icon_design__id"] }}"
+        >
+          {{ section.settings.button___choose_icon }}
+        </span>
+      {% endif %}
+    </a>
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+  </div>
+  {% if section.settings.VEDA_select_2 == 'video' and section.settings.VEDA_video_1 %}
+    <div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+  {% endif %}
+  {% if section.settings.VEDA_switch_2 %}
+    <div
+      class="pos:absolute ins:0 z:-1"
+      style="background-color: {{ section.settings["VEDA_color_2"] }};backdrop-filter: blur({{ section.settings["VEDA_slider_3"] }}px)"
+    ></div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Not Found 1",
+  "blocks": [
+    {
+      "type": "content_title",
+      "name": "Content > Title",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Title",
+          "id": "content___title",
+          "type": "liquid",
+          "default": "This is a title"
+        },
+        {
+          "label": "Content > Tag Name",
+          "id": "content___title_tag_name",
+          "type": "select",
+          "default": "h2",
+          "options": [
+            {
+              "label": "H2",
+              "value": "h2"
+            },
+            {
+              "label": "H3",
+              "value": "h3"
+            },
+            {
+              "label": "H4",
+              "value": "h4"
+            },
+            {
+              "label": "H5",
+              "value": "h5"
+            },
+            {
+              "label": "H6",
+              "value": "h6"
+            }
+          ]
+        },
+        {
+          "label": "Content > Align",
+          "id": "content___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "content_text",
+      "name": "Content > Text",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Text",
+          "id": "content___text",
+          "type": "liquid",
+          "default": "<p>This is a text</p>"
+        },
+        {
+          "label": "Content > Align",
+          "id": "content___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_3",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_4",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "content_divider",
+      "name": "Content > Divider",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Divider",
+          "id": "content___divider",
+          "type": "select",
+          "default": "line",
+          "options": [
+            {
+              "label": "Line",
+              "value": "line"
+            },
+            {
+              "label": "Wave",
+              "value": "wave"
+            },
+            {
+              "label": "Mountain",
+              "value": "mountain"
+            }
+          ]
+        },
+        {
+          "label": "Content > Align",
+          "id": "content___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "label": "Content > Color",
+          "id": "content___divider_color",
+          "type": "text"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_5",
+          "label": "Content > Padding > Bottom"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_6",
+          "label": "Content > Padding > Left"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_7",
+          "label": "Content > Padding > Right"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_8",
+          "label": "Content > Padding > Top"
+        }
+      ]
+    },
+    {
+      "type": "content_icon",
+      "name": "Content > Icon",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Icon",
+          "info": "[Get icon](https://fontawesome.com/v5/search)",
+          "id": "content___icon",
+          "type": "html",
+          "default": "<i class=\"far fa-atom\"></i>"
+        },
+        {
+          "label": "Content > Align",
+          "id": "content___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_5",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_6",
+          "info": "Please DON'T edit this field.",
+          "label": "Content > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "content_space",
+      "name": "Content > Space",
+      "settings": [
+        {
+          "label": "Content > Enable",
+          "id": "content___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Content > Space",
+          "id": "content___space",
+          "type": "number",
+          "default": 20
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "label": "Section Settings > Container Width",
+      "id": "VEDA_select_1",
+      "type": "select",
+      "default": "boxed",
+      "options": [
+        {
+          "label": "Boxed",
+          "value": "boxed"
+        },
+        {
+          "label": "Full Width",
+          "value": "full_width"
+        },
+        {
+          "label": "Manual",
+          "value": "manual"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Width",
+      "id": "section_settings___width",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Gap",
+      "id": "VEDA_slider_1",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Column Gap",
+      "id": "VEDA_slider_2",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Background Type",
+      "id": "VEDA_select_2",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "Image",
+          "value": "image"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Video",
+          "value": "video"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_1",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_image_2",
+      "label": "Background Image"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_3",
+      "label": "Background Image"
+    },
+    {
+      "label": "Section Settings > Background Color",
+      "id": "VEDA_color_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Video",
+      "id": "VEDA_video_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Fixed",
+      "id": "VEDA_switch_1",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Size",
+      "id": "VEDA_select_3",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Enable Background Overlay",
+      "id": "VEDA_switch_2",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Overlay Color",
+      "id": "VEDA_color_2",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Overlay Blur",
+      "id": "VEDA_slider_3",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Separator",
+      "id": "VEDA_switch_3",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Separator Top",
+      "id": "VEDA_slider_4",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Bottom",
+      "id": "VEDA_slider_5",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Color",
+      "id": "VEDA_color_3",
+      "type": "text",
+      "default": "var(--color-gray2)"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_1",
+      "label": "Section Settings > Padding > Bottom"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_2",
+      "label": "Section Settings > Padding > Left"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_3",
+      "label": "Section Settings > Padding > Right"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_4",
+      "label": "Section Settings > Padding > Top"
+    },
+    {
+      "label": "Button > Enable",
+      "id": "button___enable",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Button > Text",
+      "id": "button___text",
+      "type": "liquid",
+      "default": "View All"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_7",
+      "info": "Please DON'T edit this field.",
+      "label": "Button > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_8",
+      "info": "Please DON'T edit this field.",
+      "label": "Button > Design > Id"
+    },
+    {
+      "label": "Button > Open In New Tab",
+      "id": "button___new_tab",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Button > Link",
+      "id": "button___link",
+      "type": "url"
+    },
+    {
+      "label": "Button > Variant",
+      "id": "button___variant",
+      "type": "select",
+      "default": "primary",
+      "options": [
+        {
+          "label": "Primary",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary",
+          "value": "secondary"
+        },
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Gray",
+          "value": "gray"
+        },
+        {
+          "label": "Light",
+          "value": "light"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Button > Icon"
+    },
+    {
+      "label": "Button > Enable",
+      "id": "button___icon_enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Button > Choose",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "button___choose_icon",
+      "type": "html",
+      "default": "<i class=\"far fa-atom\"></i>"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_9",
+      "info": "Please DON'T edit this field.",
+      "label": "Button > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "button___icon_design__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Button > Design > Id"
+    },
+    {
+      "label": "Button > Position",
+      "id": "button___icon_position",
+      "type": "radio",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    }
+  ],
+  "tag": "div"
+}
+{% endschema %}

@@ -1,0 +1,80 @@
+<div class="customer-page theme-default-margin p:100px_0">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d:flex jc:center">
+				<div class="login w:100% maw:400px">
+					<div class="login-form-container">
+						<div class="d:flex fld:column w:100% ta:center">
+							<h2 component="heading" class="fw:500">
+								{{ "veda.customer.activate_account.title" | t }}
+							</h2>
+              <div component="heading" class="fz:16px">
+            		<p>{{ 'veda.customer.activate_account.subtext' | t }}</p>          
+							</div>
+              <div component="heading" class="pt:20px fz:0">
+                <div class="d:inline-block! w:50px h:2px bgc:color-gray3"></div>
+              </div>
+              <div component="heading" style="height: 20px;"></div>             
+						</div>
+						{% form 'activate_customer_password' %}
+							{% if form.errors %}
+								<div
+									class="d:flex ai:center fz:14px p:10px m:10px_0 bgc:color-error.1 c:color-error ls:none*ul p:0*ul m:0*ul"
+								>
+									<span><i class="far fa-exclamation-circle mr:10px"></i></span>
+									{{ form.errors | default_errors }}
+								</div>
+							{% endif %}
+							<div component="form_active">
+								<label class="d:block mb:15px">
+									<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+										{{ "veda.customer.activate_account.password" | t }}
+									</span>
+									<input
+										class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+										
+										type="password"
+										name="customer[password]"
+									>
+								</label>
+								<label class="d:block mb:15px">
+									<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+										{{ "veda.customer.activate_account.password_confirm" | t }}
+									</span>
+									<input
+										class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+										
+										type="password"
+										name="customer[password_confirmation]"
+									>
+								</label>
+								<div class="d:flex fxw:wrap mt:20px">
+									<div class="w:50% pr:5px">		
+										<button type="submit" component="active_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h w:100%">
+											<span class="mr:10px">
+												<i class="far fa-shield-check"></i>    
+											</span>
+											<span>
+												{{ "veda.customer.activate_account.submit" | t }}
+											</span>
+										</button>
+									</div>
+									<div class="w:50% pl:5px">
+										<button type="submit" component="decline_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h w:100%" name="decline">
+											<span class="mr:10px">
+												<i class="far fa-sign-out"></i>    
+											</span>
+											<span>
+												{{ "veda.customer.activate_account.cancel" | t }}
+											</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						{% endform %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

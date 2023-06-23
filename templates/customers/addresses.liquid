@@ -1,0 +1,349 @@
+<section data-id="veda-main-address" class="customer-page section-ptb my-account-page p:50px_0" >
+	<div class="container">
+    <div class="row mt:0!">
+			<div class="d:flex fld:column w:100%">
+				<h2 class="fw:500" veda-component-index="0" style="text-align: center;">
+					{{ "veda.customer.addresses.title" | t }}
+				</h2>
+        <a href="{{ routes.account_url }}" class="ff:font-secondary fz:16px fw:500 c:color-gray9 c:color-gray9|h! td:underline" veda-component-index="1" style="text-align: center;">
+          {{ "veda.customer.account.return" | t }}
+				</a>
+        <div class="pt:20px fz:0" veda-component-index="2" style="text-align: center;">
+          <div class="d:inline-block! w:50px h:2px bgc:color-gray3"></div>
+        </div>
+        <div style="height: 20px;"></div>
+			</div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d:flex fld:column jc:center ai:center">
+				<button type="submit" component="add_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h btn-add-address-js">
+					<span>
+						{{ "veda.customer.addresses.add_new" | t }}
+					</span>
+				</button>
+
+				<div class="form-add_address-js mt:20px w:100% w:40%@md d:none">
+					{% form 'customer_address', customer.new_address %}
+						<div class="w:100% p:30px_40px bd:1px_solid_color-gray5">
+							<h4 class="ta:center">{{ "veda.customer.addresses.add_new" | t }}</h4>
+							<label class="mb:15px">
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ "veda.customer.addresses.first_name" | t }}
+								</span>
+								<input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" type="text" name="address[first_name]" autocomplete="given-name">
+							</label>
+							<label class="mb:15px">
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ "veda.customer.addresses.last_name" | t }}
+								</span>
+								<input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" type="text" name="address[last_name]" autocomplete="family-name">
+							</label>
+							<label class="mb:15px">
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ "veda.customer.addresses.company" | t }}
+								</span>
+								<input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" type="text" name="address[company]" autocomplete="organization">
+							</label>
+							<label class="mb:15px">
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ "veda.customer.addresses.address1" | t }}
+								</span>
+								<input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" type="text" name="address[address1]" autocomplete="address-line1">
+							</label>
+							<label class="mb:15px">
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ "veda.customer.addresses.address2" | t }}
+								</span>
+								<input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" type="text" name="address[address2]" autocomplete="address-line2">
+							</label>
+							<label class="mb:15px">
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ "veda.customer.addresses.city" | t }}
+								</span>
+								<input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" type="text" name="address[city]" autocomplete="address-level2">
+							</label>
+							<label class="d:block mb:15px">
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ "veda.customer.addresses.country" | t }}
+								</span>
+								<select name="address[country]" id="address-country-new" data-default="{{ form.country }}" class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light" autocomplete="country">
+									{{ all_country_option_tags }}
+								</select>
+							</label>
+							<label class="address-province-container-new d:block mb:15px" style="display:none">
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ 'veda.customer.addresses.province' | t }}
+								</span>
+								<select
+									name="address[province]"
+									id="address-province-new"
+									class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+									data-default="{{ form.province }}"
+									autocomplete="address-level1"
+								></select>
+							</label>
+							<label class="d:block mb:15px"
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ "veda.customer.addresses.zip" | t }}
+								</span>
+								<input type="text" name="address[zip]" class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light" autocapitalize="characters" autocomplete="postal-code" value="">
+							</label>
+							<label class="d:block mb:15px">
+								<span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+									{{ "veda.customer.addresses.phone" | t }}
+								</span>
+								<input type="tel" class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light" name="address[phone]" autocomplete="tel" value="">
+							</label>
+							<div class="mt:10px">
+								 {{ form.set_as_default_checkbox }}
+								<label class="fz:14px c:color-gray7" for="address_default_address_new">
+										{{ "veda.customer.addresses.set_default" | t }}
+								</label>
+							</div>
+							<div class="d:flex">
+								<button type="submit" component="submit_add_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h btn-add-address-js mt:20px mr:20px">
+									<span>
+										{{ "veda.customer.addresses.add" | t }}
+									</span>
+								</button>
+								<button type="reset" component="cancel_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h btn-add-address-js mt:20px">
+									<span>
+										{{ "veda.customer.addresses.delete" | t }}
+									</span>
+								</button>
+							</div>
+						</div>
+  				{% endform %}
+				</div>
+				<div class="d:flex fld:column ai:center w:100%">
+					{% for address in customer.addresses %}
+						{% if address.default %}
+							<h2 class="mt:20px fz:20px fw:500 ta:center">
+								{{ "veda.customer.addresses.default" | t }}
+							</h2>
+						{% endif %}
+						<div class="mt:15px ta:center">
+              {{ address | format_address }}
+            </div>
+						<div class="d:flex mt:20px jc:center fxw:wrap">
+							<button type="button" component="update_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h btn-edit-address-js mr:15px" aria-label="{{ 'veda.customer.addresses.edit_address' | t }}" data-index="{{ forloop.index }}" data-form-active="false">
+								<span>
+									{{ "veda.customer.addresses.edit" | t }}
+								</span>
+							</button>
+							<form
+								class="address-delete-form"
+								method="post"
+								action="/account/addresses/{{ address.id }}"
+							>
+								<input type="hidden" name="_method" value="delete">
+								<button type="reset" component="delete_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h btn-del-address-js" data-confirm-message="{{ 'veda.customer.addresses.delete_confirm' | t }}" data-target="address.url" aria-label="{{ 'veda.customer.addresses.delete' | t }} {{ forloop.index }}">
+									<span>
+										{{ "veda.customer.addresses.delete" | t }}
+									</span>
+								</button>
+							</form>
+						</div>
+						<div class="form-update-address-js mt:20px w:100% w:40%@md d:none" data-index="{{ forloop.index }}">
+							{% form 'customer_address', address %}
+								<div class="p:30px_40px bd:1px_solid_color-gray5">
+									<h4 class="ta:center">
+										{{ "veda.customer.addresses.edit_address" | t }}
+									</h4>
+									<label class="d:block mb:15px">
+										<span
+											class="mt:20px fz:16px c:color-gray9"
+										>
+											{{ "veda.customer.addresses.first_name" | t }}
+										</span>
+										<input
+											type="text"
+											name="address[first_name]"
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											value="{{ form.first_name }}"
+											autocomplete="given-name"
+											
+										>
+									</label>
+									<label class="d:block mb:15px">
+										<span
+											class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+											for="AddressLastName_{{ form.id }}"
+											
+										>
+											{{ "veda.customer.addresses.last_name" | t }}
+										</span>
+										<input
+											type="text"
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											name="address[last_name]"
+											value="{{ form.last_name }}"
+											autocomplete="family-name"
+											
+										>
+									</label>
+									<label class="d:block mb:15px">
+										<span
+											class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+											
+										>
+											{{ "veda.customer.addresses.company" | t }}
+										</span>
+										<input
+											type="text"
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											name="address[company]"
+											value="{{ form.company }}"
+											autocomplete="organization"
+											
+										>
+									</label>
+									<label class="d:block mb:15px">
+										<span
+											class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+											
+										>
+											{{ "veda.customer.addresses.address1" | t }}
+										</span>
+										<input
+											type="text"
+											name="address[address1]"
+											value="{{ form.address1 }}"
+											autocomplete="address-line1"
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											
+										>
+									</label>
+									<label class="d:block mb:15px">
+										<span
+											class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+											
+										>
+											{{ "veda.customer.addresses.address2" | t }}
+										</span>
+										<input
+											type="text"
+											name="address[address2]"
+											value="{{ form.address2 }}"
+											autocomplete="address-line2"
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											
+										>
+									</label>
+									<label class="d:block mb:15px">
+										<span
+											class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+											
+										>
+											{{ "veda.customer.addresses.city" | t }}
+										</span>
+										<input
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											type="text"
+											name="address[city]"
+											value="{{ form.city }}"
+											autocomplete="address-level2"
+											
+										>
+									</label>
+									<label class="d:block mb:15px">
+										<span
+											class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+											
+										>
+											{{ "veda.customer.addresses.country" | t }}
+										</span>
+										<select
+											name="address[country]"
+											data-address-country-select
+											data-default="{{ form.country }}"
+											data-form-id="{{ form.id }}"
+											autocomplete="country"
+											id="address-country-{{ form.id }}"
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											
+										>
+											{{ all_country_option_tags }}
+										</select>
+									</label>
+									<label class="address-province-container-{{ form.id }} d:block mb:15px" style="display: none">
+										<span
+											class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+											
+										>
+											{{ 'veda.customer.addresses.province' | t }}
+										</span>
+										<select
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											name="address[province]"
+											id="address-province-{{ form.id }}"
+											data-default="{{ form.province }}"
+											autocomplete="address-level1"
+											
+										></select>
+									</label>
+									<label class="d:block mb:15px">
+										<span
+											class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+											for="AddressZip_{{ form.id }}"
+											
+										>
+											{{ "veda.customer.addresses.zip" | t }}
+										</span>
+										<input
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											type="text"
+											name="address[zip]"
+											value="{{ form.zip }}"
+											autocapitalize="characters"
+											autocomplete="postal-code"
+											
+										>
+									</label>
+									<label class="d:block mb:15px">
+										<span
+											class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+											for="AddressPhone_{{ form.id }}"
+											
+										>
+											{{ "veda.customer.addresses.phone" | t }}
+										</span>
+										<input
+											class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+											type="tel"
+											name="address[phone]"
+											value="{{ form.phone }}"
+											autocomplete="tel"
+											
+										>
+									</label>
+									<div>
+										{{ form.set_as_default_checkbox }}
+										<label
+											class="fz:14px c:color-gray7"
+											for="address_default_address_{{ form.id }}"
+											
+										>
+											{{ "veda.customer.addresses.set_default" | t }}
+										</label>
+									</div>
+									<div class="d:flex">
+										<button type="submit" component="submit_update_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h btn-add-address-js mt:20px mr:20px" data-index="{{ forloop.index }}">
+											<span>
+												{{ "veda.customer.addresses.update" | t }}
+											</span>
+										</button>
+										<button type="reset" component="cancel_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h btn-add-address-js mt:20px">
+											<span>
+												{{ "veda.customer.addresses.cancel" | t }}
+											</span>
+										</button>
+              		</div>
+								</div>
+          		{% endform %}
+						</div>
+					{% endfor %}
+				</div>
+    	</div>
+  	</div>
+	</div>
+</section>
+<link rel="preload" class="veda-page-script" as="script" href="{{ 'veda-main-address.js' | asset_url }}" />

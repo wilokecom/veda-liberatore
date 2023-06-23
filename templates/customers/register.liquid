@@ -1,0 +1,50 @@
+<section class="p:100px_0">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d:flex jc:center">
+        <div class="registers w:100% maw:400px">
+          {% form 'create_customer' %}
+            <div class="login-form-container">
+              <div class="section-capture">
+                <div class="section-title">
+                  <h2 class="fw:500 ta:center">{{ 'veda.customer.register.title' | t }}</h2>
+                </div>
+              </div>
+              {{ form.errors | default_errors }}
+              <div component="form_register">
+                <label class="d:block mb:15px">
+                  <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px" data-css="">
+                    {{ 'veda.customer.register.first_name' | t }} </span>
+                  <input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" data-css="" type="text" name="customer[first_name]" autocomplete="given-name" autocorrect="off" autocapitalize="off">
+                </label>
+                <label class="d:block mb:15px">
+                  <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px" data-css="">
+                    {{ 'veda.customer.register.last_name' | t }}  </span>
+                  <input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" data-css="" type="text" name="customer[last_name]" autocomplete="family-name" autocorrect="off" autocapitalize="off">
+                </label>   
+                <label class="d:block mb:15px">
+                  <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px" data-css="">
+                    {{ "veda.customer.register.email" | t }} </span>
+                  <input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" data-css="" type="email" name="customer[email]" autocomplete="email" autocorrect="off" autocapitalize="off">
+                </label>
+                <label class="d:block mb:15px">
+                  <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px" data-css="">
+                    {{ "veda.customer.register.password" | t }}  </span>
+                  <input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" data-css="" type="password" name="customer[password]">
+                </label>   
+                <button type="submit" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h w:100% m:20px_0">
+                  <span>
+                    Create  
+                  </span>
+                </button>
+                <div class="mt:10px c:color-gray7 c:color-primary*a td:underline*a ta:center" data-css="">
+                  <p>Already have an account ? <a href="{{ routes.account_login_url }}">Sign in</a></p>      
+                </div>
+              </div>
+            </div>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

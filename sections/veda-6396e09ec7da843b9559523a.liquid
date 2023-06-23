@@ -1,0 +1,2843 @@
+{% assign uniqueId = 'id_bea0951a-6e3f-402d-8907-026e2ff0d4ad' %}
+{% assign builderMode = false %}
+{% assign envatoMode = false %}
+{% liquid
+  if section.settings.VEDA_switch_1
+    assign backgroundFixed = 'fixed'
+  else
+    assign backgroundFixed = 'scroll'
+  endif
+
+  if section.settings.VEDA_select_2 == 'color'
+    assign backgroundColor = 'background-color: ' | append: section.settings.VEDA_color_1 | append: ';'
+  else
+    assign backgroundColor = ''
+  endif
+
+  if section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2
+    assign bgImage = section.settings.VEDA_image_2 | append: '&width=2000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  elsif section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2 == blank
+    assign bgImage = 'https://cdn.shopify.com/s/files/1/0552/5510/5616/files/udxhtnzxtq.png?v=1681903122&width=1000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  else
+    assign backgroundImage = ''
+  endif
+
+  assign sectionPadding = 'padding-top: ' | append: section.settings.VEDA_space_4 | append: 'px;padding-right: ' | append: section.settings.VEDA_space_3 | append: 'px;padding-bottom: ' | append: section.settings.VEDA_space_1 | append: 'px;padding-left: ' | append: section.settings.VEDA_space_2 | append: 'px;'
+
+  if section.settings.VEDA_select_1 == 'full_width'
+    assign containerType = 'container-fluid'
+  else
+    assign containerType = 'container'
+  endif
+
+  if section.settings.VEDA_slider_1 >= 0
+    assign containerGap = 'padding-left: ' | append: section.settings.VEDA_slider_1 | append: 'px; padding-right: ' | append: section.settings.VEDA_slider_1 | append: 'px;'
+  else
+    assign containerGap = ''
+  endif
+
+  if section.settings.section_settings___width >= 0
+    assign containerWidth = 'max-width: ' | append: section.settings.section_settings___width | append: 'px;'
+  else
+    assign containerWidth = ''
+  endif
+
+  if section.settings.VEDA_slider_2 >= 0
+    assign settingGap = section.settings.VEDA_slider_2 | divided_by: 2.0
+
+    assign settingGapVertical = section.settings.VEDA_slider_2
+  else
+    assign settingGap = ''
+
+    assign settingGapVertical = ''
+  endif
+
+  assign colGap = 'margin-top: ' | append: settingGapVertical | append: 'px; padding-left: ' | append: settingGap | append: 'px; padding-right: ' | append: settingGap | append: 'px;'
+
+  assign rowGap = 'margin-top: -' | append: settingGapVertical | append: 'px; margin-left: -' | append: settingGap | append: 'px; margin-right: -' | append: settingGap | append: 'px;'
+
+  assign sectionSeparator = ''
+
+  if section.settings.VEDA_switch_3
+    if section.settings.VEDA_slider_4
+      assign sectionSeparator = sectionSeparator | append: 'border-top: ' | append: section.settings.VEDA_slider_4 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+
+    if section.settings.VEDA_slider_5
+      assign sectionSeparator = sectionSeparator | append: 'border-bottom: ' | append: section.settings.VEDA_slider_5 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+  endif
+
+  if colGap and rowGap and builderMode and envatoMode
+  endif
+%}
+
+{% liquid
+  assign _alt = false
+
+  assign _style = false
+
+  assign _placeholder_class = false
+
+  assign _component = false
+
+  assign _class = false
+
+  assign _container_class = false
+
+  assign _label_class = false
+
+  assign _placeholder = false
+
+  assign _autocorrect = false
+
+  assign _data_confirm_message = false
+
+  assign _data_target = false
+
+  assign _aria_label = false
+
+  assign _data_index = false
+
+  assign _data_form_active = false
+
+  assign _form = false
+
+  assign _name = false
+
+  assign _id = false
+
+  assign _tooltip_position = false
+
+  assign _tooltip_text = false
+
+  assign _data_button_video_id = false
+
+  assign _icon_class = false
+%}
+{% capture TableHeader %}
+  <div class="d:flex@400px d:none" data-css="{{ section.settings["VEDA_styleBox_8"] }}">
+    <div
+      class="flex:1 w:100% w:40%@md p:15px_0 fz:15px ff:font-secondary fw:500"
+      data-css="{{ section.settings["VEDA_styleBox_10"] }}"
+    >
+      {{ 'veda.sections.cart.headings.product' | t }}
+    </div>
+    <div
+      class="flex:0_0_auto w:40% w:20%@sm p:15px_0 fz:15px ff:font-secondary fw:500 ta:left@md ta:right"
+      data-css="{{ section.settings["VEDA_styleBox_10"] }}"
+    >
+      {{ 'veda.sections.cart.headings.price' | t }}
+    </div>
+    <div
+      class="d:block@md d:none flex:0_0_auto w:40% w:20%@sm p:15px_0 fz:15px ff:font-secondary fw:500"
+      data-css="{{ section.settings["VEDA_styleBox_10"] }}"
+    >
+      {{ 'veda.sections.cart.headings.quantity' | t }}
+    </div>
+    <div
+      class="d:block@md d:none flex:0_0_auto w:20% p:15px_0 fz:15px ff:font-secondary fw:500 ta:right"
+      data-css="{{ section.settings["VEDA_styleBox_10"] }}"
+    >
+      {{ 'veda.sections.cart.headings.total' | t }}
+    </div>
+  </div>
+{% endcapture %}
+
+{% capture TableBody %}
+  {% for cart_item in cart.items %}
+    {% capture ProductCartItem %}
+      {% liquid
+        if section.settings.VEDA_slider_6
+          assign imageRadius = 'border-radius:' | append: section.settings.VEDA_slider_6 | append: 'px;'
+        endif
+
+        assign aspectRatio = 100
+
+        if section.settings.table___aspect_ratio
+          assign aspectRatio = section.settings.table___aspect_ratio
+        endif
+      %}
+      <a
+        class="veda-image-cover d:block w:50% maw:140px mr:20px flxs:0 h:fit-content ov:hidden"
+        href="{{ cart_item.url }}"
+        aria-label="{{ cart_item.image.alt }}"
+        style="--aspect-ratio: {{ aspectRatio }};{{ imageRadius }}"
+      >
+        {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+        {% if cart_item.image.src != blank %}
+          <img
+            class="veda-lazyload {{ _class }}"
+            src="{{ cart_item.image.src | image_url: width: 10 }}"
+            draggable="false"
+            {% if cart_item.image.alt %}
+              alt="{{ cart_item.image.alt }}"
+            {% else %}
+              alt="image"
+            {% endif %}
+            {% if cart_item.image.width %}
+              data-intrinsic-width="{{ cart_item.image.width }}"
+              width="{{ cart_item.image.width }}"
+            {% endif %}
+            {% if cart_item.image.height %}
+              height="{{ cart_item.image.height }}"
+              data-intrinsic-height="{{ cart_item.image.height }}"
+            {% endif %}
+            {% if _style %}
+              style="{{ _style }}"
+            {% endif %}
+            loading="lazy"
+          >
+        {% else %}
+          {% liquid
+            assign pl = 'lifestyle-1'
+
+            if _placeholder
+              assign pl = _placeholder
+            endif
+
+            assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _class
+
+            if _placeholder_class
+              assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _placeholder_class
+            endif
+          %}
+          {{ pl | placeholder_svg_tag: placeholder_class }}
+        {% endif %}
+        {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+      </a>
+      <div>
+        {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+        {% if true %}
+          <a
+            class="{{ 'd:block mb:5px fz:14px fw:400 ff:font-secondary c:color-gray7' }}"
+            data-css="{{ section.settings["table___vendor__id"] }}"
+            href="{{ shop.url }}/collections/vendors?q={{ cart_item.vendor }}"
+            {% if _component %}
+              component="{{ _component }}"
+            {% endif %}
+          >
+            {{ cart_item.vendor }}
+          </a>
+        {% endif %}
+        {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+
+        <a
+          href="{{ cart_item.url }}"
+          class="d:block ff:font-secondary fz:16px fw:500 mb:5px trs:0.3s"
+          data-css="{{ section.settings["table___title__id"] }}"
+        >
+          {{ cart_item.title }}
+        </a>
+        {% if cart_item.product.has_only_default_variant == false
+          or cart_item.properties.size != 0
+          or cart_item.selling_plan_allocation != null
+        %}
+          <div>
+            {% if cart_item.product.has_only_default_variant == false %}
+              {% for option in cart_item.options_with_values %}
+                <div class="d:flex mb:5px" data-css="{{ section.settings["VEDA_styleBox_16"] }}">
+                  {{ option.name }}: {{ option.value }}
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            {% for property in cart_item.properties %}
+              {% liquid
+                assign property_first_char = property.first | slice: 0
+              %}
+              {% if property.last != blank and property_first_char != '_' %}
+                <div class="d:flex mb:5px" data-css="{{ section.settings["VEDA_styleBox_16"] }}">
+                  <div>{{ property.first }}:</div>
+                  <div>
+                    {% if property.last contains '/uploads/' %}
+                      <a href="{{ property.last }}" class="link" target="_blank">
+                        {{ property.last | split: '/' | last }}
+                      </a>
+                    {% else %}
+                      {{ property.last }}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <div class="mb:5px mb:0|e" data-css="{{ section.settings["VEDA_styleBox_16"] }}">
+            {{ cart_item.selling_plan_allocation.selling_plan.name }}
+          </div>
+        {% endif %}
+
+        <ul
+          class="ls:none p:0 m:0!"
+          role="list"
+          aria-label="{{ 'veda.customer.order.discount' | t }}"
+        >
+          {% for discount in cart_item.discounts %}
+            <li class="mb:5px">
+              {{ discount.title }}
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="d:none@400px d:block">
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          {% if builderMode %}
+            <div
+              class="fz:pfs(16px,20px) ff:font-secondary fw:500 c:color-gray9"
+              data-css="{{ section.settings["table___total__id"] }}"
+            >
+              {{ cart_item.final_line_price | money }}
+            </div>
+          {% else %}
+            {% if cart_item.original_line_price != cart_item.final_line_price %}
+              <div class="d:flex ai:center ff:font-secondary mb:5px">
+                <ins
+                  class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray9 td:none mr:5px"
+                  data-css="{{ section.settings["VEDA_styleBox_20"] }}"
+                >
+                  {{ cart_item.final_line_price | money }}
+                </ins>
+                <del
+                  class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray6"
+                  data-css="{{ section.settings["VEDA_styleBox_18"] }}"
+                >
+                  {{ cart_item.original_line_price | money }}
+                </del>
+              </div>
+            {% else %}
+              <span
+                class="fz:pfs(16px,20px) fw:500 c:color-gray9 mb:5px"
+                data-css="{{ section.settings["table___total__id"] }}"
+              >
+                {{ cart_item.original_line_price | money }}
+              </span>
+            {% endif %}
+
+            {% if cart_item.variant.available and cart_item.unit_price_measurement %}
+              <div class="fz:20px fw:500 c:color-gray9 mb:5px" data-css="{{ section.settings["table___total__id"] }}">
+                {{ 'veda.products.product.price.unit_price' | t }}: {{ cart_item.variant.unit_price | money }}/&nbsp;
+                {{ 'veda.accessibility.unit_price_separator' | t }}
+                &nbsp;
+                {% if cart_item.variant.unit_price_measurement.reference_value != 1 %}
+                  {{ cart_item.variant.unit_price_measurement.reference_value }}
+                {% endif %}
+                {{ cart_item.variant.unit_price_measurement.reference_unit }}
+              </div>
+            {% endif %}
+          {% endif %}
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          <div
+            data-id="{{ cart_item.variant_id }}"
+            class="veda-counter d:flex w:pfs(100px,150px) mb:5px@+md bd:1px_solid_color-gray3 ov:hidden"
+            data-options="{ value: {{ cart_item.quantity }} }"
+            data-css="{{ section.settings["table___quantity__id"] }}"
+          >
+            <div class="veda-counter__decrement d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+              <i class="fal fa-minus"></i>
+            </div>
+            <input
+              class="veda-counter__input p:0! w:100% h:40px fz:15px fw:500 ta:center c:color-gray9 bgc:transparent bd:none! o:none"
+              data-id="{{ cart_item.variant_id }}"
+              type="number"
+              data-button="disabled"
+            >
+            <div class="veda-counter__increment d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+              <i class="fal fa-plus"></i>
+            </div>
+          </div>
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+        </div>
+        <a
+          data-id="{{ cart_item.variant_id }}"
+          class="cart-remove-item-js fz:13px cur:pointer!"
+          data-css="{{ section.settings["table___remove__id"] }}"
+        >
+          {{ 'veda.sections.cart.remove' | t }}
+        </a>
+      </div>
+    {% endcapture %}
+    <div
+      class="d:flex bdt:1px_solid_color-gray4 bdb:1px_solid_color-gray4|lc"
+      data-css="{{ section.settings["VEDA_styleBox_12"] }}"
+    >
+      <div
+        class="d:flex flex:1 w:100% w:40%@md p:15px_0"
+        data-css="{{ section.settings["VEDA_styleBox_14"] }}"
+      >
+        {{ ProductCartItem }}
+      </div>
+      <div
+        class="d:flex@400px ai:center d:none flex:0_0_auto w:40% w:20%@sm p:15px_0 fz:15px fw:500 c:color-gray9 ta:right@+md jc:flex-end@+md"
+        data-css="{{ section.settings["VEDA_styleBox_14"] }}"
+      >
+        {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+        {% if builderMode %}
+          <div
+            class="fz:20px ff:font-secondary c:color-gray9 d:none d:block@md"
+            data-css="{{ section.settings["VEDA_styleBox_18"] }}"
+          >
+            {{ cart_item.original_price | money }}
+          </div>
+        {% else %}
+          {% if cart_item.original_price != cart_item.final_price %}
+            <div class="d:flex ai:center ff:font-secondary">
+              <ins
+                class="d:inline-block@md d:none fw:500 ff:font-secondary fz:20px c:color-gray9 td:none mr:5px"
+                data-css="{{ section.settings["VEDA_styleBox_20"] }}"
+              >
+                {{ cart_item.final_price | money }}
+              </ins>
+              <del
+                class="d:inline-block@md d:none fw:500 ff:font-secondary fz:20px c:color-gray6"
+                data-css="{{ section.settings["VEDA_styleBox_18"] }}"
+              >
+                {{ cart_item.original_price | money }}
+              </del>
+            </div>
+          {% else %}
+            <div
+              class="d:inline-block@md d:none fz:20px fw:500 ff:font-secondary c:color-gray9"
+              data-css="{{ section.settings["VEDA_styleBox_18"] }}"
+            >
+              {{ cart_item.original_price | money }}
+            </div>
+          {% endif %}
+        {% endif %}
+        {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+        <div class="d:flex fld:column ai:flex-end d:none@md">
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          {% if builderMode %}
+            <div
+              class="fz:pfs(16px,20px) ff:font-secondary fw:500 c:color-gray9"
+              data-css="{{ section.settings["table___total__id"] }}"
+            >
+              {{ cart_item.final_line_price | money }}
+            </div>
+          {% else %}
+            {% if cart_item.original_line_price != cart_item.final_line_price %}
+              <div class="d:flex ai:center ff:font-secondary mb:5px">
+                <ins
+                  class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray9 td:none mr:5px"
+                  data-css="{{ section.settings["VEDA_styleBox_20"] }}"
+                >
+                  {{ cart_item.final_line_price | money }}
+                </ins>
+                <del
+                  class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray6"
+                  data-css="{{ section.settings["VEDA_styleBox_18"] }}"
+                >
+                  {{ cart_item.original_line_price | money }}
+                </del>
+              </div>
+            {% else %}
+              <span
+                class="fz:pfs(16px,20px) fw:500 c:color-gray9 mb:5px"
+                data-css="{{ section.settings["table___total__id"] }}"
+              >
+                {{ cart_item.original_line_price | money }}
+              </span>
+            {% endif %}
+
+            {% if cart_item.variant.available and cart_item.unit_price_measurement %}
+              <div class="fz:20px fw:500 c:color-gray9 mb:5px" data-css="{{ section.settings["table___total__id"] }}">
+                {{ 'veda.products.product.price.unit_price' | t }}: {{ cart_item.variant.unit_price | money }}/&nbsp;
+                {{ 'veda.accessibility.unit_price_separator' | t }}
+                &nbsp;
+                {% if cart_item.variant.unit_price_measurement.reference_value != 1 %}
+                  {{ cart_item.variant.unit_price_measurement.reference_value }}
+                {% endif %}
+                {{ cart_item.variant.unit_price_measurement.reference_unit }}
+              </div>
+            {% endif %}
+          {% endif %}
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          <div
+            data-id="{{ cart_item.variant_id }}"
+            class="veda-counter d:flex w:pfs(100px,150px) mb:5px@+md bd:1px_solid_color-gray3 ov:hidden"
+            data-options="{ value: {{ cart_item.quantity }} }"
+            data-css="{{ section.settings["table___quantity__id"] }}"
+          >
+            <div class="veda-counter__decrement d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+              <i class="fal fa-minus"></i>
+            </div>
+            <input
+              class="veda-counter__input p:0! w:100% h:40px fz:15px fw:500 ta:center c:color-gray9 bgc:transparent bd:none! o:none"
+              data-id="{{ cart_item.variant_id }}"
+              type="number"
+              data-button="disabled"
+            >
+            <div class="veda-counter__increment d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+              <i class="fal fa-plus"></i>
+            </div>
+          </div>
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+        </div>
+      </div>
+      <div
+        class="d:flex@md d:none ai:center flex:0_0_auto w:40% w:20%@sm p:15px_0"
+        data-css="{{ section.settings["VEDA_styleBox_14"] }}"
+      >
+        {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+        <div
+          data-id="{{ cart_item.variant_id }}"
+          class="veda-counter d:flex w:pfs(100px,150px) mb:5px@+md bd:1px_solid_color-gray3 ov:hidden"
+          data-options="{ value: {{ cart_item.quantity }} }"
+          data-css="{{ section.settings["table___quantity__id"] }}"
+        >
+          <div class="veda-counter__decrement d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+            <i class="fal fa-minus"></i>
+          </div>
+          <input
+            class="veda-counter__input p:0! w:100% h:40px fz:15px fw:500 ta:center c:color-gray9 bgc:transparent bd:none! o:none"
+            data-id="{{ cart_item.variant_id }}"
+            type="number"
+            data-button="disabled"
+          >
+          <div class="veda-counter__increment d:flex ai:center jc:center p:0px_15px h:40px fz:13px bgc:transparent c:color-gray9 cur:pointer">
+            <i class="fal fa-plus"></i>
+          </div>
+        </div>
+        {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+      </div>
+      <div
+        class="d:flex@md d:none ai:center jc:flex-end flex:0_0_auto w:20% p:15px_0 ta:right"
+        data-css="{{ section.settings["VEDA_styleBox_14"] }}"
+      >
+        {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+        {% if builderMode %}
+          <div
+            class="fz:pfs(16px,20px) ff:font-secondary fw:500 c:color-gray9"
+            data-css="{{ section.settings["table___total__id"] }}"
+          >
+            {{ cart_item.final_line_price | money }}
+          </div>
+        {% else %}
+          {% if cart_item.original_line_price != cart_item.final_line_price %}
+            <div class="d:flex ai:center ff:font-secondary mb:5px">
+              <ins
+                class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray9 td:none mr:5px"
+                data-css="{{ section.settings["VEDA_styleBox_20"] }}"
+              >
+                {{ cart_item.final_line_price | money }}
+              </ins>
+              <del
+                class="d:inline-block!@md d:none mt:5px fw:500 ff:font-secondary fz:pfs(16px,20px) c:color-gray6"
+                data-css="{{ section.settings["VEDA_styleBox_18"] }}"
+              >
+                {{ cart_item.original_line_price | money }}
+              </del>
+            </div>
+          {% else %}
+            <span
+              class="fz:pfs(16px,20px) fw:500 c:color-gray9 mb:5px"
+              data-css="{{ section.settings["table___total__id"] }}"
+            >
+              {{ cart_item.original_line_price | money }}
+            </span>
+          {% endif %}
+
+          {% if cart_item.variant.available and cart_item.unit_price_measurement %}
+            <div class="fz:20px fw:500 c:color-gray9 mb:5px" data-css="{{ section.settings["table___total__id"] }}">
+              {{ 'veda.products.product.price.unit_price' | t }}: {{ cart_item.variant.unit_price | money }}/&nbsp;
+              {{ 'veda.accessibility.unit_price_separator' | t }}
+              &nbsp;
+              {% if cart_item.variant.unit_price_measurement.reference_value != 1 %}
+                {{ cart_item.variant.unit_price_measurement.reference_value }}
+              {% endif %}
+              {{ cart_item.variant.unit_price_measurement.reference_unit }}
+            </div>
+          {% endif %}
+        {% endif %}
+        {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+      </div>
+    </div>
+  {% endfor %}
+{% endcapture %}
+
+{% capture EmptyContent %}
+  <div class="empty-cart-js d:flex fld:column ai:center w:100%">
+    {% liquid
+      assign imageRadius = ''
+
+      if section.settings.VEDA_slider_8
+        assign imageRadius = 'border-radius:' | append: section.settings.VEDA_slider_8 | append: 'px;'
+      endif
+
+      assign aspectRatio = 100
+
+      if section.settings.VEDA_slider_7
+        assign aspectRatio = section.settings.VEDA_slider_7
+      endif
+
+      assign imageWidth = ''
+
+      if section.settings.empty_data___width
+        assign imageWidth = 'width:' | append: section.settings.empty_data___width | append: 'px;'
+      endif
+    %}
+    <div
+      class="veda-image-cover d:block w:250px ov:hidden"
+      style="--aspect-ratio: {{ aspectRatio }};{{ imageRadius }}{{ imageWidth }}"
+    >
+      {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+      {% if section.settings.empty_data___image__src != blank %}
+        <img
+          class="veda-lazyload {{ 'veda-lazyload obf:contain!' }}"
+          src="{{ section.settings["empty_data___image__src"] | append: '&width=10' }}"
+          draggable="false"
+          {% if _alt %}
+            alt="{{ _alt }}"
+          {% else %}
+            alt="image"
+          {% endif %}
+          {% if section.settings.VEDA_image_5 %}
+            data-intrinsic-width="{{ section.settings["VEDA_image_5"] }}"
+            width="{{ section.settings["VEDA_image_5"] }}"
+          {% endif %}
+          {% if section.settings.VEDA_image_4 %}
+            height="{{ section.settings["VEDA_image_4"] }}"
+            data-intrinsic-height="{{ section.settings["VEDA_image_4"] }}"
+          {% endif %}
+          {% if _style %}
+            style="{{ _style }}"
+          {% endif %}
+          loading="lazy"
+        >
+      {% else %}
+        {% liquid
+          assign pl = 'lifestyle-1'
+
+          if _placeholder
+            assign pl = _placeholder
+          endif
+
+          assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: 'veda-lazyload obf:contain!'
+
+          if _placeholder_class
+            assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _placeholder_class
+          endif
+        %}
+        {{ pl | placeholder_svg_tag: placeholder_class }}
+      {% endif %}
+      {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+    </div>
+    <h3 class="mt:50px fz:35px fw:700 c:color-gray9" data-css="{{ section.settings["VEDA_styleBox_22"] }}">
+      {{ 'veda.sections.cart.empty' | t }}
+    </h3>
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    {% liquid
+      if section.settings.empty_data___variant == 'link'
+        assign default_class = 'rs d:inline-block td:none lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s '
+      else
+        assign default_class = 'rs d:inline-block td:none lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+      endif
+
+      assign default_for_bottom_class = ''
+
+      case section.settings.empty_data___variant
+        when 'primary'
+          assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'secondary'
+          assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'dark'
+          assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+        when 'gray'
+          assign variant_class = ' bgc:color-gray3 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        when 'light'
+          assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        else
+          assign variant_class = ' c:color-gray9 c:color-primary|h'
+      endcase
+    %}
+
+    <a
+      component="{{ 'empty_data' }}"
+      {% if 'mt:30px' %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mt:30px' }}"
+      {% else %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+      {% endif %}
+      {% if section.settings.empty_data___new_tab %}
+        target="_blank"
+      {% endif %}
+      data-css="{{ section.settings["VEDA_styleBox_24"] }}"
+      href="{{ section.settings["empty_data___link"] }}"
+    >
+      <span>
+        {{ 'veda.general.continue_shopping' | t }}
+      </span>
+    </a>
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+  </div>
+{% endcapture %}
+
+{% capture Note %}
+  <div
+    class="mini-cart-note-js p:20px_0 w:100% h:fit-content bgc:color-light z:3 trs:0.3s d:none"
+    data-css="{{ section.settings["VEDA_styleBox_32"] }}"
+  >
+    <label class="d:block mb:15px">
+      <span
+        class="d:block fz:18px fw:500 ff:font-secondary c:color-gray9 mb:10px"
+        data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+      >
+        {{ 'veda.sections.cart.special_instrutions_for_seller' | t }}
+      </span>
+      <textarea
+        name="note"
+        class="rs mini-cart-note-js w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray6||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+        rows="4"
+        placeholder="{{ 'veda.sections.cart.special_instrutions_for_seller' | t }}"
+        data-css="{{ section.settings["VEDA_styleBox_30"] }}"
+      >{{ cart.note }}</textarea>
+    </label>
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    {% liquid
+      if section.settings.submit_button___variant == 'link'
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+      else
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+      endif
+
+      assign default_for_bottom_class = ''
+
+      case section.settings.submit_button___variant
+        when 'primary'
+          assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'secondary'
+          assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'dark'
+          assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+        when 'gray'
+          assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        when 'light'
+          assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        else
+          assign variant_class = ' c:color-gray9 c:color-primary|h'
+      endcase
+    %}
+
+    <button
+      type="{{ 'submit' }}"
+      component="{{ "submit_button" }}"
+      {% if 'mini-cart-btn-save-note-js' %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-save-note-js' }}"
+      {% else %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+      {% endif %}
+      {% if _data_confirm_message %}
+        data-confirm-message="{{ _data_confirm_message }}"
+      {% endif %}
+      {% if _data_target %}
+        data-target="{{ _data_target }}"
+      {% endif %}
+      {% if _aria_label %}
+        aria-label="{{ _aria_label }}"
+      {% endif %}
+      {% if _data_index %}
+        data-index="{{ _data_index }}"
+      {% endif %}
+      {% if _data_form_active %}
+        data-form-active="{{ _data_form_active }}"
+      {% endif %}
+      {% if _form %}
+        form="{{ _form }}"
+      {% endif %}
+      {% if _name %}
+        name="{{ _name }}"
+      {% endif %}
+      {% if _id %}
+        id="{{ _id }}"
+      {% endif %}
+      {% if _tooltip_position %}
+        data-tooltip-position="{{ _tooltip_position }}"
+      {% endif %}
+      {% if _tooltip_text %}
+        data-tooltip-text="{{ _tooltip_text }}"
+      {% endif %}
+      {% if _data_button_video_id %}
+        data-button-video-id="{{ _data_button_video_id }}"
+      {% endif %}
+      data-css="{{ section.settings["VEDA_styleBox_38"] }}"
+    >
+      <span>
+        {{ 'veda.sections.cart.save' | t }}
+      </span>
+    </button>
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    {% liquid
+      if section.settings.cancel_button___variant == 'link'
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+      else
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+      endif
+
+      assign default_for_bottom_class = ''
+
+      case section.settings.cancel_button___variant
+        when 'primary'
+          assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'secondary'
+          assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'dark'
+          assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+        when 'gray'
+          assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        when 'light'
+          assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        else
+          assign variant_class = ' c:color-gray9 c:color-primary|h'
+      endcase
+    %}
+
+    <button
+      type="{{ 'button' }}"
+      component="{{ "submit_button" }}"
+      {% if 'mini-cart-btn-cancel-action-js ml:10px ml:10px' %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-cancel-action-js ml:10px ml:10px' }}"
+      {% else %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+      {% endif %}
+      {% if _data_confirm_message %}
+        data-confirm-message="{{ _data_confirm_message }}"
+      {% endif %}
+      {% if _data_target %}
+        data-target="{{ _data_target }}"
+      {% endif %}
+      {% if _aria_label %}
+        aria-label="{{ _aria_label }}"
+      {% endif %}
+      {% if _data_index %}
+        data-index="{{ _data_index }}"
+      {% endif %}
+      {% if _data_form_active %}
+        data-form-active="{{ _data_form_active }}"
+      {% endif %}
+      {% if _form %}
+        form="{{ _form }}"
+      {% endif %}
+      {% if _name %}
+        name="{{ _name }}"
+      {% endif %}
+      {% if _id %}
+        id="{{ _id }}"
+      {% endif %}
+      {% if _tooltip_position %}
+        data-tooltip-position="{{ _tooltip_position }}"
+      {% endif %}
+      {% if _tooltip_text %}
+        data-tooltip-text="{{ _tooltip_text }}"
+      {% endif %}
+      {% if _data_button_video_id %}
+        data-button-video-id="{{ _data_button_video_id }}"
+      {% endif %}
+      data-css="{{ section.settings["VEDA_styleBox_40"] }}"
+    >
+      <span>
+        {{ 'veda.sections.cart.cancel' | t }}
+      </span>
+    </button>
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+  </div>
+{% endcapture %}
+
+{% capture Shipping %}
+  <div
+    class="mini-cart-shipping-js p:20px_0 w:100% h:fit-content bgc:color-light z:3 trs:0.3s d:none"
+    data-css="{{ section.settings["VEDA_styleBox_32"] }}"
+  >
+    <script type="application/json" class="{{ 'shipping-money-format-js' }}">
+      {{ 100 | money }}
+    </script>
+
+    <label class="mini-cart-shipping-select-country-js d:block mb:15px">
+      <span
+        class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+        data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+      >
+        {{ 'veda.customer.addresses.country' | t }}
+      </span>
+      <select
+        id="address-country-shipping"
+        class="rs d:flex ai:center w:100% h:43px p:12px_15px bd:1px_solid_color-gray3 fz:pfs(12px,15px) c:color-gray7 cur:pointer"
+        autocomplete="country"
+        data-css="{{ section.settings["VEDA_styleBox_34"] }}"
+      >
+        {% if builderMode %}
+          {% for countryItem in localization.available_countries %}
+            <option
+              class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray7||ph"
+              data-css="{{ section.settings["VEDA_styleBox_36"] }}"
+              value="{{ countryItem | downcase }}"
+              {% if builderMode %}
+                data-provinces="[]"
+              {% endif %}
+            >
+              {{ countryItem.name }}
+            </option>
+          {% endfor %}
+        {% else %}
+          {{ all_country_option_tags }}
+        {% endif %}
+      </select>
+    </label>
+    <label class="address-province-container-shipping d:block mb:15px" style="display:none">
+      <span
+        class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+        data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+      >
+        {{ 'veda.customer.addresses.province' | t }}
+      </span>
+      <select
+        id="address-province-shipping"
+        class="rs w:100% p:12px_15px fz:14px bd:1px_solid_color-gray3 o:none c:color-gray9 c:color-gray7||ph bgc:color-light"
+        autocomplete="address-level1"
+        data-css="{{ section.settings["VEDA_styleBox_34"] }}"
+      ></select>
+    </label>
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    <label
+      {% if _container_class %}
+        class="{{ _container_class }}"
+      {% else %}
+        class="d:block mb:15px"
+      {% endif %}
+    >
+      <span
+        {% if _label_class %}
+          class="{{ _label_class }}"
+        {% else %}
+          class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px"
+        {% endif %}
+        data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+      >
+        {{ 'veda.customer.addresses.zip' | t }}
+      </span>
+      <input
+        {% if _class %}
+          class="rs {{ _class }}"
+        {% else %}
+          class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+        {% endif %}
+        data-css="{{ section.settings["VEDA_styleBox_30"] }}"
+        type="{{ 'text' }}"
+        name="{{ 'address[zip]' }}"
+        {% if form.zip %}
+          value="{{ form.zip }}"
+        {% endif %}
+        {% if _placeholder %}
+          placeholder="{{ _placeholder }}"
+        {% endif %}
+        {% if 'postal-code' %}
+          autocomplete="{{ 'postal-code' }}"
+        {% endif %}
+        {% if _autocorrect %}
+          autocorrect="{{ _autocorrect }}"
+        {% endif %}
+        {% if 'characters' %}
+          autocapitalize="{{ 'characters' }}"
+        {% endif %}
+      >
+    </label>
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    {% liquid
+      if section.settings.submit_button___variant == 'link'
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+      else
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+      endif
+
+      assign default_for_bottom_class = ''
+
+      case section.settings.submit_button___variant
+        when 'primary'
+          assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'secondary'
+          assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'dark'
+          assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+        when 'gray'
+          assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        when 'light'
+          assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        else
+          assign variant_class = ' c:color-gray9 c:color-primary|h'
+      endcase
+    %}
+
+    <button
+      type="{{ 'submit' }}"
+      component="{{ "submit_button" }}"
+      {% if 'mini-cart-btn-submit-shipping-js d:inline-flex ai:center' %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-submit-shipping-js d:inline-flex ai:center' }}"
+      {% else %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+      {% endif %}
+      {% if _data_confirm_message %}
+        data-confirm-message="{{ _data_confirm_message }}"
+      {% endif %}
+      {% if _data_target %}
+        data-target="{{ _data_target }}"
+      {% endif %}
+      {% if _aria_label %}
+        aria-label="{{ _aria_label }}"
+      {% endif %}
+      {% if _data_index %}
+        data-index="{{ _data_index }}"
+      {% endif %}
+      {% if _data_form_active %}
+        data-form-active="{{ _data_form_active }}"
+      {% endif %}
+      {% if _form %}
+        form="{{ _form }}"
+      {% endif %}
+      {% if _name %}
+        name="{{ _name }}"
+      {% endif %}
+      {% if _id %}
+        id="{{ _id }}"
+      {% endif %}
+      {% if _tooltip_position %}
+        data-tooltip-position="{{ _tooltip_position }}"
+      {% endif %}
+      {% if _tooltip_text %}
+        data-tooltip-text="{{ _tooltip_text }}"
+      {% endif %}
+      {% if _data_button_video_id %}
+        data-button-video-id="{{ _data_button_video_id }}"
+      {% endif %}
+      data-css="{{ section.settings["VEDA_styleBox_38"] }}"
+    >
+      <span>
+        {{ 'veda.sections.cart.estimate_shipping_rates' | t }}
+      </span>
+    </button>
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    {% liquid
+      if section.settings.cancel_button___variant == 'link'
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+      else
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+      endif
+
+      assign default_for_bottom_class = ''
+
+      case section.settings.cancel_button___variant
+        when 'primary'
+          assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'secondary'
+          assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'dark'
+          assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+        when 'gray'
+          assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        when 'light'
+          assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        else
+          assign variant_class = ' c:color-gray9 c:color-primary|h'
+      endcase
+    %}
+
+    <button
+      type="{{ 'button' }}"
+      component="{{ "cancel_button" }}"
+      {% if 'mini-cart-btn-cancel-action-js ml:10px' %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-cancel-action-js ml:10px' }}"
+      {% else %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+      {% endif %}
+      {% if _data_confirm_message %}
+        data-confirm-message="{{ _data_confirm_message }}"
+      {% endif %}
+      {% if _data_target %}
+        data-target="{{ _data_target }}"
+      {% endif %}
+      {% if _aria_label %}
+        aria-label="{{ _aria_label }}"
+      {% endif %}
+      {% if _data_index %}
+        data-index="{{ _data_index }}"
+      {% endif %}
+      {% if _data_form_active %}
+        data-form-active="{{ _data_form_active }}"
+      {% endif %}
+      {% if _form %}
+        form="{{ _form }}"
+      {% endif %}
+      {% if _name %}
+        name="{{ _name }}"
+      {% endif %}
+      {% if _id %}
+        id="{{ _id }}"
+      {% endif %}
+      {% if _tooltip_position %}
+        data-tooltip-position="{{ _tooltip_position }}"
+      {% endif %}
+      {% if _tooltip_text %}
+        data-tooltip-text="{{ _tooltip_text }}"
+      {% endif %}
+      {% if _data_button_video_id %}
+        data-button-video-id="{{ _data_button_video_id }}"
+      {% endif %}
+      data-css="{{ section.settings["VEDA_styleBox_40"] }}"
+    >
+      <span>
+        {{ 'veda.sections.cart.cancel' | t }}
+      </span>
+    </button>
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+
+    <div class="mini-cart-shipping-value mt:15px fz:16px c:color-gray9"></div>
+  </div>
+{% endcapture %}
+
+{% capture Discount %}
+  <div
+    class="mini-cart-discount-js p:20px_0 w:100% h:fit-content bgc:color-light z:3 trs:0.3s d:none"
+    data-css="{{ section.settings["VEDA_styleBox_32"] }}"
+  >
+    <label class="d:block mb:15px">
+      <span
+        class="d:block fz:18px fw:500 ff:font-secondary mb:10px"
+        data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+      >
+        {{ 'veda.sections.cart.add_discount_code' | t }}
+      </span>
+      <input
+        form="cart-drawer-form"
+        type="text"
+        name="discount"
+        class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray6||ph bgc:color-light bd:1px_solid_color-gray3 o:none"
+        data-css="{{ section.settings["VEDA_styleBox_30"] }}"
+      >
+    </label>
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    {% liquid
+      if section.settings.submit_button___variant == 'link'
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+      else
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+      endif
+
+      assign default_for_bottom_class = ''
+
+      case section.settings.submit_button___variant
+        when 'primary'
+          assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'secondary'
+          assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'dark'
+          assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+        when 'gray'
+          assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        when 'light'
+          assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        else
+          assign variant_class = ' c:color-gray9 c:color-primary|h'
+      endcase
+    %}
+
+    <button
+      type="{{ 'submit' }}"
+      component="{{ "submit_button" }}"
+      {% if 'mini-cart-btn-save-discount-js' %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-save-discount-js' }}"
+      {% else %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+      {% endif %}
+      {% if _data_confirm_message %}
+        data-confirm-message="{{ _data_confirm_message }}"
+      {% endif %}
+      {% if _data_target %}
+        data-target="{{ _data_target }}"
+      {% endif %}
+      {% if _aria_label %}
+        aria-label="{{ _aria_label }}"
+      {% endif %}
+      {% if _data_index %}
+        data-index="{{ _data_index }}"
+      {% endif %}
+      {% if _data_form_active %}
+        data-form-active="{{ _data_form_active }}"
+      {% endif %}
+      {% if _form %}
+        form="{{ _form }}"
+      {% endif %}
+      {% if _name %}
+        name="{{ _name }}"
+      {% endif %}
+      {% if _id %}
+        id="{{ _id }}"
+      {% endif %}
+      {% if _tooltip_position %}
+        data-tooltip-position="{{ _tooltip_position }}"
+      {% endif %}
+      {% if _tooltip_text %}
+        data-tooltip-text="{{ _tooltip_text }}"
+      {% endif %}
+      {% if _data_button_video_id %}
+        data-button-video-id="{{ _data_button_video_id }}"
+      {% endif %}
+      data-css="{{ section.settings["VEDA_styleBox_38"] }}"
+    >
+      <span>
+        {{ 'veda.sections.cart.save' | t }}
+      </span>
+    </button>
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    {% liquid
+      if section.settings.cancel_button___variant == 'link'
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+      else
+        assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+      endif
+
+      assign default_for_bottom_class = ''
+
+      case section.settings.cancel_button___variant
+        when 'primary'
+          assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'secondary'
+          assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'dark'
+          assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+        when 'gray'
+          assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        when 'light'
+          assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        else
+          assign variant_class = ' c:color-gray9 c:color-primary|h'
+      endcase
+    %}
+
+    <button
+      type="{{ 'button' }}"
+      component="{{ "cancel_button" }}"
+      {% if 'mini-cart-btn-cancel-action-js ml:10px' %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'mini-cart-btn-cancel-action-js ml:10px' }}"
+      {% else %}
+        class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+      {% endif %}
+      {% if _data_confirm_message %}
+        data-confirm-message="{{ _data_confirm_message }}"
+      {% endif %}
+      {% if _data_target %}
+        data-target="{{ _data_target }}"
+      {% endif %}
+      {% if _aria_label %}
+        aria-label="{{ _aria_label }}"
+      {% endif %}
+      {% if _data_index %}
+        data-index="{{ _data_index }}"
+      {% endif %}
+      {% if _data_form_active %}
+        data-form-active="{{ _data_form_active }}"
+      {% endif %}
+      {% if _form %}
+        form="{{ _form }}"
+      {% endif %}
+      {% if _name %}
+        name="{{ _name }}"
+      {% endif %}
+      {% if _id %}
+        id="{{ _id }}"
+      {% endif %}
+      {% if _tooltip_position %}
+        data-tooltip-position="{{ _tooltip_position }}"
+      {% endif %}
+      {% if _tooltip_text %}
+        data-tooltip-text="{{ _tooltip_text }}"
+      {% endif %}
+      {% if _data_button_video_id %}
+        data-button-video-id="{{ _data_button_video_id }}"
+      {% endif %}
+      data-css="{{ section.settings["VEDA_styleBox_40"] }}"
+    >
+      <span>
+        {{ 'veda.sections.cart.cancel' | t }}
+      </span>
+    </button>
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+  </div>
+{% endcapture %}
+
+{% capture CheckOut %}
+  {% liquid
+    case section.settings.VEDA_radioGroup_2
+      when 'left'
+        assign positionCheckout = 'jc:flex-start'
+      when 'center'
+        assign positionCheckout = 'jc:center'
+      else
+        assign positionCheckout = 'jc:flex-end'
+    endcase
+  %}
+  <div class="cart-checkout-js w:100% d:flex {{ positionCheckout }}">
+    <div class="w:100% maw:400px@400px">
+      <div class="w:100% h:70px d:flex mt:20px bdb:1px_solid_color-gray3">
+        {% for block in section.blocks %}
+          {% assign actionItem = block.settings %}
+
+          {% if actionItem.actions___enable %}
+            {% case block.type %}
+              {% when 'actions_note' %}
+                <div
+                  class="mini-cart-btn-note-js d:flex fld:column jc:center ai:center flxs:1 w:100% h:100% fz:pfs(13px,15px) c:color-gray9 bdr:1px_solid_color-gray3 bd:none!|lc cur:pointer bdrs:4px||be fz:13px||be"
+                  data-tooltip-position="top"
+                  data-tooltip-text="{{ 'veda.sections.cart.special_instrutions_for_seller' | t }}"
+                  data-css="{{ actionItem.actions___design__id }}"
+                >
+                  <span class="fz:18px" data-css="{{ actionItem.VEDA_styleBox_26 }}">
+                    <i class="far fa-pencil-alt"></i>
+                  </span>
+                  <span class="ff:font-secondary">{{ 'veda.sections.cart.note_title' | t }}</span>
+                </div>
+              {% when 'actions_shipping' %}
+                <div
+                  class="mini-cart-btn-shipping-js d:flex fld:column jc:center ai:center flxs:1 w:100% h:100% fz:pfs(13px,15px) c:color-gray9 bdr:1px_solid_color-gray3 bd:none!|lc cur:pointer bdrs:4px||be fz:13px||be"
+                  data-tooltip-position="top"
+                  data-tooltip-text="{{ 'veda.sections.cart.estimate_shipping_rates' | t }}"
+                  data-css="{{ actionItem.actions___design__id }}"
+                >
+                  <span class="fz:18px" data-css="{{ actionItem.VEDA_styleBox_26 }}">
+                    <i class="far fa-shipping-fast"></i>
+                  </span>
+                  <span class="ff:font-secondary">{{ 'veda.sections.cart.shipping_title' | t }}</span>
+                </div>
+              {% when 'actions_discount' %}
+                <div
+                  class="mini-cart-btn-discount-js d:flex fld:column jc:center ai:center flxs:1 w:100% h:100% fz:pfs(13px,15px) c:color-gray9 bdr:1px_solid_color-gray3 bd:none!|lc cur:pointer bdrs:4px||be fz:13px||be"
+                  data-css="{{ actionItem.actions___design__id }}"
+                  data-tooltip-position="top"
+                  data-tooltip-text="{{ 'veda.sections.cart.add_discount_code' | t }}"
+                >
+                  <span class="fz:18px" data-css="{{ actionItem.VEDA_styleBox_26 }}">
+                    <i class="far fa-percent"></i>
+                  </span>
+                  <span class="ff:font-secondary">{{ 'veda.sections.cart.coupon_code' | t }}</span>
+                </div>
+            {% endcase %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      {{ Note }}
+      {{ Shipping }}
+      {{ Discount }}
+
+      {% for block in section.blocks %}
+        {% assign checkOutItem = block.settings %}
+
+        {% case block.type %}
+          {% when 'check_out_price' %}
+            <div class="d:flex ai:center jc:space-between">
+              <div class="mt:20px fz:15px ff:font-secondary fw:500" data-css="{{ checkOutItem.VEDA_styleBox_42 }}">
+                {{ 'veda.sections.cart.subtotal' | t }}
+              </div>
+              <span
+                class="mt:20px fz:20px ff:font-secondary fw:500"
+                data-css="{{ checkOutItem.VEDA_styleBox_44 }}"
+              >
+                {{ cart.total_price | money }}
+              </span>
+            </div>
+            <div>
+              {% if cart.cart_level_discount_applications.size > 0 %}
+                <ul class="p:0! ls:none" aria-label="{{ 'veda.customer.order.discount' | t }}">
+                  {% for discountItem in cart.cart_level_discount_applications %}
+                    <li class="mt:5px fz:15px ff:font-secondary" data-css="{{ discountItem.discount_design.id }}">
+                      {{ discountItem.title }}(-{{ discountItem.total_allocated_amount | money }})
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          {% when 'check_out_text' %}
+            <div class="mt:10px fz:14px c:color-gray7" data-css="{{ checkOutItem.VEDA_styleBox_48 }}">
+              {% if cart.taxes_included and shop.shipping_policy.body != blank %}
+                {{ 'veda.sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+              {% elsif cart.taxes_included %}
+                {{ 'veda.sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+              {% elsif shop.shipping_policy.body != blank %}
+                {{
+                  'veda.sections.cart.taxes_and_shipping_policy_at_checkout_html'
+                  | t: link: shop.shipping_policy.url
+                }}
+              {% else %}
+                {{ 'veda.sections.cart.taxes_and_shipping_at_checkout' | t }}
+              {% endif %}
+            </div>
+          {% when 'check_out_button' %}
+            {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+            {% liquid
+              if checkOutItem.check_out___variant == 'link'
+                assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 bd:0 bxsh:none p:0 bg:none cur:pointer trs:0.3s '
+              else
+                assign default_class = 'rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer '
+              endif
+
+              assign default_for_bottom_class = ''
+
+              case checkOutItem.check_out___variant
+                when 'primary'
+                  assign variant_class = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+                when 'secondary'
+                  assign variant_class = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+                when 'dark'
+                  assign variant_class = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+                when 'gray'
+                  assign variant_class = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+                when 'light'
+                  assign variant_class = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+                else
+                  assign variant_class = ' c:color-gray9 c:color-primary|h'
+              endcase
+            %}
+
+            <button
+              type="{{ 'submit' }}"
+              component="{{ 'check_out' }}"
+              {% if 'w:100% mt:20px' %}
+                class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }} {{ 'w:100% mt:20px' }}"
+              {% else %}
+                class="{{ default_class }}{{ default_for_bottom_class }}{{ variant_class }}"
+              {% endif %}
+              {% if _data_confirm_message %}
+                data-confirm-message="{{ _data_confirm_message }}"
+              {% endif %}
+              {% if _data_target %}
+                data-target="{{ _data_target }}"
+              {% endif %}
+              {% if _aria_label %}
+                aria-label="{{ _aria_label }}"
+              {% endif %}
+              {% if _data_index %}
+                data-index="{{ _data_index }}"
+              {% endif %}
+              {% if _data_form_active %}
+                data-form-active="{{ _data_form_active }}"
+              {% endif %}
+              {% if 'cart-drawer-form' %}
+                form="{{ 'cart-drawer-form' }}"
+              {% endif %}
+              {% if 'checkout' %}
+                name="{{ 'checkout' }}"
+              {% endif %}
+              {% if 'checkout' %}
+                id="{{ 'checkout' }}"
+              {% endif %}
+              {% if _tooltip_position %}
+                data-tooltip-position="{{ _tooltip_position }}"
+              {% endif %}
+              {% if _tooltip_text %}
+                data-tooltip-text="{{ _tooltip_text }}"
+              {% endif %}
+              {% if _data_button_video_id %}
+                data-button-video-id="{{ _data_button_video_id }}"
+              {% endif %}
+              data-css="{{ checkOutItem.check_out___design__id }}"
+            >
+              <span>
+                {{ 'veda.sections.cart.checkout' | t }}
+              </span>
+            </button>
+            {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+          {% else %}
+
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+{% endcapture %}
+
+{% capture Content %}
+  <div
+    class="col-xs-{{ section.settings["VEDA_responsive_4"] }} col-sm-{{ section.settings["VEDA_responsive_3"] }} col-md-{{ section.settings["VEDA_responsive_2"] }} col-lg-{{ section.settings["VEDA_responsive_1"] }} mt:0!"
+    {% if section.settings.VEDA_slider_2 or section.settings.VEDA_slider_2 == 0 %}
+      style="{{ colGap }}"
+    {% endif %}
+  >
+    {% if builderMode %}
+      {% if section.settings.testing == 'has_item' %}
+        <form action="{{ routes.cart_url }}" method="post" id="cart-drawer-form" class="w:100%">
+          {{ TableHeader }}
+          {{ TableBody }}
+        </form>
+        {{ CheckOut }}
+      {% else %}
+        {{ EmptyContent }}
+      {% endif %}
+    {% else %}
+      {% if cart.item_count == 0 %}
+        {{ EmptyContent }}
+      {% else %}
+        <form action="{{ routes.cart_url }}" method="post" id="cart-drawer-form" class="w:100%">
+          {{ TableHeader }}
+          {{ TableBody }}
+        </form>
+        {{ CheckOut }}
+      {% endif %}
+    {% endif %}
+  </div>
+{% endcapture %}
+
+<section
+  data-id="{{ uniqueId }}"
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center"
+  style="{{ backgroundColor }}{{ backgroundImage }}{{ sectionPadding }}{{ sectionSeparator }}"
+>
+  <div
+    class="{{ containerType }}"
+    data-id="cartcontainer"
+    {% if section.settings.VEDA_slider_1
+      or section.settings.VEDA_slider_1 == 0
+      or section.settings.section_settings___width
+      or section.settings.section_settings___width == 0
+    %}
+      style="{{ containerGap }}{{ containerWidth }}"
+    {% endif %}
+  >
+    <div
+      {% if section.settings.VEDA_radioGroup_1 == 'left' %}
+        class="row mt:0!"
+      {% else %}
+        class="row mt:0! fld:row-reverse"
+      {% endif %}
+    >
+      <div class="col-xs-{{ section.settings["VEDA_responsive_8"] }} col-sm-{{ section.settings["VEDA_responsive_7"] }} col-md-{{ section.settings["VEDA_responsive_6"] }} col-lg-{{ section.settings["VEDA_responsive_5"] }} mt:0!">
+        <div
+          {% if section.settings.VEDA_responsive_5 == 12 %}
+            class="pos:relative d:flex ai:center jc:space-between"
+          {% else %}
+            class="pos:relative"
+          {% endif %}
+        >
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          <div class="d:flex fld:column w:100%">
+            {% for block in section.blocks %}
+              {% assign heading_item = block.settings %}
+
+              {% if heading_item.heading___enable %}
+                {% liquid
+                  assign align = heading_item.heading___align
+
+                  if heading_item.heading___align == 'left'
+                    assign align = 'start'
+                  elsif heading_item.heading___align == 'right'
+                    assign align = 'end'
+                  endif
+                %}
+                {% capture attr %}
+                  data-css="{{ heading_item.VEDA_styleBox_2 }}" class="fw:500" style="text-align: {{ align }}"
+                {% endcapture %}
+                {% case block.type %}
+                  {% when 'heading_title' %}
+                    {% if heading_item.heading___title_tag_name == 'h2' %}
+                      <h2 {{ attr }}>{{ heading_item.heading___title }}</h2>
+                    {% elsif heading_item.heading___title_tag_name == 'h3' %}
+                      <h3 {{ attr }}>{{ heading_item.heading___title }}</h3>
+                    {% elsif heading_item.heading___title_tag_name == 'h4' %}
+                      <h4 {{ attr }}>{{ heading_item.heading___title }}</h4>
+                    {% elsif heading_item.heading___title_tag_name == 'h5' %}
+                      <h5 {{ attr }}>{{ heading_item.heading___title }}</h5>
+                    {% elsif heading_item.heading___title_tag_name == 'h6' %}
+                      <h6 {{ attr }}>{{ heading_item.heading___title }}</h6>
+                    {% endif %}
+                  {% when 'heading_text' %}
+                    <div
+                      data-css="{{ heading_item.VEDA_styleBox_4 }}"
+                      style="text-align: {{ align }}"
+                      class="fz:16px"
+                    >
+                      {{ heading_item.heading___text }}
+                    </div>
+                  {% when 'heading_icon' %}
+                    <div
+                      data-css="{{ heading_item.VEDA_styleBox_6 }}"
+                      {% if heading_item.heading___align == 'left' %}
+                        style="text-align: start"
+                      {% elsif heading_item.heading___align == 'center' %}
+                        style="text-align: {{ heading_item.heading___align }}; margin-left: auto; margin-right: auto"
+                      {% elsif heading_item.heading___align == 'right' %}
+                        style="text-align: end; margin-left: auto; margin-right: 0"
+                      {% endif %}
+                      class="fz:34px"
+                    >
+                      {{ heading_item.heading___icon }}
+                    </div>
+                  {% when 'heading_space' %}
+                    <div style="height: {{ heading_item.heading___space }}px"></div>
+                  {% when 'link' %}
+                    <a
+                      href="{{ heading_item.link }}"
+                      class="ff:font-secondary fz:16px fw:500 c:color-gray9 c:color-gray9|h! td:underline"
+                      data-css="{{ heading_item.link_design.id }}"
+                      style="text-align: {{ align }}"
+                    >
+                      {{ heading_item.text_link }}
+                    </a>
+                  {% when 'heading_divider' %}
+                    {% assign headingDividerPadding = 'padding-top: '
+                      | append: heading_item.VEDA_space_8
+                      | append: 'px;padding-right: '
+                      | append: heading_item.VEDA_space_7
+                      | append: 'px;padding-bottom: '
+                      | append: heading_item.VEDA_space_5
+                      | append: 'px;padding-left: '
+                      | append: heading_item.VEDA_space_6
+                      | append: 'px;'
+                    %}
+                    <div
+                      class="pt:20px fz:0"
+                      style="text-align: {{ align }};{{ headingDividerPadding }}"
+                    >
+                      {% if heading_item.heading___divider == 'wave' %}
+                        <div class="d:inline-block">
+                          <svg
+                            width="56px"
+                            height="7px"
+                            viewBox="0 0 56 7"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            fill="none"
+                          >
+                            <g transform="translate(-288.000000, -4390.000000)" class="stk:color-gray3" style="stroke: {{ heading_item.heading___divider_color }}">
+                                <g transform="translate(135.000000, 4033.000000)">
+                                    <g transform="translate(0.000000, 48.000000)">
+                                        <g transform="translate(153.000000, 310.000000)">
+                                            <path d="M0,0 C4.64733427,0 4.65894638,2 9.33333333,2 C14.0077203,2 13.9400367,0 18.6666667,0 C23.3932966,0 23.3301172,2 28,2 C32.6698828,2 32.6447946,0 37.3333333,0 C42.0218721,0 41.9540981,2 46.6666667,2 C51.3792353,2 51.3554302,0 56,0"></path>
+                                            <path d="M0,3 C4.64733427,3 4.65894638,5 9.33333333,5 C14.0077203,5 13.9400367,3 18.6666667,3 C23.3932966,3 23.3301172,5 28,5 C32.6698828,5 32.6447946,3 37.3333333,3 C42.0218721,3 41.9540981,5 46.6666667,5 C51.3792353,5 51.3554302,3 56,3"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                          </svg>
+                        </div>
+                      {% elsif heading_item.heading___divider == 'mountain' %}
+                        <div class="d:inline-block">
+                          <svg
+                            width="60px"
+                            height="9px"
+                            viewBox="0 0 60 9"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                          >
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g transform="translate(-3.000000, -47.000000)" stroke-width="2" class="stk:color-gray3" style="stroke: {{ heading_item.heading___divider_color }}">
+                                    <g transform="translate(0.000000, 45.000000)">
+                                        <polyline points="4 9 9.8 4 15.6 9 21.4 4 27.2 9 33 4 38.8 9 44.6 4 50.4 9 56.2 4 62 9"></polyline>
+                                    </g>
+                                </g>
+                            </g>
+                          </svg>
+                        </div>
+                      {% else %}
+                        <div
+                          class="d:inline-block! w:50px h:2px bgc:color-gray3"
+                          style="background-color: {{ heading_item.heading___divider_color }}"
+                        ></div>
+                      {% endif %}
+                    </div>
+                  {% else %}
+
+                {% endcase %}
+              {% endif %}
+            {% endfor %}
+          </div>
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+        </div>
+      </div>
+      {{ Content }}
+    </div>
+  </div>
+  {% if section.settings.VEDA_select_2 == 'video' and section.settings.VEDA_video_1 %}
+    <div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+  {% endif %}
+  {% if section.settings.VEDA_switch_2 %}
+    <div
+      class="pos:absolute ins:0 z:-1"
+      style="background-color: {{ section.settings["VEDA_color_2"] }};backdrop-filter: blur({{ section.settings["VEDA_slider_3"] }}px)"
+    ></div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Cart 1",
+  "blocks": [
+    {
+      "type": "heading_title",
+      "name": "Heading > Title",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Title",
+          "id": "heading___title",
+          "type": "liquid",
+          "default": "This is a title"
+        },
+        {
+          "label": "Heading > Tag Name",
+          "id": "heading___title_tag_name",
+          "type": "select",
+          "default": "h2",
+          "options": [
+            {
+              "label": "H2",
+              "value": "h2"
+            },
+            {
+              "label": "H3",
+              "value": "h3"
+            },
+            {
+              "label": "H4",
+              "value": "h4"
+            },
+            {
+              "label": "H5",
+              "value": "h5"
+            },
+            {
+              "label": "H6",
+              "value": "h6"
+            }
+          ]
+        },
+        {
+          "label": "Heading > Align",
+          "id": "heading___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "heading_text",
+      "name": "Heading > Text",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Text",
+          "id": "heading___text",
+          "type": "liquid",
+          "default": "<p>This is a text</p>"
+        },
+        {
+          "label": "Heading > Align",
+          "id": "heading___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_3",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_4",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "heading_divider",
+      "name": "Heading > Divider",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Divider",
+          "id": "heading___divider",
+          "type": "select",
+          "default": "line",
+          "options": [
+            {
+              "label": "Line",
+              "value": "line"
+            },
+            {
+              "label": "Wave",
+              "value": "wave"
+            },
+            {
+              "label": "Mountain",
+              "value": "mountain"
+            }
+          ]
+        },
+        {
+          "label": "Heading > Align",
+          "id": "heading___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "label": "Heading > Color",
+          "id": "heading___divider_color",
+          "type": "text"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_5",
+          "label": "Heading > Padding > Bottom"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_6",
+          "label": "Heading > Padding > Left"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_7",
+          "label": "Heading > Padding > Right"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_8",
+          "label": "Heading > Padding > Top"
+        }
+      ]
+    },
+    {
+      "type": "heading_icon",
+      "name": "Heading > Icon",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Icon",
+          "info": "[Get icon](https://fontawesome.com/v5/search)",
+          "id": "heading___icon",
+          "type": "html",
+          "default": "<i class=\"far fa-atom\"></i>"
+        },
+        {
+          "label": "Heading > Align",
+          "id": "heading___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_5",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_6",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "heading_space",
+      "name": "Heading > Space",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Space",
+          "id": "heading___space",
+          "type": "number",
+          "default": 20
+        }
+      ]
+    },
+    {
+      "type": "actions_note",
+      "name": "Actions > Note",
+      "settings": [
+        {
+          "label": "Actions > Enable",
+          "id": "actions___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "actions___design__css",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "actions___design__id",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Design > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_25",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Icon Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_26",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Icon Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "actions_shipping",
+      "name": "Actions > Shipping",
+      "settings": [
+        {
+          "label": "Actions > Enable",
+          "id": "actions___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "actions___design__css",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "actions___design__id",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Design > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_25",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Icon Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_26",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Icon Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "actions_discount",
+      "name": "Actions > Discount",
+      "settings": [
+        {
+          "label": "Actions > Enable",
+          "id": "actions___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "actions___design__css",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "actions___design__id",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Design > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_25",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Icon Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_26",
+          "info": "Please DON'T edit this field.",
+          "label": "Actions > Icon Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "check_out_price",
+      "name": "Check Out > Price",
+      "settings": [
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_41",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Title Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_42",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Title Design > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_43",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Price > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_44",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Price > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_45",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Discount > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_46",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Discount > Id"
+        }
+      ]
+    },
+    {
+      "type": "check_out_text",
+      "name": "Check Out > Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_47",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_48",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "check_out_button",
+      "name": "Check Out > Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "check_out___design__css",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "check_out___design__id",
+          "info": "Please DON'T edit this field.",
+          "label": "Check Out > Design > Id"
+        },
+        {
+          "label": "Check Out > Variant",
+          "id": "check_out___variant",
+          "type": "select",
+          "default": "primary",
+          "options": [
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "label": "Dark",
+              "value": "dark"
+            },
+            {
+              "label": "Gray",
+              "value": "gray"
+            },
+            {
+              "label": "Light",
+              "value": "light"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "label": "Section Settings > Container Width",
+      "id": "VEDA_select_1",
+      "type": "select",
+      "default": "boxed",
+      "options": [
+        {
+          "label": "Boxed",
+          "value": "boxed"
+        },
+        {
+          "label": "Full Width",
+          "value": "full_width"
+        },
+        {
+          "label": "Manual",
+          "value": "manual"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Width",
+      "id": "section_settings___width",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Gap",
+      "id": "VEDA_slider_1",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Column Gap",
+      "id": "VEDA_slider_2",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Background Type",
+      "id": "VEDA_select_2",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "Image",
+          "value": "image"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Video",
+          "value": "video"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_1",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_image_2",
+      "label": "Background Image"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_3",
+      "label": "Background Image"
+    },
+    {
+      "label": "Section Settings > Background Color",
+      "id": "VEDA_color_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Video",
+      "id": "VEDA_video_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Fixed",
+      "id": "VEDA_switch_1",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Size",
+      "id": "VEDA_select_3",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Enable Background Overlay",
+      "id": "VEDA_switch_2",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Overlay Color",
+      "id": "VEDA_color_2",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Overlay Blur",
+      "id": "VEDA_slider_3",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Separator",
+      "id": "VEDA_switch_3",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Separator Top",
+      "id": "VEDA_slider_4",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Bottom",
+      "id": "VEDA_slider_5",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Color",
+      "id": "VEDA_color_3",
+      "type": "text",
+      "default": "var(--color-gray2)"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_1",
+      "label": "Section Settings > Padding > Bottom"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_2",
+      "label": "Section Settings > Padding > Left"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_3",
+      "label": "Section Settings > Padding > Right"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_4",
+      "label": "Section Settings > Padding > Top"
+    },
+    {
+      "type": "header",
+      "content": "Table > Header"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_7",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Row > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_8",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Row > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_9",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Column > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_10",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Column > Id"
+    },
+    {
+      "type": "header",
+      "content": "Table > Body"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_11",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Row > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_12",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Row > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_13",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Column > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_14",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Column > Id"
+    },
+    {
+      "type": "header",
+      "content": "Table > Product Settings"
+    },
+    {
+      "type": "text",
+      "id": "table___title__css",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Title > Css"
+    },
+    {
+      "type": "text",
+      "id": "table___title__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Title > Id"
+    },
+    {
+      "type": "text",
+      "id": "table___vendor__css",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Vendor > Css"
+    },
+    {
+      "type": "text",
+      "id": "table___vendor__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Vendor > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_15",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Option > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_16",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Option > Id"
+    },
+    {
+      "label": "Table > Aspect Ratio",
+      "id": "table___aspect_ratio",
+      "type": "number"
+    },
+    {
+      "label": "Table > Image Border Radius",
+      "id": "VEDA_slider_6",
+      "type": "number"
+    },
+    {
+      "type": "text",
+      "id": "table___remove__css",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Remove > Css"
+    },
+    {
+      "type": "text",
+      "id": "table___remove__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Remove > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_17",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Regular Price > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_18",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Regular Price > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_19",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Sale Price > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_20",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Sale Price > Id"
+    },
+    {
+      "type": "text",
+      "id": "table___quantity__css",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Quantity > Css"
+    },
+    {
+      "type": "text",
+      "id": "table___quantity__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Quantity > Id"
+    },
+    {
+      "type": "text",
+      "id": "table___total__css",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Total > Css"
+    },
+    {
+      "type": "text",
+      "id": "table___total__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Table > Total > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_21",
+      "info": "Please DON'T edit this field.",
+      "label": "Empty > Text Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_22",
+      "info": "Please DON'T edit this field.",
+      "label": "Empty > Text Design > Id"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_4",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "empty_data___image__src",
+      "label": "Image"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_5",
+      "label": "Image"
+    },
+    {
+      "label": "Empty > Width",
+      "id": "empty_data___width",
+      "type": "number"
+    },
+    {
+      "label": "Empty > Aspect Ratio",
+      "id": "VEDA_slider_7",
+      "type": "number"
+    },
+    {
+      "label": "Empty > Image Border Radius",
+      "id": "VEDA_slider_8",
+      "type": "number"
+    },
+    {
+      "label": "Empty > Open In New Tab",
+      "id": "empty_data___new_tab",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Empty > Link",
+      "id": "empty_data___link",
+      "type": "url"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_23",
+      "info": "Please DON'T edit this field.",
+      "label": "Empty > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_24",
+      "info": "Please DON'T edit this field.",
+      "label": "Empty > Design > Id"
+    },
+    {
+      "label": "Empty > Variant",
+      "id": "empty_data___variant",
+      "type": "select",
+      "default": "primary",
+      "options": [
+        {
+          "label": "Primary",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary",
+          "value": "secondary"
+        },
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Gray",
+          "value": "gray"
+        },
+        {
+          "label": "Light",
+          "value": "light"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_27",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > Label > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_28",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > Label > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_29",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > Input > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_30",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > Input > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_31",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > Content > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_32",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > Content > Id"
+    },
+    {
+      "type": "header",
+      "content": "Content Actions > Select"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_33",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > View > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_34",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > View > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_35",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > Dropdown > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_36",
+      "info": "Please DON'T edit this field.",
+      "label": "Content Actions > Dropdown > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_37",
+      "info": "Please DON'T edit this field.",
+      "label": "Submit Button > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_38",
+      "info": "Please DON'T edit this field.",
+      "label": "Submit Button > Design > Id"
+    },
+    {
+      "label": "Submit Button > Variant",
+      "id": "submit_button___variant",
+      "type": "select",
+      "default": "primary",
+      "options": [
+        {
+          "label": "Primary",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary",
+          "value": "secondary"
+        },
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Gray",
+          "value": "gray"
+        },
+        {
+          "label": "Light",
+          "value": "light"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_39",
+      "info": "Please DON'T edit this field.",
+      "label": "Cancel Button > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_40",
+      "info": "Please DON'T edit this field.",
+      "label": "Cancel Button > Design > Id"
+    },
+    {
+      "label": "Cancel Button > Variant",
+      "id": "cancel_button___variant",
+      "type": "select",
+      "default": "primary",
+      "options": [
+        {
+          "label": "Primary",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary",
+          "value": "secondary"
+        },
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Gray",
+          "value": "gray"
+        },
+        {
+          "label": "Light",
+          "value": "light"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "default": 4,
+      "id": "VEDA_responsive_1",
+      "label": "Responsive > Content Item > Large"
+    },
+    {
+      "type": "number",
+      "default": 3,
+      "id": "VEDA_responsive_2",
+      "label": "Responsive > Content Item > Medium"
+    },
+    {
+      "type": "number",
+      "default": 2,
+      "id": "VEDA_responsive_3",
+      "label": "Responsive > Content Item > Small"
+    },
+    {
+      "type": "number",
+      "default": 1,
+      "id": "VEDA_responsive_4",
+      "label": "Responsive > Content Item > Extra small"
+    },
+    {
+      "type": "number",
+      "default": 12,
+      "id": "VEDA_responsive_5",
+      "label": "Responsive > Heading And Content > Large"
+    },
+    {
+      "type": "number",
+      "default": 12,
+      "id": "VEDA_responsive_6",
+      "label": "Responsive > Heading And Content > Medium"
+    },
+    {
+      "type": "number",
+      "default": 12,
+      "id": "VEDA_responsive_7",
+      "label": "Responsive > Heading And Content > Small"
+    },
+    {
+      "type": "number",
+      "default": 12,
+      "id": "VEDA_responsive_8",
+      "label": "Responsive > Heading And Content > Extra small"
+    },
+    {
+      "label": "Responsive > Heading Position",
+      "id": "VEDA_radioGroup_1",
+      "type": "radio",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "label": "Responsive > Check Out Position",
+      "id": "VEDA_radioGroup_2",
+      "type": "radio",
+      "default": "right",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "label": "Testing",
+      "id": "testing",
+      "type": "radio",
+      "default": "has_item",
+      "options": [
+        {
+          "label": "Has Item",
+          "value": "has_item"
+        },
+        {
+          "label": "Empty",
+          "value": "empty"
+        }
+      ]
+    }
+  ],
+  "tag": "div"
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+
+    .veda-free-shipping-progress-bar {
+  animation: 5s linear infinite bar-progress;
+  background-size: 1rem 1rem;
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0) 25%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0) 100%); }
+
+@-webkit-keyframes bar-progress {
+  from {
+    background-position: 0 0; }
+  to {
+    background-position: -60px -60px; } }
+
+@keyframes bar-progress {
+  from {
+    background-position: 0 0; }
+  to {
+    background-position: -60px -60px; } }
+
+.veda-mini-cart-draw-active {
+  transform: translateX(0) !important; }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

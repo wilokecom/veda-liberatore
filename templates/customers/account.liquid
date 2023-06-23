@@ -1,0 +1,220 @@
+{% liquid
+  assign content_width = 75
+%}
+<section
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center pt:50px pb:50px"
+>
+  <div
+    class="container"
+  >
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="pos:relative d:flex ai:center jc:space-between">
+                <div class="d:flex fld:column w:100%">
+                    <h2  class="fw:500" style="text-align: start;">
+                        {{ "veda.customer.orders.title" | t }}
+                    </h2>
+                    <a  href="{{ routes.account_logout_url }}" class="ff:font-secondary fz:16px fw:500 c:color-gray9 c:color-gray9|h! td:underline" style="text-align: start;">
+                        {{ "veda.customer.log_out" | t }}      
+                    </a>
+                    <div  class="pt:20px fz:0" style="text-align: start;">
+                        <div class="d:inline-block! w:50px h:2px bgc:color-gray3"></div>
+                    </div>
+                    <div  style="height: 50px;"></div>
+                </div>
+            </div>
+            <div class="d:flex@md">
+                <div
+                    class="w:100%@+md! mih:100% d:flex fld:column pr:30px@md"
+                    component="table"
+                    style="width: {{ content_width }}%"
+                >
+                    <h4 class="mb:20px fw:500">
+                        {{ "veda.customer.orders.title" | t }}
+                    </h4>
+                    {% paginate customer.orders by 8 %}
+                    {% liquid
+                        assign item_length = customer.orders | size
+                    %}
+                    {% if item_length > 0 %}
+                        <table class="table-responsive-700">
+                        <thead>
+                            <tr>
+                            <td
+                                class="p:20px_15px! fz:14px fw:500 ff:font-secondary c:color-gray7 va:top tt:uppercase bd:1px_solid_color-gray5"
+                                
+                            >
+                                {{ 'veda.customer.orders.order_number' | t }}
+                            </td>
+                            <td
+                                class="p:20px_15px! fz:12px fw:500 ff:font-secondary c:color-gray7 va:top tt:uppercase bd:1px_solid_color-gray5"
+                                
+                            >
+                                {{ 'veda.customer.orders.date' | t }}
+                            </td>
+                            <td
+                                class="p:20px_15px! fz:12px fw:500 ff:font-secondary c:color-gray7 va:top tt:uppercase bd:1px_solid_color-gray5"
+                                
+                            >
+                                {{ 'veda.customer.orders.payment_status' | t }}
+                            </td>
+                            <td
+                                class="p:20px_15px! fz:12px fw:500 ff:font-secondary c:color-gray7 va:top tt:uppercase bd:1px_solid_color-gray5"
+                                
+                            >
+                                {{ 'veda.customer.orders.fulfillment_status' | t }}
+                            </td>
+                            <td
+                                class="p:20px_15px! fz:12px fw:500 ff:font-secondary c:color-gray7 va:top tt:uppercase bd:1px_solid_color-gray5"
+                                
+                            >
+                                {{ 'veda.customer.orders.total' | t }}
+                            </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in customer.orders %}
+                            <tr>
+                                <td
+                                class="p:13px_15px! bd:1px_solid_color-gray5"
+                                data-th="{{ 'veda.customer.orders.order_number' | t }}"
+                                
+                                >
+                                <a
+                                    href="{{ order.customer_url }}"
+                                    aria-label="{{ 'veda.customer.orders.order_number_link' | t: number: order.name }}"
+                                    class="d:inline-block bd:1px_solid_color-gray3 p:4px_10px"
+                                >
+                                    {{ order.name }}
+                                </a>
+                                </td>
+                                <td
+                                class="p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                data-th="{{ 'veda.customer.orders.date' | t }}"
+                                
+                                >
+                                {{ order.created_at | date: '%b %d, %Y' }}
+                                </td>
+                                <td
+                                class="p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                data-th="{{ 'veda.customer.orders.payment_status' | t }}"
+                                
+                                >
+                                {{ order.financial_status_label }}
+                                </td>
+                                <td
+                                class="p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5 tt:capitalize"
+                                data-th="{{ 'veda.customer.orders.fulfillment_status' | t }}"
+                                
+                                >
+                                {{ order.fulfillment_status_label }}
+                                </td>
+                                <td
+                                class="p:13px_15px! c:color-gray9 bd:1px_solid_color-gray5"
+                                data-th="{{ 'veda.customer.orders.total' | t }}"
+                                
+                                >
+                                {{ order.total_price | money_with_currency }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                    {% else %}
+                        <div class="fz:18px ff:font-secondary c:color-gray9">{{ 'veda.customer.orders.none' | t }}</div>
+                    {% endif %}
+
+                    {% if paginate.pages > 1 %}
+                        <div class="mt:0! w:100%">
+                            {% liquid
+                                assign item_general_class = 'fz:15px! d:flex! ai:center jc:center ov:hidden trs:0.3s m:5px'
+                                assign item_variant_class = 'w:fit-content miw:46px h:46px p:0_10px bgc:color-light c:color-gray9 c:color-primary|h bxsh:0_5px_15px_color-gray9.1'
+                                %}
+                            <nav class="w:100% pt:50px m:0!">
+                                <ol class="d:flex jc:center ls:none m:0! p:0!">
+                                    {% if paginate.previous %}
+                                    <li>
+                                        <a
+                                        class="{{ item_general_class }} {{ item_variant_class }}"
+                                        aria-label="Previous"
+                                        href="{{ paginate.previous.url }}"
+                                        >
+                                        <i class="far fa-arrow-left"></i>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                    {% for part in paginate.parts %}
+                                    {% if part.is_link %}
+                                        <li>
+                                        <a
+                                            class="{{ item_general_class }} {{ item_variant_class }}"
+                                            aria-label="Page {{ part.title }}"
+                                            href="{{ part.url }}"
+                                        >
+                                            {{ part.title }}
+                                        </a>
+                                        </li>
+                                    {% else %}
+                                        {% if part.title == paginate.current_page %}
+                                        <li>
+                                            <span
+                                            class="{{ item_general_class }} {{ item_variant_class }} bgc:color-primary! c:color-light-freeze!"
+                                            aria-current="page"
+                                            aria-label="Page {{ part.title }}"
+                                            >
+                                            {{ part.title }}
+                                            </span>
+                                        </li>
+                                        {% else %}
+                                        <li>
+                                            <span
+                                            class="{{ item_general_class }} {{ item_variant_class }}"
+                                            aria-label="Page {{ part.title }}"
+                                            >
+                                            {{ part.title }}
+                                            </span>
+                                        </li>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    {% if paginate.next %}
+                                    <li>
+                                        <a
+                                        class="{{ item_general_class }} {{ item_variant_class }}"
+                                        aria-label="Next"
+                                        href="{{ paginate.next.url }}"
+                                        >
+                                        <i class="far fa-arrow-right"></i>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ol>
+                            </nav>
+                        </div>
+                    {% endif %}
+                    {% endpaginate %}
+                </div>
+                <div
+                    component="detail"
+                    class="pos:relative w:100%@+md! mih:100% mt:30px@+md"
+                    style="width: {{ 100 | minus: content_width }}%"
+                >
+                    <h4 class="mb:20px fw:500" >
+                        {{ "veda.customer.account.details" | t }}
+                    </h4>
+                    <div class="fz:15px ff:font-secondary c:color-gray8" >
+                        {{ customer.default_address | format_address }}
+                    </div>
+                    <a
+                    href="{{ routes.account_addresses_url }}"
+                    class="d:block mt:15px fz:15px ff:font-secondary c:color-primary td:underline"
+                    >
+                    {{ 'veda.customer.account.view_addresses' | t }} ({{ customer.addresses_count }})
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>

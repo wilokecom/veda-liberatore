@@ -1,0 +1,2250 @@
+{% assign uniqueId = 'id_57bfca77-c996-41d1-8565-085799b42e5c' %}
+{% assign builderMode = false %}
+{% assign envatoMode = false %}
+{% liquid
+  if section.settings.VEDA_switch_1
+    assign backgroundFixed = 'fixed'
+  else
+    assign backgroundFixed = 'scroll'
+  endif
+
+  if section.settings.VEDA_select_2 == 'color'
+    assign backgroundColor = 'background-color: ' | append: section.settings.VEDA_color_1 | append: ';'
+  else
+    assign backgroundColor = ''
+  endif
+
+  if section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2
+    assign bgImage = section.settings.VEDA_image_2 | append: '&width=2000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  elsif section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2 == blank
+    assign bgImage = 'https://cdn.shopify.com/s/files/1/0552/5510/5616/files/udxhtnzxtq.png?v=1681903122&width=1000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  else
+    assign backgroundImage = ''
+  endif
+
+  assign sectionPadding = 'padding-top: ' | append: section.settings.VEDA_space_4 | append: 'px;padding-right: ' | append: section.settings.VEDA_space_3 | append: 'px;padding-bottom: ' | append: section.settings.VEDA_space_1 | append: 'px;padding-left: ' | append: section.settings.VEDA_space_2 | append: 'px;'
+
+  if section.settings.VEDA_select_1 == 'full_width'
+    assign containerType = 'container-fluid'
+  else
+    assign containerType = 'container'
+  endif
+
+  if section.settings.VEDA_slider_1 >= 0
+    assign containerGap = 'padding-left: ' | append: section.settings.VEDA_slider_1 | append: 'px; padding-right: ' | append: section.settings.VEDA_slider_1 | append: 'px;'
+  else
+    assign containerGap = ''
+  endif
+
+  if section.settings.section_settings___width >= 0
+    assign containerWidth = 'max-width: ' | append: section.settings.section_settings___width | append: 'px;'
+  else
+    assign containerWidth = ''
+  endif
+
+  if section.settings.VEDA_slider_2 >= 0
+    assign settingGap = section.settings.VEDA_slider_2 | divided_by: 2.0
+
+    assign settingGapVertical = section.settings.VEDA_slider_2
+  else
+    assign settingGap = ''
+
+    assign settingGapVertical = ''
+  endif
+
+  assign colGap = 'margin-top: ' | append: settingGapVertical | append: 'px; padding-left: ' | append: settingGap | append: 'px; padding-right: ' | append: settingGap | append: 'px;'
+
+  assign rowGap = 'margin-top: -' | append: settingGapVertical | append: 'px; margin-left: -' | append: settingGap | append: 'px; margin-right: -' | append: settingGap | append: 'px;'
+
+  assign sectionSeparator = ''
+
+  if section.settings.VEDA_switch_3
+    if section.settings.VEDA_slider_4
+      assign sectionSeparator = sectionSeparator | append: 'border-top: ' | append: section.settings.VEDA_slider_4 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+
+    if section.settings.VEDA_slider_5
+      assign sectionSeparator = sectionSeparator | append: 'border-bottom: ' | append: section.settings.VEDA_slider_5 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+  endif
+
+  if colGap and rowGap and builderMode and envatoMode
+  endif
+%}
+
+{% capture Content %}
+  {% assign quantity_product_displayed = section.settings.product_settings___limit %}
+  {% assign collectionData = collections[section.settings.VEDA_collectionPicker_1] %}
+  {% assign productData = collectionData.products %}
+  <script type="application/json" class="quickview-data-js">
+    {
+      "add_to_cart_text": "{{ section.settings["add_to_cart___text"] }}",
+      "quantity_text": "{{ section.settings["quick_view___quantity"] }}",
+      "view_detail": "{{ section.settings["quick_view___view_detail"] }}",
+      "add_compare": "{{ section.settings["compare_action___add"] }}",
+      "remove_compare": "{{ section.settings["compare_action___remove"] }}",
+      "add_wish_list": "{{ section.settings["wish_list_action___add"] }}",
+      "remove_wish_list": "{{ section.settings["VEDA_text_2"] }}",
+      "in_stock": "{{ 'veda.products.product.instock' | t }}",
+      "out_of_stock": "{{ 'veda.products.product.outofstock' | t }}",
+    }
+  </script>
+  {% for productItem in productData limit: quantity_product_displayed %}
+    <div
+      class="swiper-slide w:var(--width-xs)@+sm d:flex fld:column mih:100%"
+      style="--width-xs: calc({{ 100 | divided_by: section.settings["VEDA_responsive_4"] }}% - {{ 40 | divided_by: 2 }}px);"
+    >
+      <div
+        class="product-card-js group* pos:relative z:9|h mih:100% bgc:color-light bxsh:0_0_20px_color-gray9.2|h trs:0.3s"
+        style="text-align: {{ section.settings["product_settings___align"] }}"
+        data-css="{{ section.settings["VEDA_styleBox_8"] }}"
+      >
+        {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+        {% liquid
+          assign price_compare = productItem.compare_at_price
+
+          if price_compare
+            assign price_compare = productItem.compare_at_price
+          else
+            assign price_compare = 0
+          endif
+        %}
+        <script class="{{ 'product-card-data-js' }}" type="application/json">
+          {
+            "id": {{ productItem.id | json }},
+            "title": {{ productItem.title | json }},
+            "vendor": {{ productItem.vendor | default: "" | json }},
+            "handle": {{ productItem.handle | default: "" | json }},
+            "available": {{ productItem.available | default: false | json }},
+            "description": {{ productItem.description | default: "" | json }},
+            "featured_image": {{ productItem.featured_image | json }},
+            "images": {{ productItem.images | default: null | json }},
+            "options": {{ productItem.options | default: null | json }},
+            "selected_or_first_available_variant": {
+              "id": {{ productItem.selected_or_first_available_variant.id | json }},
+              "available": {{ productItem.selected_or_first_available_variant.available | default: false | json }},
+              "price": {{ productItem.selected_or_first_available_variant.price | money | json }},
+              {% if productItem.selected_or_first_available_variant.compare_at_price %}
+                "compare_at_price": {{ productItem.selected_or_first_available_variant.compare_at_price | money | json }},
+              {% else %}
+                "compare_at_price": {{ 0 | money | json }},
+              {% endif %}
+              "featured_image": {{ productItem.selected_or_first_available_variant.featured_image | json }},
+              "image": {{ productItem.selected_or_first_available_variant.image | json }},
+              "inventory_quantity": {{ productItem.selected_or_first_available_variant.inventory_quantity | json }},
+              "options": {{ productItem.selected_or_first_available_variant.options | default: null | json }},
+              "title": {{ productItem.selected_or_first_available_variant.title | default: "" | json }}
+              {% if productItem.selected_or_first_available_variant.sku %}
+              ,
+              "sku": {{ productItem.selected_or_first_available_variant.sku | default: "" | json }}
+              {% endif %}
+              {% if productItem.selected_or_first_available_variant.url %}
+              ,
+              "url": {{ productItem.selected_or_first_available_variant.url | json }},
+              {% endif %}
+            },
+            "price_max": {{ productItem.price_max | json }},
+            "price_min": {{ productItem.price_min | json }},
+            {% if productItem.type %}
+
+            "type": {{ productItem.type | json }},
+            {% endif %}
+            "tags": {{ productItem.tags | default: "" | json }},
+            "variants": [
+            {% for item in productItem.variants %}
+                {
+                  "id": {{ item.id | json }},
+                  "available": {{ item.available | default: false | json }},
+                  "price": {{ item.price | money | json }},
+                  {% if item.compare_at_price %}
+                    "compare_at_price": {{ item.compare_at_price | money | json }},
+                  {% else %}
+                    "compare_at_price": {{ 0 | money | json }},
+                  {% endif %}
+                  "featured_image": {{ item.featured_image | json }},
+                  "image": {{ item.image | json }},
+                  "inventory_quantity": {{ item.inventory_quantity | json }},
+                  "options": {{ item.options | default: null | json }},
+                  "title": {{ item.title | json }}
+                  {% if item.sku %}
+                    ,
+                    "sku": {{ item.sku | json }}
+                  {% endif %}
+
+                  {% if item.url %}
+                  ,
+                    "url": {{ item.url | json }},
+                  {% endif %}
+                },
+            {% endfor %}
+          ],
+            "price": {{ productItem.price | money | json }},
+            "compare_at_price": {{ price_compare | money | json }},
+            "options_with_values": {{ productItem.options_with_values | json }},
+            "url": {{ productItem.url | default: "" | json }},
+            "published_at": {{ productItem.published_at | default: "" | json }}
+          }
+        </script>
+        {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+
+        <script type="application/json" class="current-variant-id">
+          {{ productItem.selected_or_first_available_variant.id | json }}
+        </script>
+        {% if section.settings.VEDA_slider_2 != 0 %}
+          <div class="pos:absolute ins:0 z:2 bd:1px_solid_color-gray3 pe:none"></div>
+        {% else %}
+          <div class="pos:absolute ins:0 z:2 bxsh:1px_0_color-gray3,0_1px_color-gray3 pe:none"></div>
+        {% endif %}
+        <div class="w:100% pb:15px" style="padding: {{ section.settings["VEDA_slider_6"] }}px">
+          <div class="pos:relative">
+            {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+            {% liquid
+              if _defaul_aspect_ratio and _defaul_aspect_ratio != 0
+                assign aspectRatio = _defaul_aspect_ratio
+              else
+                assign aspectRatio = 90
+              endif
+
+              if section.settings.VEDA_slider_7 and section.settings.VEDA_slider_7 != 0
+                assign aspectRatio = section.settings.VEDA_slider_7
+              endif
+            %}
+            <div
+              class="ov:hidden w:100% pos:relative"
+              {% if section.settings.VEDA_slider_8 %}
+                style="border-radius: {{ section.settings["VEDA_slider_8"] }}px"
+              {% endif %}
+            >
+              <a
+                href="{{ productItem.url }}"
+                class="veda-image-cover pos:relative d:block trs:opacity_0.3s z:1 {% if productItem.images[1] %}op:0*group-hover{% endif %}"
+                style="--aspect-ratio:{{ aspectRatio }}"
+              >
+                <img
+                  class="product-card-image-js veda-lazyload"
+                  src="{{ productItem.featured_image.src | image_url: width: 10 }}"
+                  alt="{{ productItem.title }}"
+                  width="{{ productItem.featured_image.width }}"
+                  height="{{ productItem.featured_image.height }}"
+                  data-intrinsic-width="{{ productItem.featured_image.width }}"
+                  data-intrinsic-height="{{ productItem.featured_image.height }}"
+                  loading="lazy"
+                >
+              </a>
+              {% if productItem.images[1] %}
+                <a
+                  href="{{ productItem.url }}"
+                  class="veda-image-cover pos:absolute! t:0 l:-100000px w:100% z:9 op:0 trs:opacity_0.4s,left_0s_0.4s trs:opacity_0.4s,left_0s_0s*group-hover op:1*group-hover l:0*group-hover"
+                  style="--aspect-ratio:{{ aspectRatio }}"
+                >
+                  <img
+                    class="veda-lazyload bgc:color-light-freeze"
+                    src="{{ productItem.images[1].src | image_url: width: 10 }}"
+                    alt="{{ productItem.title }}"
+                    width="{{ productItem.featured_image.width }}"
+                    height="{{ productItem.featured_image.height }}"
+                    data-intrinsic-width="{{ productItem.images[1].width }}"
+                    data-intrinsic-height="{{ productItem.images[1].height }}"
+                    loading="lazy"
+                  >
+                </a>
+              {% endif %}
+            </div>
+            {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+          </div>
+        </div>
+        {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+        <div class="pos:absolute t:10px r:0 z:12 w:35px w:44px@md m:auto ov:hidden ov:visible|h">
+          <div class="w:30px@md w:24px d:flex fld:column ai:center cur:pointer">
+            <span
+              class="product-card-add-js mb:5px w:24px h:24px w:30px@md h:30px@md pos:relative fz:13px bdrs:50% bgc:color-gray9-freeze c:color-gray1-freeze trs:0.3s c:color-primary|h d:flex! ai:center jc:center bdrs:4px|be fz:12px|be trf:translate(100%,0)@md r:0 r:-15px@md trs:0.3s trf:translate(0,0)*group-hover@md r:0*group-hover@md"
+              data-tooltip-position="left"
+              data-tooltip-text="{{ 'veda.products.product.add_to_cart' | t }}"
+              data-cart-success-text="{{ 'veda.products.product.add_to_cart' | t }}"
+              data-css="{{ section.settings["add_to_cart___design__id"] }}"
+            >
+              <div class="product-cart-add-icon-js"><i class="far fa-shopping-cart"></i></div>
+            </span>
+            {% if section.settings.VEDA_switch_8 %}
+              <span
+                class="wishlist-toggle-js mb:5px w:24px h:24px w:30px@md h:30px@md pos:relative fz:13px bdrs:50% bgc:color-gray9-freeze c:color-gray1-freeze trs:0.3s c:color-primary|h d:flex! ai:center jc:center bdrs:4px|be fz:12px|be trf:translate(100%,0)@md r:0 r:-15px@md trs:0.3s trf:translate(0,0)*group-hover@md r:0*group-hover@md trsde:0.05s"
+                data-tooltip-position="left"
+                data-tooltip-active="true"
+                data-tooltip-text="{{ 'veda.products.product.add_to_wishlist' | t }}"
+                data-tooltip-active-text="{{ 'veda.products.product.remove_from_wishlist' | t }}"
+                data-css="{{ section.settings["VEDA_styleBox_26"] }}"
+              >
+                <i class="fas fa-heart"></i>
+              </span>
+            {% endif %}
+            {% if section.settings.compare_action___enable %}
+              <span
+                class="compare-toggle-js mb:5px w:24px h:24px w:30px@md h:30px@md pos:relative fz:13px bdrs:50% bgc:color-gray9-freeze c:color-gray1-freeze trs:0.3s c:color-primary|h d:flex! ai:center jc:center bdrs:4px|be fz:12px|be trf:translate(100%,0)@md r:0 r:-15px@md trs:0.3s trf:translate(0,0)*group-hover@md r:0*group-hover@md trsde:0.1s"
+                data-tooltip-position="left"
+                data-tooltip-active="false"
+                data-tooltip-text="{{ 'veda.products.product.add_to_compare' | t }}"
+                data-tooltip-active-text="{{ 'veda.products.product.remove_from_compare' | t }}"
+                data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+              >
+                <i class="fas fa-repeat-alt"></i>
+              </span>
+            {% endif %}
+            {% if section.settings.quick_view___enable %}
+              <span
+                class="quickview-toggle-js w:24px h:24px w:30px@md h:30px@md pos:relative fz:13px bdrs:50% bgc:color-gray9-freeze c:color-gray1-freeze trs:0.3s c:color-primary|h d:flex! ai:center jc:center bdrs:4px|be fz:12px|be trf:translate(100%,0)@md r:0 r:-15px@md trs:0.3s trf:translate(0,0)*group-hover@md r:0*group-hover@md trsde:0.15s"
+                data-tooltip-text="{{ 'veda.products.product.quick_view' | t }}"
+                data-tooltip-position="left"
+                data-tooltip-active="false"
+                data-css="{{ section.settings["quick_view___design__id"] }}"
+              >
+                <i class="far fa-eye"></i>
+              </span>
+            {% endif %}
+          </div>
+        </div>
+        {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+
+        <div class="pos:absolute t:10px l:10px z:9">
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          {% if section.settings.VEDA_switch_4 %}
+            <a
+              class="{{ 'p:2px_5px bdrs:3px bgc:color-primary c:color-light-freeze lh:normal fz:10px fw:500 ff:font-secondary tt:uppercase op:0 op:1*group-hover trs:0.3s' }}"
+              data-css="{{ section.settings["VEDA_styleBox_10"] }}"
+              href="{{ shop.url }}/collections/vendors?q={{ productItem.vendor }}"
+              {% if _component %}
+                component="{{ _component }}"
+              {% endif %}
+            >
+              {{ productItem.vendor }}
+            </a>
+          {% endif %}
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+        </div>
+        <div class="d:flex fld:column jc:center p:15px pt:0!">
+          <div style="order:{{ section.settings["VEDA_flexOrder_2"] }}">
+            <div>
+              {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+              <div class="{{ 'product-content-price-js d:inline-flex mt:5px' }}">
+                {% if productItem.selected_or_first_available_variant.compare_at_price
+                    > productItem.selected_or_first_available_variant.price
+                %}
+                  <div class="product-price-on-sale-js {{ _price_class }}">
+                    <del
+                      class="{{ 'fw:400 ff:font-secondary fz:14px c:color-gray6' }} mr:5px"
+                      data-css="{{ section.settings["VEDA_styleBox_14"] }}"
+                    >
+                      {{ productItem.selected_or_first_available_variant.compare_at_price | money }}
+                    </del>
+                    <ins
+                      class="{{ 'fw:400 ff:font-secondary fz:14px c:color-primary td:none mr:5px' }}"
+                      data-css="{{ section.settings["VEDA_styleBox_16"] }}"
+                    >
+                      {{ productItem.selected_or_first_available_variant.price | money }}
+                    </ins>
+                  </div>
+                  <ins
+                    class="{{ 'fw:400 ff:font-secondary fz:14px c:color-primary td:none mr:5px' }} product-price-not-sale-js d:none"
+                    data-css="{{ section.settings["VEDA_styleBox_14"] }}"
+                  >
+                  </ins>
+                {% else %}
+                  <div class="product-price-on-sale-js d:none {{ _price_class }}">
+                    <del
+                      class="{{ 'fw:400 ff:font-secondary fz:14px c:color-gray6' }} mr:5px"
+                      data-css="{{ section.settings["VEDA_styleBox_14"] }}"
+                    >
+                    </del>
+                    <ins
+                      class="{{ 'fw:400 ff:font-secondary fz:14px c:color-primary td:none mr:5px' }}"
+                      data-css="{{ section.settings["VEDA_styleBox_16"] }}"
+                    >
+                    </ins>
+                  </div>
+                  <ins
+                    class="{{ 'fw:400 ff:font-secondary fz:14px c:color-primary td:none mr:5px' }} product-price-not-sale-js {{ _price_class }}"
+                    data-css="{{ section.settings["VEDA_styleBox_14"] }}"
+                  >
+                    <div>
+                      {{ productItem.selected_or_first_available_variant.price | money }}
+                    </div>
+                  </ins>
+                {% endif %}
+              </div>
+              {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+            </div>
+          </div>
+          <h3 style="order:{{ section.settings["VEDA_flexOrder_1"] }}">
+            <a
+              class="lines-2 mt:5px fz:14px ff:font-secondary fw:500 c:color-gray9 trs:0.3s"
+              href="{{ productItem.url }}"
+              data-css="{{ section.settings["VEDA_styleBox_12"] }}"
+            >
+              {{ productItem.title }}
+            </a>
+          </h3>
+          <div style="order:{{ section.settings["VEDA_flexOrder_3"] }}">
+            <div
+              class="d:flex ai:center mt:5px"
+              {% if section.settings.product_settings___align == 'center' %}
+                style="justify-content: center"
+              {% elsif section.settings.product_settings___align == 'right' %}
+                style="justify-content: flex-end"
+              {% endif %}
+            >
+              {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+              {% liquid
+                assign productDate = productItem.published_at | date: '%s'
+
+                assign currentDate = 'now' | date: '%s'
+
+                assign difference = currentDate | minus: productDate | divided_by: 86400.0
+              %}
+              {% if section.settings.new___enable %}
+                {% if difference < 10 %}
+                  <div
+                    {% if 'p:2px_5px bdrs:3px bgc:#daf5e9 c:#17c478 lh:normal fz:10px fw:500 ff:font-secondary tt:uppercase c:color-light-freeze mb:4px mr:4px' %}
+                      class="w:fit-content {{ 'p:2px_5px bdrs:3px bgc:#daf5e9 c:#17c478 lh:normal fz:10px fw:500 ff:font-secondary tt:uppercase c:color-light-freeze mb:4px mr:4px' }}"
+                    {% else %}
+                      class="p:5px_10px bdrs:3px bgc:#17c478 lh:normal fz:10px ff:font-secondary tt:uppercase lts:1px c:color-light-freeze mb:5px w:fit-content"
+                    {% endif %}
+                    {% if 'new' %}
+                      component="{{ 'new' }}"
+                    {% endif %}
+                    data-css="{{ section.settings["new___design__id"] }}"
+                  >
+                    {{ 'veda.products.product.new' | t }}
+                  </div>
+                {% endif %}
+              {% endif %}
+              {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+              {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+              {% if productItem.compare_at_price > productItem.price and section.settings.sale___enable %}
+                <div
+                  {% if 'p:2px_5px bdrs:3px bgc:#ffe7e7 c:#eb4747 lh:normal fz:10px fw:500 ff:font-secondary tt:uppercase c:color-light-freeze mb:4px mr:4px' %}
+                    class="w:fit-content {{ 'p:2px_5px bdrs:3px bgc:#ffe7e7 c:#eb4747 lh:normal fz:10px fw:500 ff:font-secondary tt:uppercase c:color-light-freeze mb:4px mr:4px' }}"
+                  {% else %}
+                    class="p:5px_10px bdrs:3px bgc:#eb4747 lh:normal fz:10px ff:font-secondary tt:uppercase lts:1px c:color-light-freeze w:fit-content"
+                  {% endif %}
+                  {% if 'sale' %}
+                    component="{{ 'sale' }}"
+                  {% endif %}
+                  data-css="{{ section.settings["sale___design__id"] }}"
+                >
+                  {{ 'veda.products.product.on_sale' | t }}
+                </div>
+              {% endif %}
+              {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+              {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+              {% if section.settings.VEDA_switch_6 %}
+                {% liquid
+                  assign available = false
+
+                  assign variant = productItem.selected_or_first_available_variant
+
+                  if variant.available
+                    assign available = true
+                  endif
+                %}
+                {% if available %}
+                  <span
+                    data-css="{{ section.settings["VEDA_styleBox_18"] }}"
+                    data-instock="{{ section.settings["VEDA_styleBox_17"] }}"
+                    data-outofstock="{{ section.settings["VEDA_styleBox_19"] }}"
+                    {% if _instock_class %}
+                      class="{{ _instock_class }}"
+                    {% else %}
+                      class="p:2px_5px bdrs:3px bgc:#ddf1e9 c:#599078 lh:normal fz:10px fw:500 ff:font-secondary tt:uppercase c:color-light-freeze mb:4px mr:4px"
+                    {% endif %}
+                  >
+                    <span class="available-product-js">{{ 'veda.products.product.instock' | t }}</span>
+                  </span>
+                {% else %}
+                  <span
+                    data-css="{{ section.settings["VEDA_styleBox_20"] }}"
+                    data-instock="{{ section.settings["VEDA_styleBox_17"] }}"
+                    data-outofstock="{{ section.settings["VEDA_styleBox_19"] }}"
+                    {% if _outofstock_class %}
+                      class="{{ _outofstock_class }}"
+                    {% else %}
+                      class="p:2px_5px bdrs:3px bgc:#ffe7e7 c:#eb4747 lh:normal fz:10px fw:500 ff:font-secondary tt:uppercase c:color-light-freeze mb:4px mr:4px"
+                    {% endif %}
+                  >
+                    <span class="available-product-js">{{ 'veda.products.product.outofstock' | t }}</span>
+                  </span>
+                {% endif %}
+              {% endif %}
+              {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+            </div>
+          </div>
+          <div style="order:{{ section.settings["VEDA_flexOrder_4"] }}">
+            {% if section.settings.VEDA_switch_5 %}
+              <div
+                class="product-card-colors-js d:flex ml:-2px mr:-2px mt:8px mt:0|e"
+                {% if section.settings.product_settings___align == 'center' %}
+                  style="justify-content:center"
+                {% elsif section.settings.product_settings___align == 'right' %}
+                  style="justify-content: flex-end"
+                {% endif %}
+              ></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endcapture %}
+
+{% capture SwiperSlider %}
+  {% liquid
+    assign delay = 1000000000
+
+    assign gap = 20
+
+    if section.settings.VEDA_switch_9
+      assign delay = 4000
+    endif
+
+    if section.settings.slider_settings___delay and section.settings.VEDA_switch_9
+      assign delay = section.settings.slider_settings___delay
+    endif
+
+    if section.settings.VEDA_slider_2 or section.settings.VEDA_slider_2 == 0
+      assign gap = section.settings.VEDA_slider_2
+    endif
+  %}
+  <div class="pos:relative">
+    {% if section.settings.VEDA_slider_2 == 0 %}
+      <div class="pos:absolute t:0 r:1px b:1px l:0 z:2 bxsh:-1px_0_color-gray2,0_-1px_color-gray2 pe:none"></div>
+    {% endif %}
+    <div
+      class="veda-swiper"
+      data-options="
+        {
+          slidesPerView: 'auto',
+          autoHeight: true,
+          autoplay: {
+            delay: {{ delay }}
+          },
+          loop: {{ section.settings["slider_settings___loop"] }},
+          navigation: {
+            nextEl: '[data-id={{ uniqueId }}] .swiper-button-next',
+            prevEl: '[data-id={{ uniqueId }}] .swiper-button-prev',
+          },
+          spaceBetween: {{ gap }},
+          breakpoints: {
+            768: { slidesPerView: {{ section.settings["VEDA_responsive_3"] }} },
+            992: { slidesPerView: {{ section.settings["VEDA_responsive_2"] }} },
+            1200: { slidesPerView: {{ section.settings["VEDA_responsive_1"] }} }
+          }
+        }
+      "
+    >
+      <div class="swiper pr:1px pb:1px">
+        <div class="veda-swiper-wrapper swiper-wrapper">
+          {{ Content }}
+        </div>
+      </div>
+      {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+      {% liquid
+        assign arrowGeneralClassName = 'fz:pfs(24px,30px)! d:flex! ai:center jc:center ov:hidden trs:0.3s m:5px'
+
+        case section.settings.VEDA_select_7
+          when 'square_shadow'
+            assign arrowVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-light c:color-gray9 c:color-primary|h bxsh:0_5px_15px_color-gray9.1'
+          when 'square_border'
+            assign arrowVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-light bd:1px_solid_color-gray2 c:color-gray9 c:color-primary|h'
+          when 'square_gray'
+            assign arrowVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-gray2 c:color-gray9 c:color-primary|h'
+          when 'circle_shadow'
+            assign arrowVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-light c:color-gray9 c:color-primary|h bxsh:0_5px_15px_color-gray9.1 bdrs:50%'
+          when 'circle_border'
+            assign arrowVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-light bd:1px_solid_color-gray2 c:color-gray9 c:color-primary|h bdrs:50%'
+          when 'circle_gray'
+            assign arrowVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-gray2 c:color-gray9 c:color-primary|h bdrs:50%'
+          when 'custom'
+            assign arrowVariantClassName = 'w:30px h:30px'
+          else
+            assign arrowVariantClassName = 'w:30px h:30px'
+        endcase
+      %}
+
+      {% if section.settings.VEDA_switch_11
+        and section.settings.VEDA_select_6 != 'top'
+        or section.settings.VEDA_select_6 == 'top'
+        and section.settings.VEDA_responsive_5 != 12
+      %}
+        <div
+          {% if section.settings.VEDA_select_6 == 'top' and section.settings.VEDA_responsive_5 != 12 %}
+            class="d:flex pos:absolute b:calc(100%_+_5px) r:0"
+          {% elsif section.settings.VEDA_select_6 == 'bottom' %}
+            class="d:flex@sm d:none mt:15px"
+            style="justify-content: {{ section.settings["VEDA_radioGroup_2"] }}"
+          {% else %}
+            class="d:flex@sm d:none"
+          {% endif %}
+        >
+          <div
+            {% if section.settings.VEDA_select_6 == 'middle' %}
+              class="swiper-button-prev swiper-button-prev-middle l:0! trf:translate(-50%,-50%) m:0! {{ arrowGeneralClassName }} {{ arrowVariantClassName }}"
+            {% elsif section.settings.VEDA_select_6 == 'middle_out' %}
+              class="swiper-button-prev swiper-button-prev-middle-out l:auto! r:100%! trf:translate(0,-50%) {{ arrowGeneralClassName }} {{ arrowVariantClassName }}"
+            {% elsif section.settings.VEDA_select_6 == 'middle_in' %}
+              class="swiper-button-prev swiper-button-prev-middle-in l:0! trf:translate(0,-50%) {{ arrowGeneralClassName }} {{ arrowVariantClassName }}"
+            {% else %}
+              class="swiper-button-prev swiper-button-prev-bottom pos:static! trf:none! mt:0! {{ arrowGeneralClassName }} {{ arrowVariantClassName }}"
+            {% endif %}
+            data-css="{{ section.settings["VEDA_styleBox_31"] }}"
+          >
+            <span><i class="fal fa-angle-left"></i></span>
+          </div>
+          <div
+            {% if section.settings.VEDA_select_6 == 'middle' %}
+              class="swiper-button-next swiper-button-next-middle r:0! trf:translate(50%,-50%) m:0! {{ arrowGeneralClassName }} {{ arrowVariantClassName }}"
+            {% elsif section.settings.VEDA_select_6 == 'middle_out' %}
+              class="swiper-button-next swiper-button-next-middle r:auto! l:100%! trf:translate(0,-50%) {{ arrowGeneralClassName }} {{ arrowVariantClassName }}"
+            {% elsif section.settings.VEDA_select_6 == 'middle_in' %}
+              class="swiper-button-next swiper-button-next-middle r:0! trf:translate(0,-50%) {{ arrowGeneralClassName }} {{ arrowVariantClassName }}"
+            {% else %}
+              class="swiper-button-next swiper-button-next-bottom pos:static! trf:none! mt:0! {{ arrowGeneralClassName }} {{ arrowVariantClassName }}"
+            {% endif %}
+            data-css="{{ section.settings["VEDA_styleBox_31"] }}"
+          >
+            <span><i class="fal fa-angle-right"></i></span>
+          </div>
+        </div>
+      {% endif %}
+      {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+
+      {% if section.settings.VEDA_switch_10 %}
+        <div
+          class="swiper-pagination c:color-gray9 bd:2px_solid_color-light*span bxz:content-box*span"
+          data-child-css="{{ section.settings["VEDA_styleBox_32"] }}"
+        ></div>
+      {% endif %}
+    </div>
+  </div>
+{% endcapture %}
+
+<section
+  data-id="{{ uniqueId }}"
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center"
+  style="{{ backgroundColor }}{{ backgroundImage }}{{ sectionPadding }}{{ sectionSeparator }}"
+>
+  <div
+    class="{{ containerType }}"
+    {% if section.settings.VEDA_slider_1
+      or section.settings.VEDA_slider_1 == 0
+      or section.settings.section_settings___width
+      or section.settings.section_settings___width == 0
+    %}
+      style="{{ containerGap }}{{ containerWidth }}"
+    {% endif %}
+  >
+    <div
+      {% if section.settings.VEDA_radioGroup_3 == 'left' %}
+        class="row mt:0!"
+      {% else %}
+        class="row mt:0! fld:row-reverse"
+      {% endif %}
+    >
+      <div class="col-xs-{{ section.settings["VEDA_responsive_8"] }} col-sm-{{ section.settings["VEDA_responsive_7"] }} col-md-{{ section.settings["VEDA_responsive_6"] }} col-lg-{{ section.settings["VEDA_responsive_5"] }} mt:0!">
+        <div
+          {% if section.settings.VEDA_responsive_5 == 12 %}
+            class="pos:relative d:flex ai:center jc:space-between"
+          {% else %}
+            class="pos:relative"
+          {% endif %}
+        >
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          <div class="d:flex fld:column w:100%">
+            {% for block in section.blocks %}
+              {% assign heading_item = block.settings %}
+
+              {% if heading_item.heading___enable %}
+                {% liquid
+                  assign align = heading_item.heading___align
+
+                  if heading_item.heading___align == 'left'
+                    assign align = 'start'
+                  elsif heading_item.heading___align == 'right'
+                    assign align = 'end'
+                  endif
+                %}
+                {% capture attr %}
+                  data-css="{{ heading_item.VEDA_styleBox_2 }}" class="fw:500" style="text-align: {{ align }}"
+                {% endcapture %}
+                {% case block.type %}
+                  {% when 'heading_title' %}
+                    {% if heading_item.heading___title_tag_name == 'h2' %}
+                      <h2 {{ attr }}>{{ heading_item.heading___title }}</h2>
+                    {% elsif heading_item.heading___title_tag_name == 'h3' %}
+                      <h3 {{ attr }}>{{ heading_item.heading___title }}</h3>
+                    {% elsif heading_item.heading___title_tag_name == 'h4' %}
+                      <h4 {{ attr }}>{{ heading_item.heading___title }}</h4>
+                    {% elsif heading_item.heading___title_tag_name == 'h5' %}
+                      <h5 {{ attr }}>{{ heading_item.heading___title }}</h5>
+                    {% elsif heading_item.heading___title_tag_name == 'h6' %}
+                      <h6 {{ attr }}>{{ heading_item.heading___title }}</h6>
+                    {% endif %}
+                  {% when 'heading_text' %}
+                    <div
+                      data-css="{{ heading_item.VEDA_styleBox_4 }}"
+                      style="text-align: {{ align }}"
+                      class="fz:16px"
+                    >
+                      {{ heading_item.heading___text }}
+                    </div>
+                  {% when 'heading_icon' %}
+                    <div
+                      data-css="{{ heading_item.VEDA_styleBox_6 }}"
+                      {% if heading_item.heading___align == 'left' %}
+                        style="text-align: start"
+                      {% elsif heading_item.heading___align == 'center' %}
+                        style="text-align: {{ heading_item.heading___align }}; margin-left: auto; margin-right: auto"
+                      {% elsif heading_item.heading___align == 'right' %}
+                        style="text-align: end; margin-left: auto; margin-right: 0"
+                      {% endif %}
+                      class="fz:34px"
+                    >
+                      {{ heading_item.heading___icon }}
+                    </div>
+                  {% when 'heading_space' %}
+                    <div style="height: {{ heading_item.heading___space }}px"></div>
+                  {% when 'link' %}
+                    <a
+                      href="{{ heading_item.link }}"
+                      class="ff:font-secondary fz:16px fw:500 c:color-gray9 c:color-gray9|h! td:underline"
+                      data-css="{{ heading_item.link_design.id }}"
+                      style="text-align: {{ align }}"
+                    >
+                      {{ heading_item.text_link }}
+                    </a>
+                  {% when 'heading_divider' %}
+                    {% assign headingDividerPadding = 'padding-top: '
+                      | append: heading_item.VEDA_space_8
+                      | append: 'px;padding-right: '
+                      | append: heading_item.VEDA_space_7
+                      | append: 'px;padding-bottom: '
+                      | append: heading_item.VEDA_space_5
+                      | append: 'px;padding-left: '
+                      | append: heading_item.VEDA_space_6
+                      | append: 'px;'
+                    %}
+                    <div
+                      class="pt:20px fz:0"
+                      style="text-align: {{ align }};{{ headingDividerPadding }}"
+                    >
+                      {% if heading_item.heading___divider == 'wave' %}
+                        <div class="d:inline-block">
+                          <svg
+                            width="56px"
+                            height="7px"
+                            viewBox="0 0 56 7"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            fill="none"
+                          >
+                            <g transform="translate(-288.000000, -4390.000000)" class="stk:color-gray3" style="stroke: {{ heading_item.heading___divider_color }}">
+                                <g transform="translate(135.000000, 4033.000000)">
+                                    <g transform="translate(0.000000, 48.000000)">
+                                        <g transform="translate(153.000000, 310.000000)">
+                                            <path d="M0,0 C4.64733427,0 4.65894638,2 9.33333333,2 C14.0077203,2 13.9400367,0 18.6666667,0 C23.3932966,0 23.3301172,2 28,2 C32.6698828,2 32.6447946,0 37.3333333,0 C42.0218721,0 41.9540981,2 46.6666667,2 C51.3792353,2 51.3554302,0 56,0"></path>
+                                            <path d="M0,3 C4.64733427,3 4.65894638,5 9.33333333,5 C14.0077203,5 13.9400367,3 18.6666667,3 C23.3932966,3 23.3301172,5 28,5 C32.6698828,5 32.6447946,3 37.3333333,3 C42.0218721,3 41.9540981,5 46.6666667,5 C51.3792353,5 51.3554302,3 56,3"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                          </svg>
+                        </div>
+                      {% elsif heading_item.heading___divider == 'mountain' %}
+                        <div class="d:inline-block">
+                          <svg
+                            width="60px"
+                            height="9px"
+                            viewBox="0 0 60 9"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                          >
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g transform="translate(-3.000000, -47.000000)" stroke-width="2" class="stk:color-gray3" style="stroke: {{ heading_item.heading___divider_color }}">
+                                    <g transform="translate(0.000000, 45.000000)">
+                                        <polyline points="4 9 9.8 4 15.6 9 21.4 4 27.2 9 33 4 38.8 9 44.6 4 50.4 9 56.2 4 62 9"></polyline>
+                                    </g>
+                                </g>
+                            </g>
+                          </svg>
+                        </div>
+                      {% else %}
+                        <div
+                          class="d:inline-block! w:50px h:2px bgc:color-gray3"
+                          style="background-color: {{ heading_item.heading___divider_color }}"
+                        ></div>
+                      {% endif %}
+                    </div>
+                  {% else %}
+
+                {% endcase %}
+              {% endif %}
+            {% endfor %}
+          </div>
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          {% liquid
+            if section.settings.VEDA_select_4 == 'link'
+              assign defaultClass = ''
+            else
+              assign defaultClass = ' p:12px_20px bdrs:6px fz:14px'
+            endif
+
+            if section.settings.VEDA_select_5 == 'bottom'
+              assign defaultForBottomClass = ' mt:30px'
+            else
+              assign defaultForBottomClass = ''
+            endif
+
+            case section.settings.VEDA_select_4
+              when 'primary'
+                assign variantClass = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+              when 'secondary'
+                assign variantClass = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+              when 'dark'
+                assign variantClass = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+              when 'gray'
+                assign variantClass = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+              when 'light'
+                assign variantClass = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+              else
+                assign variantClass = ' c:color-gray9 c:color-primary|h'
+            endcase
+
+            assign custom_class = ''
+
+            if _class
+              assign custom_class = _class
+            endif
+          %}
+          {% capture ViewAllBase %}
+            <a
+              {% if _component %}
+                component="{{ _component }}"
+              {% else %}
+
+              {% endif %}
+              class="d:inline-flex ai:center ff:font-primary fw:500 trs:0.3s{{ defaultForBottomClass }}{{ defaultClass }}{{ variantClass }} {{ custom_class }}"
+              data-css="{{ section.settings["VEDA_styleBox_22"] }}"
+              {% if _default_link %}
+                href="{{ _default_link }}"
+              {% else %}
+                href="{{ section.settings["button_view_all___link"] }}"
+              {% endif %}
+              {% if button_view_all.new_tab %}
+                target="_blank"
+              {% endif %}
+            >
+              {% if section.settings.VEDA_switch_7 and section.settings.VEDA_radioGroup_1 == 'left' %}
+                <span class="mr:10px" data-css="{{ section.settings["VEDA_styleBox_24"] }}">
+                  {{ section.settings.VEDA_icon_1 }}
+                </span>
+              {% endif %}
+              <span>
+                {{ section.settings.button_view_all___text }}
+              </span>
+              {% if section.settings.VEDA_switch_7 and section.settings.VEDA_radioGroup_1 == 'right' %}
+                <span class="ml:10px" data-css="{{ section.settings["VEDA_styleBox_24"] }}">
+                  {{ section.settings.VEDA_icon_1 }}
+                </span>
+              {% endif %}
+            </a>
+          {% endcapture %}
+
+          {% capture ViewAllTop %}
+            {% if section.settings.button_view_all___enable and section.settings.VEDA_select_5 == 'top' %}
+              <div class="d:none@+md flxs:0">
+                {{ ViewAllBase }}
+              </div>
+            {% endif %}
+          {% endcapture %}
+
+          {% capture ViewAllBottom %}
+            {% if section.settings.button_view_all___enable and section.settings.VEDA_select_5 == 'bottom' %}
+              <div style="text-align: {{ section.settings["button_view_all___align"] }}">
+                {{ ViewAllBase }}
+              </div>
+            {% endif %}
+            {% if section.settings.button_view_all___enable and section.settings.VEDA_select_5 == 'top' %}
+              <div class="d:none@md mt:30px">
+                {{ ViewAllBase }}
+              </div>
+            {% endif %}
+          {% endcapture %}
+
+          {% if 'top' == 'top' %}
+            {{ ViewAllTop }}
+          {% else %}
+            {{ ViewAllBottom }}
+          {% endif %}
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          {% liquid
+            assign arrowTopGeneralClassName = 'fz:pfs(24px,30px)! d:flex! ai:center jc:center ov:hidden trs:0.3s m:5px'
+
+            case section.settings.VEDA_select_7
+              when 'square_shadow'
+                assign arrowTopVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-light c:color-gray9 c:color-primary|h bxsh:0_5px_15px_color-gray9.1'
+              when 'square_border'
+                assign arrowTopVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-light bd:1px_solid_color-gray2 c:color-gray9 c:color-primary|h'
+              when 'square_gray'
+                assign arrowTopVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-gray2 c:color-gray9 c:color-primary|h'
+              when 'circle_shadow'
+                assign arrowTopVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-light c:color-gray9 c:color-primary|h bxsh:0_5px_15px_color-gray9.1 bdrs:50%'
+              when 'circle_border'
+                assign arrowTopVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-light bd:1px_solid_color-gray2 c:color-gray9 c:color-primary|h bdrs:50%'
+              when 'circle_gray'
+                assign arrowTopVariantClassName = 'w:pfs(30px,50px) h:pfs(30px,50px) bgc:color-gray2 c:color-gray9 c:color-primary|h bdrs:50%'
+              when 'custom'
+                assign arrowTopVariantClassName = 'w:30px h:30px'
+              else
+                assign arrowTopVariantClassName = 'w:30px h:30px'
+            endcase
+          %}
+
+          {% if section.settings.VEDA_switch_11
+            and section.settings.VEDA_select_6 == 'top'
+            and section.settings.VEDA_responsive_5 == 12
+          %}
+            <div class="d:flex ml:10px mb:10px">
+              <div
+                class="swiper-button-prev swiper-button-prev-top pos:static! trf:none! {{ arrowTopGeneralClassName }} {{ arrowTopVariantClassName }}"
+                data-css="{{ section.settings["VEDA_styleBox_31"] }}"
+              >
+                <span><i class="fal fa-angle-left"></i></span>
+              </div>
+              <div
+                class="swiper-button-next swiper-button-next-top pos:static! trf:none! mr:0! {{ arrowTopGeneralClassName }} {{ arrowTopVariantClassName }}"
+                data-css="{{ section.settings["VEDA_styleBox_31"] }}"
+              >
+                <span><i class="fal fa-angle-right"></i></span>
+              </div>
+            </div>
+          {% endif %}
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+        </div>
+      </div>
+      {% liquid
+        assign contentXs = 12 | minus: section.settings.VEDA_responsive_8
+
+        assign contentSm = 12 | minus: section.settings.VEDA_responsive_7
+
+        assign contentMd = 12 | minus: section.settings.VEDA_responsive_6
+
+        assign contentLg = 12 | minus: section.settings.VEDA_responsive_5
+      %}
+      <div class="col-xs-{{ contentXs }} col-sm-{{ contentSm }} col-md-{{ contentMd }} col-lg-{{ contentLg }} mt:0!">
+        {{ SwiperSlider }}
+      </div>
+    </div>
+    {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+    {% liquid
+      if section.settings.VEDA_select_4 == 'link'
+        assign defaultClass = ''
+      else
+        assign defaultClass = ' p:12px_20px bdrs:6px fz:14px'
+      endif
+
+      if section.settings.VEDA_select_5 == 'bottom'
+        assign defaultForBottomClass = ' mt:30px'
+      else
+        assign defaultForBottomClass = ''
+      endif
+
+      case section.settings.VEDA_select_4
+        when 'primary'
+          assign variantClass = ' bgc:color-primary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'secondary'
+          assign variantClass = ' bgc:color-secondary c:color-light-freeze bgc:color-gray9|h c:color-light|h'
+        when 'dark'
+          assign variantClass = ' bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h'
+        when 'gray'
+          assign variantClass = ' bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        when 'light'
+          assign variantClass = ' bgc:color-light c:color-gray9 bgc:color-primary|h c:color-light-freeze|h'
+        else
+          assign variantClass = ' c:color-gray9 c:color-primary|h'
+      endcase
+
+      assign custom_class = ''
+
+      if _class
+        assign custom_class = _class
+      endif
+    %}
+    {% capture ViewAllBase %}
+      <a
+        {% if _component %}
+          component="{{ _component }}"
+        {% else %}
+
+        {% endif %}
+        class="d:inline-flex ai:center ff:font-primary fw:500 trs:0.3s{{ defaultForBottomClass }}{{ defaultClass }}{{ variantClass }} {{ custom_class }}"
+        data-css="{{ section.settings["VEDA_styleBox_22"] }}"
+        {% if _default_link %}
+          href="{{ _default_link }}"
+        {% else %}
+          href="{{ section.settings["button_view_all___link"] }}"
+        {% endif %}
+        {% if button_view_all.new_tab %}
+          target="_blank"
+        {% endif %}
+      >
+        {% if section.settings.VEDA_switch_7 and section.settings.VEDA_radioGroup_1 == 'left' %}
+          <span class="mr:10px" data-css="{{ section.settings["VEDA_styleBox_24"] }}">
+            {{ section.settings.VEDA_icon_1 }}
+          </span>
+        {% endif %}
+        <span>
+          {{ section.settings.button_view_all___text }}
+        </span>
+        {% if section.settings.VEDA_switch_7 and section.settings.VEDA_radioGroup_1 == 'right' %}
+          <span class="ml:10px" data-css="{{ section.settings["VEDA_styleBox_24"] }}">
+            {{ section.settings.VEDA_icon_1 }}
+          </span>
+        {% endif %}
+      </a>
+    {% endcapture %}
+
+    {% capture ViewAllTop %}
+      {% if section.settings.button_view_all___enable and section.settings.VEDA_select_5 == 'top' %}
+        <div class="d:none@+md flxs:0">
+          {{ ViewAllBase }}
+        </div>
+      {% endif %}
+    {% endcapture %}
+
+    {% capture ViewAllBottom %}
+      {% if section.settings.button_view_all___enable and section.settings.VEDA_select_5 == 'bottom' %}
+        <div style="text-align: {{ section.settings["button_view_all___align"] }}">
+          {{ ViewAllBase }}
+        </div>
+      {% endif %}
+      {% if section.settings.button_view_all___enable and section.settings.VEDA_select_5 == 'top' %}
+        <div class="d:none@md mt:30px">
+          {{ ViewAllBase }}
+        </div>
+      {% endif %}
+    {% endcapture %}
+
+    {% if 'bottom' == 'top' %}
+      {{ ViewAllTop }}
+    {% else %}
+      {{ ViewAllBottom }}
+    {% endif %}
+    {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+  </div>
+  {% if section.settings.VEDA_select_2 == 'video' and section.settings.VEDA_video_1 %}
+    <div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+  {% endif %}
+  {% if section.settings.VEDA_switch_2 %}
+    <div
+      class="pos:absolute ins:0 z:-1"
+      style="background-color: {{ section.settings["VEDA_color_2"] }};backdrop-filter: blur({{ section.settings["VEDA_slider_3"] }}px)"
+    ></div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Product Carousel 4",
+  "blocks": [
+    {
+      "type": "heading_title",
+      "name": "Heading > Title",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Title",
+          "id": "heading___title",
+          "type": "liquid",
+          "default": "This is a title"
+        },
+        {
+          "label": "Heading > Tag Name",
+          "id": "heading___title_tag_name",
+          "type": "select",
+          "default": "h2",
+          "options": [
+            {
+              "label": "H2",
+              "value": "h2"
+            },
+            {
+              "label": "H3",
+              "value": "h3"
+            },
+            {
+              "label": "H4",
+              "value": "h4"
+            },
+            {
+              "label": "H5",
+              "value": "h5"
+            },
+            {
+              "label": "H6",
+              "value": "h6"
+            }
+          ]
+        },
+        {
+          "label": "Heading > Align",
+          "id": "heading___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "heading_text",
+      "name": "Heading > Text",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Text",
+          "id": "heading___text",
+          "type": "liquid",
+          "default": "<p>This is a text</p>"
+        },
+        {
+          "label": "Heading > Align",
+          "id": "heading___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_3",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_4",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "heading_divider",
+      "name": "Heading > Divider",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Divider",
+          "id": "heading___divider",
+          "type": "select",
+          "default": "line",
+          "options": [
+            {
+              "label": "Line",
+              "value": "line"
+            },
+            {
+              "label": "Wave",
+              "value": "wave"
+            },
+            {
+              "label": "Mountain",
+              "value": "mountain"
+            }
+          ]
+        },
+        {
+          "label": "Heading > Align",
+          "id": "heading___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "label": "Heading > Color",
+          "id": "heading___divider_color",
+          "type": "text"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_5",
+          "label": "Heading > Padding > Bottom"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_6",
+          "label": "Heading > Padding > Left"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_7",
+          "label": "Heading > Padding > Right"
+        },
+        {
+          "type": "number",
+          "id": "VEDA_space_8",
+          "label": "Heading > Padding > Top"
+        }
+      ]
+    },
+    {
+      "type": "heading_icon",
+      "name": "Heading > Icon",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Icon",
+          "info": "[Get icon](https://fontawesome.com/v5/search)",
+          "id": "heading___icon",
+          "type": "html",
+          "default": "<i class=\"far fa-atom\"></i>"
+        },
+        {
+          "label": "Heading > Align",
+          "id": "heading___align",
+          "type": "radio",
+          "default": "left",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_5",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_6",
+          "info": "Please DON'T edit this field.",
+          "label": "Heading > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "heading_space",
+      "name": "Heading > Space",
+      "settings": [
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Heading > Space",
+          "id": "heading___space",
+          "type": "number",
+          "default": 20
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "label": "Section Settings > Container Width",
+      "id": "VEDA_select_1",
+      "type": "select",
+      "default": "boxed",
+      "options": [
+        {
+          "label": "Boxed",
+          "value": "boxed"
+        },
+        {
+          "label": "Full Width",
+          "value": "full_width"
+        },
+        {
+          "label": "Manual",
+          "value": "manual"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Width",
+      "id": "section_settings___width",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Gap",
+      "id": "VEDA_slider_1",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Column Gap",
+      "id": "VEDA_slider_2",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Background Type",
+      "id": "VEDA_select_2",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "Image",
+          "value": "image"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Video",
+          "value": "video"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_1",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_image_2",
+      "label": "Background Image"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_3",
+      "label": "Background Image"
+    },
+    {
+      "label": "Section Settings > Background Color",
+      "id": "VEDA_color_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Video",
+      "id": "VEDA_video_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Fixed",
+      "id": "VEDA_switch_1",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Size",
+      "id": "VEDA_select_3",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Enable Background Overlay",
+      "id": "VEDA_switch_2",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Overlay Color",
+      "id": "VEDA_color_2",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Overlay Blur",
+      "id": "VEDA_slider_3",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Separator",
+      "id": "VEDA_switch_3",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Separator Top",
+      "id": "VEDA_slider_4",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Bottom",
+      "id": "VEDA_slider_5",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Color",
+      "id": "VEDA_color_3",
+      "type": "text",
+      "default": "var(--color-gray2)"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_1",
+      "label": "Section Settings > Padding > Bottom"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_2",
+      "label": "Section Settings > Padding > Left"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_3",
+      "label": "Section Settings > Padding > Right"
+    },
+    {
+      "type": "number",
+      "default": 50,
+      "id": "VEDA_space_4",
+      "label": "Section Settings > Padding > Top"
+    },
+    {
+      "label": "Product Settings > Collection",
+      "id": "VEDA_collectionPicker_1",
+      "type": "collection"
+    },
+    {
+      "label": "Product Settings > Limit",
+      "id": "product_settings___limit",
+      "type": "number",
+      "default": 8
+    },
+    {
+      "label": "Product Settings > Align",
+      "id": "product_settings___align",
+      "type": "radio",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "label": "Product Settings > Enable Vendor",
+      "id": "VEDA_switch_4",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Product Settings > Enable Color",
+      "id": "VEDA_switch_5",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Product Settings > Design"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_7",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Content > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_8",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Content > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_9",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Vendor > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_10",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Vendor > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_11",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Name > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_12",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Name > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_13",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Regular Price > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_14",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Regular Price > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_15",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Sale Price > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_16",
+      "info": "Please DON'T edit this field.",
+      "label": "Product Settings > Sale Price > Id"
+    },
+    {
+      "type": "text",
+      "default": "0",
+      "id": "VEDA_flexOrder_1",
+      "label": "Product Settings > Sortable > Name"
+    },
+    {
+      "type": "text",
+      "default": "1",
+      "id": "VEDA_flexOrder_2",
+      "label": "Product Settings > Sortable > Price"
+    },
+    {
+      "type": "text",
+      "default": "2",
+      "id": "VEDA_flexOrder_3",
+      "label": "Product Settings > Sortable > Available"
+    },
+    {
+      "type": "text",
+      "default": "3",
+      "id": "VEDA_flexOrder_4",
+      "label": "Product Settings > Sortable > Color"
+    },
+    {
+      "type": "header",
+      "content": "Product Settings > Image"
+    },
+    {
+      "label": "Product Settings > Space",
+      "id": "VEDA_slider_6",
+      "type": "number"
+    },
+    {
+      "label": "Product Settings > Aspect Ratio",
+      "id": "VEDA_slider_7",
+      "type": "number"
+    },
+    {
+      "label": "Product Settings > Image Border Radius",
+      "id": "VEDA_slider_8",
+      "type": "number"
+    },
+    {
+      "label": "Sale > Enable",
+      "id": "sale___enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Sale > Text",
+      "id": "sale___text",
+      "type": "liquid",
+      "default": "Text"
+    },
+    {
+      "type": "text",
+      "id": "sale___design__css",
+      "info": "Please DON'T edit this field.",
+      "label": "Sale > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "sale___design__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Sale > Design > Id"
+    },
+    {
+      "label": "New > Enable",
+      "id": "new___enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "New > Text",
+      "id": "new___text",
+      "type": "liquid",
+      "default": "New"
+    },
+    {
+      "type": "text",
+      "id": "new___design__css",
+      "info": "Please DON'T edit this field.",
+      "label": "New > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "new___design__id",
+      "info": "Please DON'T edit this field.",
+      "label": "New > Design > Id"
+    },
+    {
+      "label": "Available > Enable",
+      "id": "VEDA_switch_6",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_17",
+      "info": "Please DON'T edit this field.",
+      "label": "Available > In Stock > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_18",
+      "info": "Please DON'T edit this field.",
+      "label": "Available > In Stock > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_19",
+      "info": "Please DON'T edit this field.",
+      "label": "Available > Out of Stock > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_20",
+      "info": "Please DON'T edit this field.",
+      "label": "Available > Out of Stock > Id"
+    },
+    {
+      "label": "View All Button > Enable",
+      "id": "button_view_all___enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "View All Button > Text",
+      "id": "button_view_all___text",
+      "type": "liquid",
+      "default": "View All"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_21",
+      "info": "Please DON'T edit this field.",
+      "label": "View All Button > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_22",
+      "info": "Please DON'T edit this field.",
+      "label": "View All Button > Design > Id"
+    },
+    {
+      "label": "View All Button > Link",
+      "id": "button_view_all___link",
+      "type": "url"
+    },
+    {
+      "label": "View All Button > Variant",
+      "id": "VEDA_select_4",
+      "type": "select",
+      "default": "link",
+      "options": [
+        {
+          "label": "Link",
+          "value": "link"
+        },
+        {
+          "label": "Primary",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary",
+          "value": "secondary"
+        },
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Gray",
+          "value": "gray"
+        },
+        {
+          "label": "Light",
+          "value": "light"
+        }
+      ]
+    },
+    {
+      "label": "View All Button > Position",
+      "id": "VEDA_select_5",
+      "type": "select",
+      "default": "bottom",
+      "options": [
+        {
+          "label": "Top",
+          "value": "top"
+        },
+        {
+          "label": "Bottom",
+          "value": "bottom"
+        }
+      ]
+    },
+    {
+      "label": "View All Button > Align",
+      "id": "button_view_all___align",
+      "type": "radio",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "View All Button > Icon"
+    },
+    {
+      "label": "View All Button > Enable",
+      "id": "VEDA_switch_7",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "View All Button > Choose",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "VEDA_icon_1",
+      "type": "html",
+      "default": "<i class=\"far fa-atom\"></i>"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_23",
+      "info": "Please DON'T edit this field.",
+      "label": "View All Button > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_24",
+      "info": "Please DON'T edit this field.",
+      "label": "View All Button > Design > Id"
+    },
+    {
+      "label": "View All Button > Position",
+      "id": "VEDA_radioGroup_1",
+      "type": "radio",
+      "default": "right",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "label": "Quick View Action > Enable",
+      "id": "quick_view___enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Quick View Action > Quick View",
+      "id": "VEDA_text_1",
+      "type": "liquid"
+    },
+    {
+      "label": "Quick View Action > Quantity",
+      "id": "quick_view___quantity",
+      "type": "liquid",
+      "default": "Quantity"
+    },
+    {
+      "label": "Quick View Action > View Detail",
+      "id": "quick_view___view_detail",
+      "type": "liquid",
+      "default": "View Detail"
+    },
+    {
+      "label": "Quick View Action > Icon",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "quick_view___icon",
+      "type": "html",
+      "default": "<i class=\"far fa-atom\"></i>"
+    },
+    {
+      "type": "text",
+      "id": "quick_view___design__css",
+      "info": "Please DON'T edit this field.",
+      "label": "Quick View Action > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "quick_view___design__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Quick View Action > Design > Id"
+    },
+    {
+      "label": "Wishlist Action > Enable",
+      "id": "VEDA_switch_8",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Wishlist Action > Add To Wishlist",
+      "id": "wish_list_action___add",
+      "type": "liquid",
+      "default": "Add To Wishlist"
+    },
+    {
+      "label": "Wishlist Action > Remove From Wishlist",
+      "id": "VEDA_text_2",
+      "type": "liquid",
+      "default": "Remove From Wishlist"
+    },
+    {
+      "label": "Wishlist Action > Icon",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "wish_list_action___icon",
+      "type": "html",
+      "default": "<i class=\"far fa-atom\"></i>"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_25",
+      "info": "Please DON'T edit this field.",
+      "label": "Wishlist Action > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_26",
+      "info": "Please DON'T edit this field.",
+      "label": "Wishlist Action > Design > Id"
+    },
+    {
+      "label": "Compare Action > Enable",
+      "id": "compare_action___enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Compare Action > Add To Compare",
+      "id": "compare_action___add",
+      "type": "liquid",
+      "default": "Add To Compare"
+    },
+    {
+      "label": "Compare Action > Remove From Compare",
+      "id": "compare_action___remove",
+      "type": "liquid",
+      "default": "Remove From Compare"
+    },
+    {
+      "label": "Compare Action > Icon",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "compare_action___icon",
+      "type": "html",
+      "default": "<i class=\"far fa-atom\"></i>"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_27",
+      "info": "Please DON'T edit this field.",
+      "label": "Compare Action > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_28",
+      "info": "Please DON'T edit this field.",
+      "label": "Compare Action > Design > Id"
+    },
+    {
+      "label": "Add To Cart Action > Enable",
+      "id": "add_to_cart___enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Add To Cart Action > Text",
+      "id": "add_to_cart___text",
+      "type": "liquid",
+      "default": "Add To Cart"
+    },
+    {
+      "label": "Add To Cart Action > Icon",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "add_to_cart___icon",
+      "type": "html",
+      "default": "<i class=\"far fa-atom\"></i>"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_29",
+      "info": "Please DON'T edit this field.",
+      "label": "Add To Cart Action > Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart___design__id",
+      "info": "Please DON'T edit this field.",
+      "label": "Add To Cart Action > Design > Id"
+    },
+    {
+      "label": "Slider Settings > Auto Play",
+      "id": "VEDA_switch_9",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Slider Settings > Delay (ms)",
+      "id": "slider_settings___delay",
+      "type": "number",
+      "default": 4000
+    },
+    {
+      "label": "Slider Settings > Loop",
+      "id": "slider_settings___loop",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Slider Settings > Enable Pagination",
+      "id": "VEDA_switch_10",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Slider Settings > Enable Arrow",
+      "id": "VEDA_switch_11",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Slider Settings > Arrow Position",
+      "id": "VEDA_select_6",
+      "type": "select",
+      "default": "middle",
+      "options": [
+        {
+          "label": "Top",
+          "value": "top"
+        },
+        {
+          "label": "Middle",
+          "value": "middle"
+        },
+        {
+          "label": "Middle Out",
+          "value": "middle_out"
+        },
+        {
+          "label": "Middle In",
+          "value": "middle_in"
+        },
+        {
+          "label": "Bottom",
+          "value": "bottom"
+        }
+      ]
+    },
+    {
+      "label": "Slider Settings > Arrow Align",
+      "id": "VEDA_radioGroup_2",
+      "type": "radio",
+      "default": "flex-start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "flex-start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "flex-end"
+        }
+      ]
+    },
+    {
+      "label": "Slider Settings > Arrow Variant",
+      "id": "VEDA_select_7",
+      "type": "select",
+      "default": "custom",
+      "options": [
+        {
+          "label": "Custom",
+          "value": "custom"
+        },
+        {
+          "label": "Square Shadow",
+          "value": "square_shadow"
+        },
+        {
+          "label": "Square Border",
+          "value": "square_border"
+        },
+        {
+          "label": "Square Gray",
+          "value": "square_gray"
+        },
+        {
+          "label": "Circle Shadow",
+          "value": "circle_shadow"
+        },
+        {
+          "label": "Circle Border",
+          "value": "circle_border"
+        },
+        {
+          "label": "Circle Gray",
+          "value": "circle_gray"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings > Arrow Icon"
+    },
+    {
+      "label": "Slider Settings > Left",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "VEDA_icon_2",
+      "type": "html",
+      "default": "<i class=\"fal fa-angle-left\"></i>"
+    },
+    {
+      "label": "Slider Settings > Right",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "VEDA_icon_3",
+      "type": "html",
+      "default": "<i class=\"fal fa-angle-right\"></i>"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings > Design"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_30",
+      "info": "Please DON'T edit this field.",
+      "label": "Slider Settings > Arrow > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_31",
+      "info": "Please DON'T edit this field.",
+      "label": "Slider Settings > Arrow > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_32",
+      "info": "Please DON'T edit this field.",
+      "label": "Slider Settings > Pagination > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_33",
+      "info": "Please DON'T edit this field.",
+      "label": "Slider Settings > Pagination > Id"
+    },
+    {
+      "type": "number",
+      "default": 4,
+      "id": "VEDA_responsive_1",
+      "label": "Responsive > Content Item > Large"
+    },
+    {
+      "type": "number",
+      "default": 3,
+      "id": "VEDA_responsive_2",
+      "label": "Responsive > Content Item > Medium"
+    },
+    {
+      "type": "number",
+      "default": 2,
+      "id": "VEDA_responsive_3",
+      "label": "Responsive > Content Item > Small"
+    },
+    {
+      "type": "number",
+      "default": 1,
+      "id": "VEDA_responsive_4",
+      "label": "Responsive > Content Item > Extra small"
+    },
+    {
+      "type": "number",
+      "default": 12,
+      "id": "VEDA_responsive_5",
+      "label": "Responsive > Heading And Content > Large"
+    },
+    {
+      "type": "number",
+      "default": 12,
+      "id": "VEDA_responsive_6",
+      "label": "Responsive > Heading And Content > Medium"
+    },
+    {
+      "type": "number",
+      "default": 12,
+      "id": "VEDA_responsive_7",
+      "label": "Responsive > Heading And Content > Small"
+    },
+    {
+      "type": "number",
+      "default": 12,
+      "id": "VEDA_responsive_8",
+      "label": "Responsive > Heading And Content > Extra small"
+    },
+    {
+      "label": "Responsive > Heading Position",
+      "id": "VEDA_radioGroup_3",
+      "type": "radio",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    }
+  ],
+  "tag": "div"
+}
+{% endschema %}

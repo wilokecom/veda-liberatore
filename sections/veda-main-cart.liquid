@@ -1,0 +1,811 @@
+{% assign uniqueId = 'veda-main-cart-uniqueId' %}
+{% assign builderMode = false %}
+{% assign envatoMode = true %}
+{% liquid
+	if section.settings.VEDA_switch_7
+		assign backgroundFixed = 'fixed'
+	else
+		assign backgroundFixed = 'scroll'
+	endif
+	
+	if section.settings.VEDA_select_2 == 'color'
+		assign backgroundColor = 'background-color: ' | append: null | append: ';'
+	else
+		assign backgroundColor = ''
+	endif
+	
+	if section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_1.src
+		assign bgImage = section.settings.VEDA_image_1.src | image_url: width: 2000
+		
+		assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_1 | append: ';'
+	elsif section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_1.src == blank
+		assign bgImage = 'https://cdn.shopify.com/s/files/1/0552/5510/5616/files/udxhtnzxtq.png?v=1681903122&width=1000'
+		
+		assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_1 | append: ';'
+	else
+		assign backgroundImage = ''
+	endif
+	
+	assign sectionPadding = 'padding-top: ' | append: 60 | append: 'px;padding-right: ' | append: null | append: 'px;padding-bottom: ' | append: 60 | append: 'px;padding-left: ' | append: null | append: 'px;'
+	
+	if section.settings.VEDA_select_3 == 'full_width'
+		assign containerType = 'container-fluid'
+	else
+		assign containerType = 'container'
+	endif
+	
+	if section.settings.VEDA_slider_8 >= 0
+		assign containerGap = 'padding-left: ' | append: section.settings.VEDA_slider_8 | append: 'px; padding-right: ' | append: section.settings.VEDA_slider_8 | append: 'px;'
+	else
+		assign containerGap = ''
+	endif
+	
+	if section.settings.section_settings___width >= 0
+		assign containerWidth = 'max-width: ' | append: section.settings.section_settings___width | append: 'px;'
+	else
+		assign containerWidth = ''
+	endif
+	
+	if section.settings.VEDA_slider_7 >= 0
+		assign settingGap = section.settings.VEDA_slider_7 | divided_by: 2.0
+		
+		assign settingGapVertical = section.settings.VEDA_slider_7
+	else
+		assign settingGap = ''
+		
+		assign settingGapVertical = ''
+	endif
+	
+	assign colGap = 'margin-top: ' | append: settingGapVertical | append: 'px; padding-left: ' | append: settingGap | append: 'px; padding-right: ' | append: settingGap | append: 'px;'
+	
+	assign rowGap = 'margin-top: -' | append: settingGapVertical | append: 'px; margin-left: -' | append: settingGap | append: 'px; margin-right: -' | append: settingGap | append: 'px;'
+	
+	assign sectionSeparator = ''
+	
+	if section.settings.VEDA_switch_5
+		if section.settings.VEDA_slider_5
+			assign sectionSeparator = sectionSeparator | append: 'border-top: ' | append: section.settings.VEDA_slider_5 | append: 'px solid ' | append: '#f3f3f3' | append: ';'
+		endif
+		
+		if section.settings.VEDA_slider_4
+			assign sectionSeparator = sectionSeparator | append: 'border-bottom: ' | append: section.settings.VEDA_slider_4 | append: 'px solid ' | append: '#f3f3f3' | append: ';'
+		endif
+	endif
+	
+	if colGap and rowGap and builderMode and envatoMode
+	endif
+%}
+{% capture TableHeader %}
+	<div class="d:flex@400px d:none" >
+		<div
+			class="flex:1 w:100% w:40%@md p:15px_0 fz:15px ff:font-secondary fw:500"
+		>
+			{{ 'veda.sections.cart.headings.product' | t }}
+		</div>
+		<div
+			class="flex:0_0_auto w:40% w:20%@sm p:15px_0 fz:15px ff:font-secondary fw:500 ta:left@md ta:right"
+			
+		>
+			{{ 'veda.sections.cart.headings.price' | t }}
+		</div>
+		<div
+			class="d:block@md d:none flex:0_0_auto w:40% w:20%@sm p:15px_0 fz:15px ff:font-secondary fw:500"
+			
+		>
+			{{ 'veda.sections.cart.headings.quantity' | t }}
+		</div>
+		<div
+			class="d:block@md d:none flex:0_0_auto w:20% p:15px_0 fz:15px ff:font-secondary fw:500 ta:right"
+			
+		>
+			{{ 'veda.sections.cart.headings.total' | t }}
+		</div>
+	</div>
+{% endcapture %}
+
+{% capture Content %}
+	<div
+		class="col-xs-{{ 12 }} col-sm-{{ 12 }} col-md-{{ 12 }} col-lg-{{ 12 }} mt:0!"
+		{% if section.settings.VEDA_slider_7 or section.settings.VEDA_slider_7 == 0 %}
+			style="{{ colGap }}"
+		{% endif %}
+	>
+    {% if cart.item_count == 0 %}
+      {%- render "veda-cart-empty", section: section -%}
+    {% else %}
+      <form action="{{ routes.cart_url }}" method="post" id="cart-drawer-form" class="w:100%">
+        {{ TableHeader }}
+        {%- render "veda-cart-table-body", section: section -%}
+      </form>
+      {%- render "veda-cart-checkout", section: section -%}
+    {% endif %}
+	</div>
+{% endcapture %}
+
+<section
+	data-id="{{ uniqueId }}"
+	class="veda-lazyload pos:relative z:1 bgz:cover bgp:center"
+	style="{{ backgroundColor }}{{ backgroundImage }}{{ sectionPadding }}{{ sectionSeparator }}"
+>
+	<div
+		class="{{ containerType }}"
+		data-id="cartcontainer"
+		{% if section.settings.VEDA_slider_8
+		or section.settings.VEDA_slider_8 == 0
+		or section.settings.section_settings___width
+		or section.settings.section_settings___width == 0
+		%}
+			style="{{ containerGap }}{{ containerWidth }}"
+		{% endif %}
+	>
+		<div
+			{% if 'left' == 'left' %}
+				class="row mt:0!"
+			{% else %}
+				class="row mt:0! fld:row-reverse"
+			{% endif %}
+		>
+			<div class="col-xs-{{ 12 }} col-sm-{{ 12 }} col-md-{{ 12 }} col-lg-{{ 12 }} mt:0!">
+				<div
+					{% if 12 == 12 %}
+						class="pos:relative d:flex ai:center jc:space-between"
+					{% else %}
+						class="pos:relative"
+					{% endif %}
+				>
+					<div class="d:flex fld:column w:100%">
+						
+						{% for block in section.blocks %}
+							{% assign heading_item = block.settings %}
+							
+							{% if heading_item.heading___enable %}
+								{% liquid
+									assign align = 'center'
+									
+									if 'center' == 'left'
+										assign align = 'start'
+									elsif 'center' == 'right'
+										assign align = 'end'
+									endif
+								%}
+								{% capture attr %}
+									 class="fw:500" style="text-align: {{ align }}"
+								{% endcapture %}
+								{% case block.type %}
+									{% when 'heading_title' %}
+										{% if heading_item.heading___title_tag_name == 'h2' %}
+											<h2 {{ attr }}>{{ heading_item.heading___title }}</h2>
+										{% elsif heading_item.heading___title_tag_name == 'h3' %}
+											<h3 {{ attr }}>{{ heading_item.heading___title }}</h3>
+										{% elsif heading_item.heading___title_tag_name == 'h4' %}
+											<h4 {{ attr }}>{{ heading_item.heading___title }}</h4>
+										{% elsif heading_item.heading___title_tag_name == 'h5' %}
+											<h5 {{ attr }}>{{ heading_item.heading___title }}</h5>
+										{% elsif heading_item.heading___title_tag_name == 'h6' %}
+											<h6 {{ attr }}>{{ heading_item.heading___title }}</h6>
+										{% endif %}
+									{% when 'heading_text' %}
+										<div
+											
+											style="text-align: {{ align }}"
+											class="fz:16px"
+										>
+											{{ heading_item.heading___text }}
+										</div>
+									{% when 'heading_icon' %}
+										<div
+											
+											{% if 'center' == 'left' %}
+												style="text-align: start"
+											{% elsif 'center' == 'center' %}
+												style="text-align: {{ "center" }}; margin-left: auto; margin-right: auto"
+											{% elsif 'center' == 'right' %}
+												style="text-align: end; margin-left: auto; margin-right: 0"
+											{% endif %}
+											class="fz:34px"
+										>
+											{{ heading_item.heading___icon }}
+										</div>
+									{% when 'heading_space' %}
+										<div style="height: {{ heading_item.heading___space }}px"></div>
+									{% when 'link' %}
+										<a
+											href="{{ heading_item.link }}"
+											class="ff:font-secondary fz:16px fw:500 c:color-gray9 c:color-gray9|h! td:underline"
+											data-css="{{ heading_item.link_design.id }}"
+											style="text-align: {{ align }}"
+										>
+											{{ heading_item.text_link }}
+										</a>
+									{% when 'heading_divider' %}
+										{% assign headingDividerPadding = 'padding-top: '
+											| append: null
+											| append: 'px;padding-right: '
+											| append: null
+											| append: 'px;padding-bottom: '
+											| append: null
+											| append: 'px;padding-left: '
+											| append: null
+											| append: 'px;'
+										%}
+										<div
+											class="pt:20px fz:0"
+											style="text-align: {{ align }};{{ headingDividerPadding }}"
+										>
+											{% if heading_item.heading___divider == 'wave' %}
+												<div class="d:inline-block">
+													<svg
+														width="56px"
+														height="7px"
+														viewBox="0 0 56 7"
+														version="1.1"
+														xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink"
+														fill="none"
+													>
+														<g transform="translate(-288.000000, -4390.000000)" class="stk:color-gray3" style="stroke: {{ null }}">
+															<g transform="translate(135.000000, 4033.000000)">
+																<g transform="translate(0.000000, 48.000000)">
+																	<g transform="translate(153.000000, 310.000000)">
+																		<path d="M0,0 C4.64733427,0 4.65894638,2 9.33333333,2 C14.0077203,2 13.9400367,0 18.6666667,0 C23.3932966,0 23.3301172,2 28,2 C32.6698828,2 32.6447946,0 37.3333333,0 C42.0218721,0 41.9540981,2 46.6666667,2 C51.3792353,2 51.3554302,0 56,0"></path>
+																		<path d="M0,3 C4.64733427,3 4.65894638,5 9.33333333,5 C14.0077203,5 13.9400367,3 18.6666667,3 C23.3932966,3 23.3301172,5 28,5 C32.6698828,5 32.6447946,3 37.3333333,3 C42.0218721,3 41.9540981,5 46.6666667,5 C51.3792353,5 51.3554302,3 56,3"></path>
+																	</g>
+																</g>
+															</g>
+														</g>
+													</svg>
+												</div>
+											{% elsif heading_item.heading___divider == 'mountain' %}
+												<div class="d:inline-block">
+													<svg
+														width="60px"
+														height="9px"
+														viewBox="0 0 60 9"
+														version="1.1"
+														xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink"
+													>
+														<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+															<g transform="translate(-3.000000, -47.000000)" stroke-width="2" class="stk:color-gray3" style="stroke: {{ null }}">
+																<g transform="translate(0.000000, 45.000000)">
+																	<polyline points="4 9 9.8 4 15.6 9 21.4 4 27.2 9 33 4 38.8 9 44.6 4 50.4 9 56.2 4 62 9"></polyline>
+																</g>
+															</g>
+														</g>
+													</svg>
+												</div>
+											{% else %}
+												<div
+													class="d:inline-block! w:50px h:2px bgc:color-gray3"
+													style="background-color: {{ null }}"
+												></div>
+											{% endif %}
+										</div>
+									{% else %}
+								
+								{% endcase %}
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			{{ Content }}
+		</div>
+	</div>
+	{% if section.settings.VEDA_select_2 == 'video' and section.settings.VEDA_video_1 %}
+		<div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+	{% endif %}
+	{% if section.settings.VEDA_switch_6 %}
+		<div
+			class="pos:absolute ins:0 z:-1"
+			style="background-color: {{ null }};backdrop-filter: blur({{ section.settings["VEDA_slider_6"] }}px)"
+		></div>
+	{% endif %}
+</section>
+{% schema %}
+{
+  "name": "Cart 1",
+  "blocks": [
+    {
+      "type": "check_out_price",
+      "name": "Check Out > Price",
+      "settings": [
+      ]
+    },
+    {
+      "type": "check_out_text",
+      "name": "Check Out > Text",
+      "settings": [
+
+      ]
+    },
+    {
+      "type": "check_out_button",
+      "name": "Check Out Button",
+      "settings": [
+        {
+          "label": "Check Out > Variant",
+          "id": "check_out___variant",
+          "type": "select",
+          "default": "primary",
+          "options": [
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "label": "Dark",
+              "value": "dark"
+            },
+            {
+              "label": "Gray",
+              "value": "gray"
+            },
+            {
+              "label": "Light",
+              "value": "light"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "actions_note",
+      "name": "Actions > Note",
+      "settings": [
+      ]
+    },
+    {
+      "type": "actions_shipping",
+      "name": "Actions > Shipping",
+      "settings": [
+      ]
+    },
+    {
+      "type": "actions_discount",
+      "name": "Actions > Discount",
+      "settings": [
+      ]
+    },
+    {
+      "type": "empty_data_text",
+      "name": "Empty > Text",
+      "settings": [
+      ]
+    },
+    {
+      "type": "empty_data_image",
+      "name": "Empty > Image",
+      "settings": [
+        {
+          "label": "Empty > Image Border Radius",
+          "id": "VEDA_slider_1",
+          "type": "number"
+        },
+        {
+          "label": "Empty > Aspect Ratio",
+          "id": "VEDA_slider_2",
+          "type": "number"
+        },
+        {
+          "label": "Empty > Width",
+          "id": "empty_data___width",
+          "type": "number"
+        },
+        {
+          "type": "image_picker",
+          "id": "empty_data___image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "empty_data_button",
+      "name": "Empty > Button",
+      "settings": [
+        {
+          "label": "Empty > Variant",
+          "id": "empty_data___variant",
+          "type": "select",
+          "default": "primary",
+          "options": [
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "label": "Dark",
+              "value": "dark"
+            },
+            {
+              "label": "Gray",
+              "value": "gray"
+            },
+            {
+              "label": "Light",
+              "value": "light"
+            }
+          ]
+        },
+        {
+          "label": "Empty > Link",
+          "id": "empty_data___link",
+          "type": "text"
+        },
+        {
+          "label": "Empty > Open In New Tab",
+          "id": "empty_data___new_tab",
+          "type": "checkbox",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "heading_title",
+      "name": "Heading > Title",
+      "settings": [
+        {
+          "label": "Heading > Tag Name",
+          "id": "heading___title_tag_name",
+          "type": "select",
+          "default": "h2",
+          "options": [
+            {
+              "label": "H2",
+              "value": "h2"
+            },
+            {
+              "label": "H3",
+              "value": "h3"
+            },
+            {
+              "label": "H4",
+              "value": "h4"
+            },
+            {
+              "label": "H5",
+              "value": "h5"
+            },
+            {
+              "label": "H6",
+              "value": "h6"
+            }
+          ]
+        },
+        {
+          "label": "Heading > Title",
+          "id": "heading___title",
+          "type": "liquid",
+          "default": "This is a title"
+        },
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "heading_text",
+      "name": "Heading > Text",
+      "settings": [
+        {
+          "label": "Heading > Text",
+          "id": "heading___text",
+          "type": "liquid",
+          "default": "<p>This is a text</p>"
+        },
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "heading_divider",
+      "name": "Heading > Divider",
+      "settings": [
+        {
+          "label": "Heading > Divider",
+          "id": "heading___divider",
+          "type": "select",
+          "default": "line",
+          "options": [
+            {
+              "label": "Line",
+              "value": "line"
+            },
+            {
+              "label": "Wave",
+              "value": "wave"
+            },
+            {
+              "label": "Mountain",
+              "value": "mountain"
+            }
+          ]
+        },
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "heading_icon",
+      "name": "Heading > Icon",
+      "settings": [
+        {
+          "label": "Heading > Icon",
+          "info": "[Get icon](https://fontawesome.com/v5/search)",
+          "id": "heading___icon",
+          "type": "html",
+          "default": "<i class=\"far fa-atom\"></i>"
+        },
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "heading_space",
+      "name": "Heading > Space",
+      "settings": [
+        {
+          "label": "Heading > Space",
+          "id": "heading___space",
+          "type": "number",
+          "default": 20
+        },
+        {
+          "label": "Heading > Enable",
+          "id": "heading___enable",
+          "type": "checkbox",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "label": "Cancel Button > Variant",
+      "id": "cancel_button___variant",
+      "type": "select",
+      "default": "primary",
+      "options": [
+        {
+          "label": "Primary",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary",
+          "value": "secondary"
+        },
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Gray",
+          "value": "gray"
+        },
+        {
+          "label": "Light",
+          "value": "light"
+        }
+      ]
+    },
+    {
+      "label": "Submit Button > Variant",
+      "id": "submit_button___variant",
+      "type": "select",
+      "default": "primary",
+      "options": [
+        {
+          "label": "Primary",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary",
+          "value": "secondary"
+        },
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Gray",
+          "value": "gray"
+        },
+        {
+          "label": "Light",
+          "value": "light"
+        }
+      ]
+    },
+    {
+      "label": "Table > Image Border Radius",
+      "id": "VEDA_slider_3",
+      "type": "number"
+    },
+    {
+      "label": "Table > Aspect Ratio",
+      "id": "table___aspect_ratio",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Bottom",
+      "id": "VEDA_slider_4",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Top",
+      "id": "VEDA_slider_5",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Separator",
+      "id": "VEDA_switch_5",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Overlay Blur",
+      "id": "VEDA_slider_6",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Background Overlay",
+      "id": "VEDA_switch_6",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Size",
+      "id": "VEDA_select_1",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Background Fixed",
+      "id": "VEDA_switch_7",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Video",
+      "id": "VEDA_video_1",
+      "type": "text"
+    },
+    {
+      "type": "image_picker",
+      "id": "VEDA_image_1",
+      "label": "Background Image"
+    },
+    {
+      "label": "Section Settings > Background Type",
+      "id": "VEDA_select_2",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "Image",
+          "value": "image"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Video",
+          "value": "video"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Column Gap",
+      "id": "VEDA_slider_7",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Gap",
+      "id": "VEDA_slider_8",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Width",
+      "id": "section_settings___width",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Width",
+      "id": "VEDA_select_3",
+      "type": "select",
+      "default": "boxed",
+      "options": [
+        {
+          "label": "Boxed",
+          "value": "boxed"
+        },
+        {
+          "label": "Full Width",
+          "value": "full_width"
+        },
+        {
+          "label": "Manual",
+          "value": "manual"
+        }
+      ]
+    }
+  ],
+  "tag": "div",
+  "presets": [
+    {
+      "name": "Cart 1",
+      "blocks": [
+        {
+          "type": "heading_title"
+        },
+        {
+          "type": "empty_data_image"
+        },
+        {
+          "type": "empty_data_text"
+        },
+        {
+          "type": "empty_data_button"
+        },
+        {
+          "type": "actions_note"
+        },
+        {
+          "type": "actions_shipping"
+        },
+        {
+          "type": "actions_discount"
+        },
+        {
+          "type": "check_out_price"
+        },
+        {
+          "type": "check_out_text"
+        },
+        {
+          "type": "check_out_button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<link rel="preload" class="veda-page-script" as="script" href="{{ 'veda-main-cart.js' | asset_url }}" />

@@ -1,0 +1,114 @@
+<section data-id="veda-main-login" class="p:100px_0 ">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d:flex jc:center">
+        <div class="login w:100% maw:400px">
+          <div class="login-form-js">
+            {% form 'customer_login' %}
+              <div class="login-form-container">
+                <div class="section-capture">
+                  <div class="section-title">
+                    <h2 class="fw:500 ta:center">{{ 'veda.customer.login.title' | t }}</h2>
+                  </div>
+                </div>
+                
+                {{ form.errors | default_errors }}
+                  <label class="d:block mb:15px">
+                    <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+                      {{ "veda.customer.login_page.email" | t }}
+                    </span>
+                    <input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" data-css="" type="email" name="customer[email]" autocomplete="email" autocorrect="off" autocapitalize="off">
+                  </label>
+
+                  {% if form.password_needed %}
+                    <label class="d:block mb:15px">
+                      <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px" data-css="">
+                      {{ "veda.customer.login_page.password" | t }}
+                      </span>
+                      <input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" data-css="" type="password" name="customer[password]">
+                    </label>
+                  {% endif %}
+                  {% if form.password_needed %}
+                    <a href="#recover" id="RecoverPassword" class="btn-login-to-recover-js mt:15px fz:14px fw:400 td:underline c:color-gray9 cur:pointer" >
+                      {{ 'veda.customer.login.forgot_password' | t }}
+                    </a>
+                  {% endif %}
+                <button type="submit" component="sign_in_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h w:100% m:20px_0">
+                  <span class="mr:10px">
+                    <i class="far fa-user-alt"></i>
+                  </span>
+                  <span>
+                    {{ 'veda.customer.login.sign_in' | t }}
+                  </span>
+                </button>
+              </div>
+              <div class="mt:10px c:color-gray7*a td:underline*a ta:center">
+                {{ 'veda.layout.customer.create_account' | t | customer_register_link }}
+              </div>
+            {% endform %}
+            {% if shop.checkout.guest_login %}
+              <h2 class="mt:20px fz:20px fw:500 c:color-gray9">
+                {{ 'veda.customer.login_page.guest_title' | t }}
+              </h2>
+              <button type="submit" component="sign_in_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h w:100% m:20px_0">
+                <span>
+                  {{ 'veda.customer.login.guest_continue' | t }}
+                </span>
+              </button>
+            {% endif %}
+          </div>
+          <div class="recover-form-js d:none">
+            <div class="section-capture">
+              <div class="section-title">
+                <h2 class="fw:500 ta:center">{{ "veda.customer.recover_password.title" | t }}</h2>
+              </div>
+            </div>
+            {% form 'recover_customer_password' %}
+              {% if form.posted_successfully? %}
+                <div
+                  class="d:flex ai:center fz:14px p:10px m:10px_0 bgc:color-success.1 c:color-success"
+                >
+                  <span><i class="far fa-check-circle mr:10px"></i></span>
+                  <div>{{ 'veda.customer.recover_password.success' | t }}</div>
+                </div>
+              {% endif %}
+              {% if form.errors %}
+                <div
+                  class="d:flex ai:center fz:14px p:10px m:10px_0 bgc:color-error.1 c:color-error ls:none*ul p:0*ul m:0*ul"
+                >
+                  <span><i class="far fa-exclamation-circle mr:10px"></i></span>
+                  {{ form.errors | default_errors }}
+                </div>
+              {% endif %}
+              <label class="d:block mb:15px">
+                <span class="d:block fz:15px ff:font-secondary c:color-gray9 mb:4px">
+                  {{ "veda.customer.login_page.email" | t }}
+                </span>
+                <input class="rs w:100% p:12px_15px fz:14px c:color-gray9 c:color-gray7-freeze||ph bgc:color-light bd:1px_solid_color-gray3 o:none" data-css="" type="email" name="email" autocomplete="email" autocorrect="off" autocapitalize="off">
+              </label>
+              <div class="d:flex jc:center mt:20px fxw:wrap">
+                <button type="submit" component="submit_recover_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h btn-recover-password-js mr:10px">
+                  <span class="mr:10px">
+                    <i class="far fa-badge-check"></i>
+                  </span>
+                  <span>
+                    {{ "veda.customer.login_page.submit" | t }}
+                  </span>
+                </button>
+                <button type="reset" component="cancel_recover_button" class="rs lh:1.5 fz:15px ff:font-primary fw:500 trs:0.3s p:13px_20px bd:none bxsh:none o:none cur:pointer  bgc:color-gray2 c:color-gray9 bgc:color-primary|h c:color-light-freeze|h btn-recover-password-cancel-js" data-css="">
+                  <span class="mr:10px">
+                    <i class="far fa-times-hexagon"></i>
+                  </span>
+                  <span>
+                    {{ "veda.customer.login_page.cancel" | t }}
+                  </span>
+                </button>
+              </div>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<link rel="preload" class="veda-page-script" as="script" href="{{ 'veda-main-login.js' | asset_url }}" />

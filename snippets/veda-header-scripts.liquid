@@ -1,0 +1,514 @@
+{% comment %}
+You SHOULD NOT modify source code in this page because
+It is automatically generated from Veda.
+{% endcomment %}
+<script>
+    window.VedaThemeSlug = "{{ settings.theme_slug }}"
+</script>
+{% comment %}Detecting product id{% endcomment %}
+{% if request.page_type == 'product' %}
+    <script type="application/json" class="veda-product-id">{{ product.id }}</script>
+{% endif %}
+{% comment %}Multi currency purpose{% endcomment %}
+<script type="application/json" class="veda-money-format">{{ 100 | money }}</script>
+<style>:root {
+      
+          --color-primary: rgba(151,105,248,1);
+          --color-primary-freeze: rgba(151,105,248,1);
+          --rgb-color-primary: 151,105,248;
+          --rgb-color-primary-freeze: 151,105,248;
+        
+
+          --color-secondary: rgba(191,238,97,1);
+          --color-secondary-freeze: rgba(191,238,97,1);
+          --rgb-color-secondary: 191,238,97;
+          --rgb-color-secondary-freeze: 191,238,97;
+        
+
+          --color-tertiary: #eb6c6c;
+          --color-tertiary-freeze: #eb6c6c;
+          --rgb-color-tertiary: 235, 108, 108;
+          --rgb-color-tertiary-freeze: 235, 108, 108;
+        
+
+          --color-quaternary: #FBC473;
+          --color-quaternary-freeze: #FBC473;
+          --rgb-color-quaternary: 251, 196, 115;
+          --rgb-color-quaternary-freeze: 251, 196, 115;
+        
+
+          --color-dark: #000000;
+          --color-dark-freeze: #000000;
+          --rgb-color-dark: 0, 0, 0;
+          --rgb-color-dark-freeze: 0, 0, 0;
+        
+
+          --color-gray9: #232323;
+          --color-gray9-freeze: #232323;
+          --rgb-color-gray9: 35, 35, 35;
+          --rgb-color-gray9-freeze: 35, 35, 35;
+        
+
+          --color-gray8: #3e3e3e;
+          --color-gray8-freeze: #3e3e3e;
+          --rgb-color-gray8: 62, 62, 62;
+          --rgb-color-gray8-freeze: 62, 62, 62;
+        
+
+          --color-gray7: #575757;
+          --color-gray7-freeze: #575757;
+          --rgb-color-gray7: 87, 87, 87;
+          --rgb-color-gray7-freeze: 87, 87, 87;
+        
+
+          --color-gray6: #888888;
+          --color-gray6-freeze: #888888;
+          --rgb-color-gray6: 136, 136, 136;
+          --rgb-color-gray6-freeze: 136, 136, 136;
+        
+
+          --color-gray5: #b3b3b3;
+          --color-gray5-freeze: #b3b3b3;
+          --rgb-color-gray5: 179, 179, 179;
+          --rgb-color-gray5-freeze: 179, 179, 179;
+        
+
+          --color-gray4: #dbdbdb;
+          --color-gray4-freeze: #dbdbdb;
+          --rgb-color-gray4: 219, 219, 219;
+          --rgb-color-gray4-freeze: 219, 219, 219;
+        
+
+          --color-gray3: #e9e9e9;
+          --color-gray3-freeze: #e9e9e9;
+          --rgb-color-gray3: 233, 233, 233;
+          --rgb-color-gray3-freeze: 233, 233, 233;
+        
+
+          --color-gray2: #f3f3f3;
+          --color-gray2-freeze: #f3f3f3;
+          --rgb-color-gray2: 243, 243, 243;
+          --rgb-color-gray2-freeze: 243, 243, 243;
+        
+
+          --color-gray1: #fafafa;
+          --color-gray1-freeze: #fafafa;
+          --rgb-color-gray1: 250, 250, 250;
+          --rgb-color-gray1-freeze: 250, 250, 250;
+        
+
+          --color-light: #ffffff;
+          --color-light-freeze: #ffffff;
+          --rgb-color-light: 255, 255, 255;
+          --rgb-color-light-freeze: 255, 255, 255;
+        
+      --font-primary:Work Sans;
+--font-tertiary:Playfair Display;
+--font-quaternary:Roboto Mono;
+
+    }
+    :root.dark {
+      
+        --color-primary: rgba(151,105,248,1);
+        --rgb-color-primary: 151,105,248;
+      
+
+        --color-secondary: rgba(191,238,97,1);
+        --rgb-color-secondary: 191,238,97;
+      
+
+        --color-tertiary: #eb6c6c;
+        --rgb-color-tertiary: 235, 108, 108;
+      
+
+        --color-quaternary: #FBC473;
+        --rgb-color-quaternary: 251, 196, 115;
+      
+
+        --color-dark: #ffffff;
+        --rgb-color-dark: 255, 255, 255;
+      
+
+        --color-gray9: #fafafa;
+        --rgb-color-gray9: 250, 250, 250;
+      
+
+        --color-gray8: #f3f3f3;
+        --rgb-color-gray8: 243, 243, 243;
+      
+
+        --color-gray7: #e9e9e9;
+        --rgb-color-gray7: 233, 233, 233;
+      
+
+        --color-gray6: #dbdbdb;
+        --rgb-color-gray6: 219, 219, 219;
+      
+
+        --color-gray5: #b3b3b3;
+        --rgb-color-gray5: 179, 179, 179;
+      
+
+        --color-gray4: #888888;
+        --rgb-color-gray4: 136, 136, 136;
+      
+
+        --color-gray3: #575757;
+        --rgb-color-gray3: 87, 87, 87;
+      
+
+        --color-gray2: #3e3e3e;
+        --rgb-color-gray2: 62, 62, 62;
+      
+
+        --color-gray1: #232323;
+        --rgb-color-gray1: 35, 35, 35;
+      
+
+        --color-light: #000000;
+        --rgb-color-light: 0, 0, 0;
+      
+    }
+    
+
+  html .container {
+    max-width: 1300px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  html .row {
+    margin-top: -20px;
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  html .row > * {
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  html .veda-grid-auto {
+    column-gap: 10px !important;
+    row-gap: 20px !important;
+  }
+
+
+        .veda-color-style_1 {
+          
+            --color-primary: rgba(8,37,36,1);
+            --color-primary-freeze: rgba(8,37,36,1);
+            --rgb-color-primary: 8,37,36;
+            --rgb-color-primary-freeze: 8,37,36;
+          
+
+            --color-secondary: #3540df;
+            --color-secondary-freeze: #3540df;
+            --rgb-color-secondary: 53, 64, 223;
+            --rgb-color-secondary-freeze: 53, 64, 223;
+          
+
+            --color-tertiary: #eb6c6c;
+            --color-tertiary-freeze: #eb6c6c;
+            --rgb-color-tertiary: 235, 108, 108;
+            --rgb-color-tertiary-freeze: 235, 108, 108;
+          
+
+            --color-quaternary: #FBC473;
+            --color-quaternary-freeze: #FBC473;
+            --rgb-color-quaternary: 251, 196, 115;
+            --rgb-color-quaternary-freeze: 251, 196, 115;
+          
+
+            --color-dark: #000000;
+            --color-dark-freeze: #000000;
+            --rgb-color-dark: 0, 0, 0;
+            --rgb-color-dark-freeze: 0, 0, 0;
+          
+
+            --color-gray9: #232323;
+            --color-gray9-freeze: #232323;
+            --rgb-color-gray9: 35, 35, 35;
+            --rgb-color-gray9-freeze: 35, 35, 35;
+          
+
+            --color-gray8: #3e3e3e;
+            --color-gray8-freeze: #3e3e3e;
+            --rgb-color-gray8: 62, 62, 62;
+            --rgb-color-gray8-freeze: 62, 62, 62;
+          
+
+            --color-gray7: #575757;
+            --color-gray7-freeze: #575757;
+            --rgb-color-gray7: 87, 87, 87;
+            --rgb-color-gray7-freeze: 87, 87, 87;
+          
+
+            --color-gray6: #888888;
+            --color-gray6-freeze: #888888;
+            --rgb-color-gray6: 136, 136, 136;
+            --rgb-color-gray6-freeze: 136, 136, 136;
+          
+
+            --color-gray5: #b3b3b3;
+            --color-gray5-freeze: #b3b3b3;
+            --rgb-color-gray5: 179, 179, 179;
+            --rgb-color-gray5-freeze: 179, 179, 179;
+          
+
+            --color-gray4: #dbdbdb;
+            --color-gray4-freeze: #dbdbdb;
+            --rgb-color-gray4: 219, 219, 219;
+            --rgb-color-gray4-freeze: 219, 219, 219;
+          
+
+            --color-gray3: #e9e9e9;
+            --color-gray3-freeze: #e9e9e9;
+            --rgb-color-gray3: 233, 233, 233;
+            --rgb-color-gray3-freeze: 233, 233, 233;
+          
+
+            --color-gray2: #f3f3f3;
+            --color-gray2-freeze: #f3f3f3;
+            --rgb-color-gray2: 243, 243, 243;
+            --rgb-color-gray2-freeze: 243, 243, 243;
+          
+
+            --color-gray1: #fafafa;
+            --color-gray1-freeze: #fafafa;
+            --rgb-color-gray1: 250, 250, 250;
+            --rgb-color-gray1-freeze: 250, 250, 250;
+          
+
+            --color-light: #ffffff;
+            --color-light-freeze: #ffffff;
+            --rgb-color-light: 255, 255, 255;
+            --rgb-color-light-freeze: 255, 255, 255;
+          
+        }
+        .veda-color-style_1.dark {
+          
+          --color-primary: #33C9C4;
+          --rgb-color-primary: 51, 201, 196;
+        
+
+          --color-secondary: #3540df;
+          --rgb-color-secondary: 53, 64, 223;
+        
+
+          --color-tertiary: #eb6c6c;
+          --rgb-color-tertiary: 235, 108, 108;
+        
+
+          --color-quaternary: #FBC473;
+          --rgb-color-quaternary: 251, 196, 115;
+        
+
+          --color-dark: #ffffff;
+          --rgb-color-dark: 255, 255, 255;
+        
+
+          --color-gray9: #fafafa;
+          --rgb-color-gray9: 250, 250, 250;
+        
+
+          --color-gray8: #f3f3f3;
+          --rgb-color-gray8: 243, 243, 243;
+        
+
+          --color-gray7: #e9e9e9;
+          --rgb-color-gray7: 233, 233, 233;
+        
+
+          --color-gray6: #dbdbdb;
+          --rgb-color-gray6: 219, 219, 219;
+        
+
+          --color-gray5: #b3b3b3;
+          --rgb-color-gray5: 179, 179, 179;
+        
+
+          --color-gray4: #888888;
+          --rgb-color-gray4: 136, 136, 136;
+        
+
+          --color-gray3: #575757;
+          --rgb-color-gray3: 87, 87, 87;
+        
+
+          --color-gray2: #3e3e3e;
+          --rgb-color-gray2: 62, 62, 62;
+        
+
+          --color-gray1: #232323;
+          --rgb-color-gray1: 35, 35, 35;
+        
+
+          --color-light: #000000;
+          --rgb-color-light: 0, 0, 0;
+        
+        }
+      
+
+        .veda-color-style_2 {
+          
+            --color-primary: #4840D8;
+            --color-primary-freeze: #4840D8;
+            --rgb-color-primary: 72, 64, 216;
+            --rgb-color-primary-freeze: 72, 64, 216;
+          
+
+            --color-secondary: #EA7E4C;
+            --color-secondary-freeze: #EA7E4C;
+            --rgb-color-secondary: 234, 126, 76;
+            --rgb-color-secondary-freeze: 234, 126, 76;
+          
+
+            --color-tertiary: #1B3839;
+            --color-tertiary-freeze: #1B3839;
+            --rgb-color-tertiary: 27, 56, 57;
+            --rgb-color-tertiary-freeze: 27, 56, 57;
+          
+
+            --color-quaternary: #EEF9FE;
+            --color-quaternary-freeze: #EEF9FE;
+            --rgb-color-quaternary: 238, 249, 254;
+            --rgb-color-quaternary-freeze: 238, 249, 254;
+          
+
+            --color-dark: #080626;
+            --color-dark-freeze: #080626;
+            --rgb-color-dark: 8, 6, 38;
+            --rgb-color-dark-freeze: 8, 6, 38;
+          
+
+            --color-gray9: #211F3C;
+            --color-gray9-freeze: #211F3C;
+            --rgb-color-gray9: 33, 31, 60;
+            --rgb-color-gray9-freeze: 33, 31, 60;
+          
+
+            --color-gray8: #393851;
+            --color-gray8-freeze: #393851;
+            --rgb-color-gray8: 57, 56, 81;
+            --rgb-color-gray8-freeze: 57, 56, 81;
+          
+
+            --color-gray7: #525167;
+            --color-gray7-freeze: #525167;
+            --rgb-color-gray7: 82, 81, 103;
+            --rgb-color-gray7-freeze: 82, 81, 103;
+          
+
+            --color-gray6: #838293;
+            --color-gray6-freeze: #838293;
+            --rgb-color-gray6: 131, 130, 147;
+            --rgb-color-gray6-freeze: 131, 130, 147;
+          
+
+            --color-gray5: #9C9BA8;
+            --color-gray5-freeze: #9C9BA8;
+            --rgb-color-gray5: 156, 155, 168;
+            --rgb-color-gray5-freeze: 156, 155, 168;
+          
+
+            --color-gray4: #B5B4BE;
+            --color-gray4-freeze: #B5B4BE;
+            --rgb-color-gray4: 181, 180, 190;
+            --rgb-color-gray4-freeze: 181, 180, 190;
+          
+
+            --color-gray3: #CECDD4;
+            --color-gray3-freeze: #CECDD4;
+            --rgb-color-gray3: 206, 205, 212;
+            --rgb-color-gray3-freeze: 206, 205, 212;
+          
+
+            --color-gray2: #E6E6E9;
+            --color-gray2-freeze: #E6E6E9;
+            --rgb-color-gray2: 230, 230, 233;
+            --rgb-color-gray2-freeze: 230, 230, 233;
+          
+
+            --color-gray1: #F3F3F4;
+            --color-gray1-freeze: #F3F3F4;
+            --rgb-color-gray1: 243, 243, 244;
+            --rgb-color-gray1-freeze: 243, 243, 244;
+          
+
+            --color-light: #FFFFFF;
+            --color-light-freeze: #FFFFFF;
+            --rgb-color-light: 255, 255, 255;
+            --rgb-color-light-freeze: 255, 255, 255;
+          
+        }
+        .veda-color-style_2.dark {
+          
+          --color-primary: #4840D8;
+          --rgb-color-primary: 72, 64, 216;
+        
+
+          --color-secondary: #EA7E4C;
+          --rgb-color-secondary: 234, 126, 76;
+        
+
+          --color-tertiary: #1B3839;
+          --rgb-color-tertiary: 27, 56, 57;
+        
+
+          --color-quaternary: #EEF9FE;
+          --rgb-color-quaternary: 238, 249, 254;
+        
+
+          --color-dark: #ffffff;
+          --rgb-color-dark: 255, 255, 255;
+        
+
+          --color-gray9: #F3F3F4;
+          --rgb-color-gray9: 243, 243, 244;
+        
+
+          --color-gray8: #E6E6E9;
+          --rgb-color-gray8: 230, 230, 233;
+        
+
+          --color-gray7: #CECDD4;
+          --rgb-color-gray7: 206, 205, 212;
+        
+
+          --color-gray6: #B5B4BE;
+          --rgb-color-gray6: 181, 180, 190;
+        
+
+          --color-gray5: #9C9BA8;
+          --rgb-color-gray5: 156, 155, 168;
+        
+
+          --color-gray4: #838293;
+          --rgb-color-gray4: 131, 130, 147;
+        
+
+          --color-gray3: #525167;
+          --rgb-color-gray3: 82, 81, 103;
+        
+
+          --color-gray2: #393851;
+          --rgb-color-gray2: 57, 56, 81;
+        
+
+          --color-gray1: #211F3C;
+          --rgb-color-gray1: 33, 31, 60;
+        
+
+          --color-light: #080626;
+          --rgb-color-light: 8, 6, 38;
+        
+        }
+      </style>
+  
+  
+  
+  
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" />
+
+{% style %}{% endstyle %}

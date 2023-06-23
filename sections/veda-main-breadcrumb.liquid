@@ -1,0 +1,495 @@
+{% liquid
+	assign uniqueId = 'id_f67ac258-8c50-4a4f-9d81-80dbfc272cd2'
+  if section.settings.VEDA_switch_3
+    assign backgroundFixed = 'fixed'
+  else
+    assign backgroundFixed = 'scroll'
+  endif
+
+  if section.settings.VEDA_select_2 == 'color'
+    assign backgroundColor = 'background-color: ' | append: null | append: ';'
+  else
+    assign backgroundColor = ''
+  endif
+
+  if section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_1.src
+    assign bgImage = section.settings.VEDA_image_1.src | image_url: width: 2000
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_1 | append: ';'
+  elsif section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_1.src == blank
+    assign bgImage = 'https://cdn.shopify.com/s/files/1/0552/5510/5616/files/udxhtnzxtq.png?v=1681903122&width=1000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_1 | append: ';'
+  else
+    assign backgroundImage = ''
+  endif
+
+  assign sectionPadding = 'padding-top: ' | append: 20 | append: 'px;padding-right: ' | append: null | append: 'px;padding-bottom: ' | append: 20 | append: 'px;padding-left: ' | append: null | append: 'px;'
+
+  if section.settings.VEDA_select_3 == 'full_width'
+    assign containerType = 'container-fluid'
+  else
+    assign containerType = 'container'
+  endif
+
+  if section.settings.VEDA_slider_5 >= 0
+    assign containerGap = 'padding-left: ' | append: section.settings.VEDA_slider_5 | append: 'px; padding-right: ' | append: section.settings.VEDA_slider_5 | append: 'px;'
+  else
+    assign containerGap = ''
+  endif
+
+  if section.settings.section_settings___width >= 0
+    assign containerWidth = 'max-width: ' | append: section.settings.section_settings___width | append: 'px;'
+  else
+    assign containerWidth = ''
+  endif
+
+  assign sectionSeparator = ''
+
+  if section.settings.VEDA_switch_1
+    if section.settings.VEDA_slider_2
+      assign sectionSeparator = sectionSeparator | append: 'border-top: ' | append: section.settings.VEDA_slider_2 | append: 'px solid ' | append: '#f3f3f3' | append: ';'
+    endif
+
+    if section.settings.VEDA_slider_1
+      assign sectionSeparator = sectionSeparator | append: 'border-bottom: ' | append: section.settings.VEDA_slider_1 | append: 'px solid ' | append: '#f3f3f3' | append: ';'
+    endif
+  endif
+%}
+
+{% capture SectionHeading %}
+  {% liquid
+    assign headingPadding = 'padding-top: ' | append: null | append: 'px;padding-right: ' | append: null | append: 'px;padding-bottom: ' | append: null | append: 'px;padding-left: ' | append: null | append: 'px;'
+%}
+  {% if section.settings.heading___enable %}
+    <div
+      class="d:flex fld:column w:100%"
+      style="text-align: {{ "left" }};{{ headingPadding }}"
+    >
+      {% if section.settings.heading___title %}
+        <h2
+          class="ff:font-secondary fz:pfs(25px,36px) fw:500"
+          data-css="{{ null }}"
+        >
+          {%- liquid
+            if section.settings.heading___manual
+              echo section.settings.heading___title
+            else
+              if template.name == 'product'
+                assign current_collection = null
+                assign collectionsSize = product.collections | size
+	              if collection
+	                assign current_collection = collection
+	              elsif product and collectionsSize > 0
+	                assign current_collection = product.collections.first
+	              endif
+	              if current_collection
+	                if current_collection.handle
+	                  echo current_collection.title
+	                endif
+	              endif
+                echo product.title
+              elsif template.name == 'collection' and collection.handle
+	              if current_tags
+	                echo current_tags | join: ' + '
+	              else
+	                echo collection.title
+	              endif
+	            elsif template.name == 'blog'
+	              if current_tags
+	                echo current_tags | join: ' + '
+	              else
+	                echo blog.title
+	              endif
+	            elsif template == 'article'
+	              echo blog.title
+	            elsif template == 'customers/addresses'
+	              echo page_title
+	            elsif template contains 'page'
+	              echo page.title
+	            elsif template contains 'search'
+	              echo 'veda.general.search.heading' | t: count: search.results_count, terms: search.terms
+	            else
+	              echo page_title
+	            endif
+	          endif
+          %}
+        </h2>
+      {% endif %}
+      {% if section.settings.heading___divider != 'none' %}
+        {%- render "veda-devider", type: section.settings.heading___divider %}
+      {% endif %}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{% capture Content %}
+  {% capture separator %}
+    <span
+      aria-hidden="true"
+      class="p:4px fz:10px c:color-gray6"
+      data-css="{{ null }}"
+    >
+      {{ section.settings.breadcrumb___separator }}
+    </span>
+  {% endcapture %}
+
+  {% capture home %}
+    <a
+      href="{{ routes.root_url }}"
+      class="p:4px fz:15px c:color-gray9 trs:0.3s"
+      title="{{ section.settings["VEDA_text_2"] }}"
+      data-css="{{ null }}"
+    >
+      {{ section.settings.VEDA_text_2 }}
+    </a>
+  {% endcapture %}
+
+  {% if template != 'index' %}
+    <nav
+      role="navigation"
+      aria-label="breadcrumbs"
+    >
+      <div data-css="{{ null }}">
+        <div
+          class="d:flex ai:center mih:100% {{ containerType }}"
+          {% if section.settings.VEDA_slider_5
+            or section.settings.VEDA_slider_5 == 0
+            or section.settings.section_settings___width
+            or section.settings.section_settings___width == 0
+          %}
+            style="justify-content: {{ "flex-start" }}; {{ containerGap }}{{ containerWidth }}"
+          {% else %}
+            style="justify-content: {{ "flex-start" }};"
+          {% endif %}
+        >
+          {%- liquid
+	          if template.name != 'product'
+	             echo home
+	          endif
+          %}
+
+          {% if template.name == 'product' %}
+            {%- liquid
+              echo home
+              assign current_collection = null
+              assign collectionsSize = product.collections | size
+              if collection
+								assign current_collection = collection
+							elsif product and collectionsSize > 0
+								assign current_collection = product.collections.first
+							endif
+            %}
+            {% if current_collection %}
+              {{ separator }}
+              {% if current_collection.handle %}
+                {% capture url %}/collections/{{ current_collection.handle }}{% endcapture %}
+                <a href="{{ url }}" class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+                  {{ current_collection.title }}
+                </a>
+              {% endif %}
+            {% endif %}
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+              {{ product.title }}
+            </span>
+          {% elsif template.name == 'collection' and collection.handle %}
+            {{ separator }}
+            {% if current_tags %}
+              {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+              <a href="{{ url }}" class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+                {{ collection.title }}
+              </a>
+              {{ separator }}
+              <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+                {{ current_tags | join: ' + ' }}
+              </span>
+            {% else %}
+              <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+                {{ collection.title }}
+              </span>
+            {% endif %}
+          {% elsif template.name == 'blog' %}
+            {{ separator }}
+            {% if current_tags %}
+              <a
+                href="{{ blog.url }}"
+                class="p:4px fz:15px c:color-gray9 trs:0.3s"
+                data-css="{{ null }}"
+              >
+                {{ blog.title }}
+              </a>
+              {{ separator }}
+              <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+                {{ current_tags | join: ' + ' }}
+              </span>
+            {% else %}
+              <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+                {{ blog.title }}
+              </span>
+            {% endif %}
+          {% elsif template.name == 'article' %}
+            {{ separator }}
+            <a href="{{ blog.url }}" class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+              {{ blog.title }}
+            </a>
+          {% elsif template.name == 'customers/addresses' %}
+            {{ separator }}
+            <a
+              href="{{ routes.account_url }}"
+              class="p:4px fz:15px c:color-gray9 trs:0.3s"
+              data-css="{{ null }}"
+            >
+              {{ section.settings.VEDA_text_1 }}
+            </a>
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+              {{ page_title }}
+            </span>
+          {% elsif template contains 'page' %}
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+              {{ page.title }}
+            </span>
+          {% elsif template contains 'search' %}
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+              {{ 'veda.general.search.heading' | t: count: search.results_count, terms: search.terms }}
+            </span>
+          {% else %}
+            {{ separator }}
+            <span class="p:4px fz:15px c:color-gray9 trs:0.3s" data-css="{{ null }}">
+              {{ page_title }}
+            </span>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+  {% endif %}
+{% endcapture %}
+
+<section
+  data-id="{{ uniqueId }}"
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center bdb:1px_solid_color-gray2"
+  style="{{ backgroundColor }}{{ backgroundImage }}{{ sectionPadding }}{{ sectionSeparator }}"
+>
+  <div
+    class="{{ containerType }}"
+    {% if section.settings.VEDA_slider_5
+      or section.settings.VEDA_slider_5 == 0
+      or section.settings.section_settings___width
+      or section.settings.section_settings___width == 0
+    %}
+      style="{{ containerGap }}{{ containerWidth }}"
+    {% endif %}
+  >
+    {{ SectionHeading }}
+  </div>
+  {{ Content }}
+  {% if section.settings.VEDA_select_2 == 'video' and section.settings.VEDA_video_1 %}
+    <div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+  {% endif %}
+  {% if section.settings.VEDA_switch_2 %}
+    <div
+      class="pos:absolute ins:0 z:-1"
+      style="background-color: {{ null }};backdrop-filter: blur({{ section.settings["VEDA_slider_3"] }}px)"
+    ></div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Breadcrumb 1",
+  "blocks": [
+
+  ],
+  "settings": [
+    {
+      "label": "Breadcrumb > Separator",
+      "info": "[Get icon](https://fontawesome.com/v5/search)",
+      "id": "breadcrumb___separator",
+      "type": "html",
+      "default": "<i class=\"far fa-chevron-right\"></i>"
+    },
+    {
+      "label": "Breadcrumb > Customer Page Title",
+      "id": "VEDA_text_1",
+      "type": "liquid",
+      "default": "{{ 'veda.customer.account.page_title' | t }}"
+    },
+    {
+      "label": "Breadcrumb > Home Page Title",
+      "id": "VEDA_text_2",
+      "type": "liquid",
+      "default": "{{ 'veda.general.breadcrumbs.home' | t }}"
+    },
+    {
+      "label": "Heading > Divider",
+      "id": "heading___divider",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "None",
+          "value": "none"
+        },
+        {
+          "label": "Line",
+          "value": "line"
+        },
+        {
+          "label": "Wave",
+          "value": "wave"
+        },
+        {
+          "label": "Mountain",
+          "value": "mountain"
+        }
+      ]
+    },
+    {
+      "label": "Heading > Title",
+      "id": "heading___title",
+      "type": "liquid"
+    },
+    {
+      "label": "Heading > Manual",
+      "id": "heading___manual",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Heading > Enable",
+      "id": "heading___enable",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Section Settings > Separator Bottom",
+      "id": "VEDA_slider_1",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Top",
+      "id": "VEDA_slider_2",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Separator",
+      "id": "VEDA_switch_1",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Overlay Blur",
+      "id": "VEDA_slider_3",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Background Overlay",
+      "id": "VEDA_switch_2",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Size",
+      "id": "VEDA_select_1",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Background Fixed",
+      "id": "VEDA_switch_3",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Video",
+      "id": "VEDA_video_1",
+      "type": "text"
+    },
+    {
+      "type": "image_picker",
+      "id": "VEDA_image_1",
+      "label": "Background Image"
+    },
+    {
+      "label": "Section Settings > Background Type",
+      "id": "VEDA_select_2",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "Image",
+          "value": "image"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Video",
+          "value": "video"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Column Gap",
+      "id": "VEDA_slider_4",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Gap",
+      "id": "VEDA_slider_5",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Width",
+      "id": "section_settings___width",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Width",
+      "id": "VEDA_select_3",
+      "type": "select",
+      "default": "boxed",
+      "options": [
+        {
+          "label": "Boxed",
+          "value": "boxed"
+        },
+        {
+          "label": "Full Width",
+          "value": "full_width"
+        },
+        {
+          "label": "Manual",
+          "value": "manual"
+        }
+      ]
+    }
+  ],
+  "tag": "div",
+  "presets": [
+    {
+      "name": "Breadcrumb 1",
+      "blocks": [
+
+      ]
+    }
+  ]
+}
+{% endschema %}

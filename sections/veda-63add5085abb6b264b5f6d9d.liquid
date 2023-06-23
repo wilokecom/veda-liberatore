@@ -1,0 +1,1381 @@
+{% assign uniqueId = 'id_98fdb315-10b6-470c-a6ec-678b0f82d412' %}
+{% assign builderMode = false %}
+{% assign envatoMode = false %}
+{% liquid
+  if section.settings.VEDA_switch_1
+    assign backgroundFixed = 'fixed'
+  else
+    assign backgroundFixed = 'scroll'
+  endif
+
+  if section.settings.VEDA_select_2 == 'color'
+    assign backgroundColor = 'background-color: ' | append: section.settings.VEDA_color_1 | append: ';'
+  else
+    assign backgroundColor = ''
+  endif
+
+  if section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2
+    assign bgImage = section.settings.VEDA_image_2 | append: '&width=2000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  elsif section.settings.VEDA_select_2 == 'image' and section.settings.VEDA_image_2 == blank
+    assign bgImage = 'https://cdn.shopify.com/s/files/1/0552/5510/5616/files/udxhtnzxtq.png?v=1681903122&width=1000'
+
+    assign backgroundImage = 'background-image: url(' | append: bgImage | append: ');background-attachment: ' | append: backgroundFixed | append: ';background-size: ' | append: section.settings.VEDA_select_3 | append: ';'
+  else
+    assign backgroundImage = ''
+  endif
+
+  assign sectionPadding = 'padding-top: ' | append: section.settings.VEDA_space_4 | append: 'px;padding-right: ' | append: section.settings.VEDA_space_3 | append: 'px;padding-bottom: ' | append: section.settings.VEDA_space_1 | append: 'px;padding-left: ' | append: section.settings.VEDA_space_2 | append: 'px;'
+
+  if section.settings.VEDA_select_1 == 'full_width'
+    assign containerType = 'container-fluid'
+  else
+    assign containerType = 'container'
+  endif
+
+  if section.settings.VEDA_slider_1 >= 0
+    assign containerGap = 'padding-left: ' | append: section.settings.VEDA_slider_1 | append: 'px; padding-right: ' | append: section.settings.VEDA_slider_1 | append: 'px;'
+  else
+    assign containerGap = ''
+  endif
+
+  if section.settings.section_settings___width >= 0
+    assign containerWidth = 'max-width: ' | append: section.settings.section_settings___width | append: 'px;'
+  else
+    assign containerWidth = ''
+  endif
+
+  if section.settings.VEDA_slider_2 >= 0
+    assign settingGap = section.settings.VEDA_slider_2 | divided_by: 2.0
+
+    assign settingGapVertical = section.settings.VEDA_slider_2
+  else
+    assign settingGap = ''
+
+    assign settingGapVertical = ''
+  endif
+
+  assign colGap = 'margin-top: ' | append: settingGapVertical | append: 'px; padding-left: ' | append: settingGap | append: 'px; padding-right: ' | append: settingGap | append: 'px;'
+
+  assign rowGap = 'margin-top: -' | append: settingGapVertical | append: 'px; margin-left: -' | append: settingGap | append: 'px; margin-right: -' | append: settingGap | append: 'px;'
+
+  assign sectionSeparator = ''
+
+  if section.settings.VEDA_switch_3
+    if section.settings.VEDA_slider_4
+      assign sectionSeparator = sectionSeparator | append: 'border-top: ' | append: section.settings.VEDA_slider_4 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+
+    if section.settings.VEDA_slider_5
+      assign sectionSeparator = sectionSeparator | append: 'border-bottom: ' | append: section.settings.VEDA_slider_5 | append: 'px solid ' | append: section.settings.VEDA_color_3 | append: ';'
+    endif
+  endif
+
+  if colGap and rowGap and builderMode and envatoMode
+  endif
+%}
+
+{% liquid
+  assign _alt = false
+
+  assign _style = false
+
+  assign _style = false
+
+  assign _placeholder = false
+
+  assign _placeholder_class = false
+
+  assign _test = false
+
+  assign _class = false
+%}
+{% capture Content %}
+  {% liquid
+    assign contentPadding = ''
+
+    if section.settings.VEDA_switch_4
+      if section.settings.VEDA_radioGroup_1 == 'left'
+        assign contentPadding = ' pr:40px@md'
+      else
+        assign contentPadding = ' pl:40px@md'
+      endif
+    endif
+  %}
+  <div
+    class="w:100%@+md! mih:100% d:flex fld:column ai:center"
+    {% if section.settings.VEDA_switch_4 %}
+      {% if section.settings.VEDA_radioGroup_1 == 'right' %}
+        style="width: {{ section.settings["VEDA_slider_8"] }}%; order: 1;"
+      {% else %}
+        style="width: {{ section.settings["VEDA_slider_8"] }}%;"
+      {% endif %}
+    {% endif %}
+  >
+    {% liquid
+      assign aspectRatio = 66
+
+      assign imageRadius = 0
+
+      if section.settings.content___aspect_ratio
+        assign aspectRatio = section.settings.content___aspect_ratio
+      endif
+
+      if section.settings.VEDA_slider_7
+        assign imageRadius = section.settings.VEDA_slider_7
+      endif
+    %}
+    <div
+      class="row row-cols-lg-{{ section.settings["VEDA_responsive_1"] }} row-cols-md-{{ section.settings["VEDA_responsive_2"] }} row-cols-sm-{{ section.settings["VEDA_responsive_3"] }} row-cols-{{ section.settings["VEDA_responsive_4"] }} {{ contentPadding }} w:100%"
+      {% if section.settings.VEDA_slider_2 or section.settings.VEDA_slider_2 == 0 %}
+        style="{{ rowGap }}"
+      {% endif %}
+    >
+      {% paginate blog.articles by section.settings.VEDA_slider_6 %}
+        {% for articleItem in blog.articles %}
+          <div
+            class="col"
+            {% if section.settings.VEDA_slider_2 or section.settings.VEDA_slider_2 == 0 %}
+              style="{{ colGap }}"
+            {% endif %}
+          >
+            <div class="d:flex fld:column jc:space-between bgc:color-light bdrs:10px mih:100% ov:hidden">
+              <div>
+                <a
+                  href="{{ articleItem.url }}"
+                  class="veda-image-cover d:block"
+                  style="--aspect-ratio: {{ aspectRatio }};border-radius: {{ imageRadius }}px"
+                >
+                  {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+                  {% if articleItem.image.src != blank %}
+                    <img
+                      class="veda-lazyload {{ _class }}"
+                      src="{{ articleItem.image.src | image_url: width: 10 }}"
+                      draggable="false"
+                      {% if articleItem.title %}
+                        alt="{{ articleItem.title }}"
+                      {% else %}
+                        alt="image"
+                      {% endif %}
+                      {% if articleItem.image.width %}
+                        data-intrinsic-width="{{ articleItem.image.width }}"
+                        width="{{ articleItem.image.width }}"
+                      {% endif %}
+                      {% if articleItem.image.height %}
+                        height="{{ articleItem.image.height }}"
+                        data-intrinsic-height="{{ articleItem.image.height }}"
+                      {% endif %}
+                      {% if _style %}
+                        style="{{ _style }}"
+                      {% endif %}
+                      loading="lazy"
+                    >
+                  {% else %}
+                    {% liquid
+                      assign pl = 'lifestyle-1'
+
+                      if _placeholder
+                        assign pl = _placeholder
+                      endif
+
+                      assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _class
+
+                      if 'bg:color-gray3'
+                        assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: 'bg:color-gray3'
+                      endif
+                    %}
+                    {{ pl | placeholder_svg_tag: placeholder_class }}
+                  {% endif %}
+                  {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+                </a>
+
+                <div class="p:15px">
+                  <div class="d:flex ai:center jc:space-between mb:15px">
+                    {% if section.settings.content___enable_author %}
+                      {% if builderMode %}
+                        <div class="d:flex ai:center">
+                          <div class="ff:font-secondary fz:12px fw:500 c:color-gray8">Elliana</div>
+                        </div>
+                      {% else %}
+                        <div class="d:flex ai:center" data-css="{{ section.settings["VEDA_styleBox_6"] }}">
+                          <div class="ff:font-secondary fz:12px fw:500 c:color-gray8">
+                            {{ articleItem.author }}
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endif %}
+
+                    <div class="d:flex ai:center c:color-gray7 fz:13px ff:font-secondary">
+                      {% liquid
+                        assign tagSize = articleItem.tags | size
+                      %}
+                      {% if tagSize >= 1 and section.settings.content___enable_tag %}
+                        <div
+                          class="c:color-primary"
+                          data-css="{{ section.settings["VEDA_styleBox_12"] }}"
+                        >
+                          {{ articleItem.tags[0] | link_to_tag: articleItem.tags[0] }}
+                        </div>
+                      {% endif %}
+                      {% if tagSize >= 1
+                        and section.settings.content___enable_tag
+                        and section.settings.content___enable_comment
+                        and articleItem.comments_enabled
+                        and blog.comments_enabled?
+                      %}
+                        <div class="w:15px"></div>
+                      {% endif %}
+                      {% if section.settings.content___enable_comment
+                        and articleItem.comments_enabled
+                        and blog.comments_enabled?
+                      %}
+                        <div class="ff:font-secondary" data-css="{{ section.settings["VEDA_styleBox_10"] }}">
+                          {% if articleItem.comments_count > 1 %}
+                            <i class="far fa-comments-alt"></i>
+                            <span class="ml:3px">
+                              {{ articleItem.comments_count }}
+                            </span>
+                          {% else %}
+                            <i class="far fa-comment-alt"></i>
+                            <span class="ml:3px">
+                              {{ articleItem.comments_count }}
+                            </span>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <a
+                    href="{{ articleItem.url }}"
+                    class="lines-2 c:color-gray9 fz:16px fw:500 ff:font-secondary cur:pointer tt:capitalize trs:0.3s"
+                    data-css="{{ section.settings["VEDA_styleBox_4"] }}"
+                  >
+                    {{ articleItem.title }}
+                  </a>
+                  {% if section.settings.content___enable_excerpt %}
+                    <div class="mt:10px lines-3" data-css="{{ section.settings["VEDA_styleBox_14"] }}">
+                      {% liquid
+                        assign excerptSize = articleItem.excerpt | size
+                      %}
+                      {% if excerptSize > 0 %}
+                        {{ articleItem.excerpt | strip_html | truncatewords: 24, '...' }}
+                      {% elsif articleItem.content %}
+                        {{ articleItem.content | strip_html | truncatewords: 24, '...' }}
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% if section.settings.content___enable_date and articleItem.published_at %}
+                <div class="p:15px pt:0! c:color-gray7 fz:12px" data-css="{{ section.settings["VEDA_styleBox_8"] }}">
+                  <i class="far fa-calendar-alt"></i>
+                  <span class="ff:font-secondary ml:3px">{{ articleItem.published_at | date: '%b %d, %Y' }}</span>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+        {% if paginate.pages > 1 %}
+          {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+          {% liquid
+            assign item_general_class = 'fz:15px! d:flex! ai:center jc:center ov:hidden trs:0.3s m:5px'
+
+            case section.settings.VEDA_select_4
+              when 'square_shadow'
+                assign item_variant_class = 'w:fit-content miw:46px h:46px p:0_10px bgc:color-light c:color-gray9 c:color-primary|h bxsh:0_5px_15px_color-gray9.1'
+              when 'square_border'
+                assign item_variant_class = 'w:fit-content miw:46px h:46px p:0_10px bgc:color-light bd:1px_solid_color-gray3 c:color-gray9 c:color-primary|h'
+              when 'square_gray'
+                assign item_variant_class = 'w:fit-content miw:46px h:46px p:0_10px bgc:color-gray3 c:color-gray9 c:color-primary|h'
+              when 'circle_shadow'
+                assign item_variant_class = 'w:fit-content miw:46px h:46px p:0_10px bgc:color-light c:color-gray9 c:color-primary|h bxsh:0_5px_15px_color-gray9.1 bdrs:50%'
+              when 'circle_border'
+                assign item_variant_class = 'w:fit-content miw:46px h:46px p:0_10px bgc:color-light bd:1px_solid_color-gray3 c:color-gray9 c:color-primary|h bdrs:50%'
+              when 'circle_gray'
+                assign item_variant_class = 'w:fit-content miw:46px h:46px p:0_10px bgc:color-gray3 c:color-gray9 c:color-primary|h bdrs:50%'
+              when 'custom'
+                assign item_variant_class = 'w:fit-content miw:46px h:46px p:0_10px'
+              else
+                assign item_variant_class = 'w:fit-content miw:46px h:46px p:0_10px'
+            endcase
+          %}
+          <nav class="w:100% pt:50px m:0!" data-css="{{ section.settings["VEDA_styleBox_26"] }}">
+            <ol class="d:flex jc:center ls:none m:0! p:0!">
+              {% if paginate.previous %}
+                <li>
+                  <a
+                    class="{{ item_general_class }} {{ item_variant_class }}"
+                    aria-label="Previous"
+                    href="{{ paginate.previous.url }}"
+                    data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+                  >
+                    <i class="far fa-arrow-left"></i>
+                  </a>
+                </li>
+              {% endif %}
+              {% for part in paginate.parts %}
+                {% if part.is_link %}
+                  <li>
+                    <a
+                      class="{{ item_general_class }} {{ item_variant_class }}"
+                      aria-label="Page {{ part.title }}"
+                      href="{{ part.url }}"
+                      data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+                    >
+                      {{ part.title }}
+                    </a>
+                  </li>
+                {% else %}
+                  {% if part.title == paginate.current_page %}
+                    <li>
+                      <span
+                        class="{{ item_general_class }} {{ item_variant_class }} bgc:color-primary! c:color-light-freeze!"
+                        aria-current="page"
+                        aria-label="Page {{ part.title }}"
+                        data-css="{{ section.settings["VEDA_styleBox_30"] }}"
+                      >
+                        {{ part.title }}
+                      </span>
+                    </li>
+                  {% else %}
+                    <li>
+                      <span
+                        class="{{ item_general_class }} {{ item_variant_class }}"
+                        aria-label="Page {{ part.title }}"
+                        data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+                      >
+                        {{ part.title }}
+                      </span>
+                    </li>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+
+              {% if paginate.next %}
+                <li>
+                  <a
+                    class="{{ item_general_class }} {{ item_variant_class }}"
+                    aria-label="Next"
+                    href="{{ paginate.next.url }}"
+                    data-css="{{ section.settings["VEDA_styleBox_28"] }}"
+                  >
+                    <i class="far fa-arrow-right"></i>
+                  </a>
+                </li>
+              {% endif %}
+            </ol>
+          </nav>
+          {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+        {% endif %}
+      {% endpaginate %}
+    </div>
+  </div>
+{% endcapture %}
+
+{% capture SideBar %}
+  {% if section.settings.VEDA_switch_4 %}
+    <div
+      class="pos:relative w:100%@+md! mt:30px@+md! mih:100%"
+      style="width: {{ 100 | minus: section.settings["VEDA_slider_8"] }}%"
+    >
+      {% for block in section.blocks %}
+        {% assign itemSidebar = block.settings %}
+
+        {% if itemSidebar.sidebar___enable %}
+          {% liquid
+            assign aspectRatio = 100
+
+            assign imageRadius = 0
+
+            if itemSidebar.sidebar___aspect_ratio
+              assign aspectRatio = itemSidebar.sidebar___aspect_ratio
+            endif
+
+            if itemSidebar.sidebar___border_radius
+              assign imageRadius = itemSidebar.sidebar___border_radius
+            endif
+          %}
+          <div class="mb:30px">
+            {% capture TitleSidebar %}
+              {% if itemSidebar.sidebar___title or itemSidebar.sidebar___description %}
+                <div class="mb:15px">
+                  {% if itemSidebar.sidebar___title %}
+                    <h3 class="fz:20px fw:500 m:0">{{ itemSidebar.sidebar___title }}</h3>
+                  {% endif %}
+                  {% if itemSidebar.sidebar___description %}
+                    <div>{{ itemSidebar.sidebar___description }}</div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endcapture %}
+            {% case block.type %}
+              {% when 'sidebar_image' %}
+                {{ TitleSidebar }}
+                <a
+                  class="pos:relative d:block"
+                  {% if itemSidebar.new_tab %}
+                    target="_blank"
+                  {% endif %}
+                  href="{{ itemSidebar.sidebar___link }}"
+                  style="border-radius: {{ imageRadius }}px"
+                >
+                  {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+                  {% if itemSidebar.sidebar___image__src != blank %}
+                    <img
+                      class="veda-lazyload {{ _class }}"
+                      src="{{ itemSidebar.sidebar___image__src | append: '&width=10' }}"
+                      draggable="false"
+                      {% if _alt %}
+                        alt="{{ _alt }}"
+                      {% else %}
+                        alt="image"
+                      {% endif %}
+                      {% if itemSidebar.sidebar___image__width %}
+                        data-intrinsic-width="{{ itemSidebar.sidebar___image__width }}"
+                        width="{{ itemSidebar.sidebar___image__width }}"
+                      {% endif %}
+                      {% if itemSidebar.sidebar___image__height %}
+                        height="{{ itemSidebar.sidebar___image__height }}"
+                        data-intrinsic-height="{{ itemSidebar.sidebar___image__height }}"
+                      {% endif %}
+                      {% if _style %}
+                        style="{{ _style }}"
+                      {% endif %}
+                      loading="lazy"
+                    >
+                  {% else %}
+                    {% liquid
+                      assign pl = 'lifestyle-1'
+
+                      if 'collection-1'
+                        assign pl = 'collection-1'
+                      endif
+
+                      assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _class
+
+                      if _placeholder_class
+                        assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _placeholder_class
+                      endif
+                    %}
+                    {{ pl | placeholder_svg_tag: placeholder_class }}
+                  {% endif %}
+                  {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+                </a>
+              {% when 'sidebar_posts' %}
+                {% liquid
+                  assign blogData = blogs[itemSidebar.sidebar___blog_name]
+                %}
+                {{ TitleSidebar }}
+                <div>
+                  {% for articleItem2 in blogData.articles limit: itemSidebar.sidebar___count %}
+                    <a href="{{ articleItem2.url }}" class="mb:15px d:flex ai:center">
+                      <div
+                        class="veda-image-cover d:block w:64px miw:64px flxs:0 mr:15px ov:hidden"
+                        style="--aspect-ratio:{{ aspectRatio }};border-radius: {{ imageRadius }}px"
+                      >
+                        {% comment %}BAT_DAU_TACH_FILE{% endcomment %}
+                        {% if articleItem2.image.src != blank %}
+                          <img
+                            class="veda-lazyload {{ _class }}"
+                            src="{{ articleItem2.image.src | image_url: width: 10 }}"
+                            draggable="false"
+                            {% if articleItem2.title %}
+                              alt="{{ articleItem2.title }}"
+                            {% else %}
+                              alt="image"
+                            {% endif %}
+                            {% if articleItem2.image.width %}
+                              data-intrinsic-width="{{ articleItem2.image.width }}"
+                              width="{{ articleItem2.image.width }}"
+                            {% endif %}
+                            {% if articleItem2.image.height %}
+                              height="{{ articleItem2.image.height }}"
+                              data-intrinsic-height="{{ articleItem2.image.height }}"
+                            {% endif %}
+                            {% if _style %}
+                              style="{{ _style }}"
+                            {% endif %}
+                            loading="lazy"
+                          >
+                        {% else %}
+                          {% liquid
+                            assign pl = 'lifestyle-1'
+
+                            if 'product-1'
+                              assign pl = 'product-1'
+                            endif
+
+                            assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _class
+
+                            if _placeholder_class
+                              assign placeholder_class = 'veda-placeholder-svg bgc:color-gray2 ' | append: _placeholder_class
+                            endif
+                          %}
+                          {{ pl | placeholder_svg_tag: placeholder_class }}
+                        {% endif %}
+                        {% comment %}KET_THUC_TACH_FILE{% endcomment %}
+                      </div>
+                      <div>
+                        {% liquid
+                          assign tagSize = articleItem2.tags | size
+                        %}
+                        {% if tagSize >= 1 %}
+                          <div
+                            class="mb:5px c:color-gray9 fz:11px fw:400 ff:font-secondary lts:1px tt:uppercase"
+                            data-css="{{ articleItem2.post_tag_design.id }}"
+                          >
+                            {{ articleItem2.tags[0] }}
+                          </div>
+                        {% endif %}
+                        <h3
+                          class="line-2 w:100% fz:15px fw:500 c:color-gray9 m:0"
+                          data-css="{{ articleItem2.post_title_design.id }}"
+                        >
+                          {{ articleItem2.title }}
+                        </h3>
+                      </div>
+                    </a>
+                  {% endfor %}
+                </div>
+              {% when 'sidebar_newsletter' %}
+                {{ TitleSidebar }}
+                {% form 'customer' %}
+                  {% if builderMode and _test %}
+                    <div class="d:flex ai:center fz:14px p:10px m:10px_0 bgc:color-error.1 c:color-error ls:none*ul p:0*ul m:0*ul">
+                      <span><i class="far fa-exclamation-circle mr:10px"></i></span>
+                      <div class="errors">Form error placeholder</div>
+                    </div>
+                  {% elsif form.errors %}
+                    <div class="d:flex ai:center fz:14px p:10px m:10px_0 bgc:color-error.1 c:color-error ls:none*ul p:0*ul m:0*ul">
+                      <span><i class="far fa-exclamation-circle mr:10px"></i></span>
+                      {{ form.errors | default_errors }}
+                    </div>
+                  {% endif %}
+
+                  {% if builderMode and _test %}
+                    <div class="d:flex ai:center fz:14px p:10px m:10px_0 bgc:color-success.1 c:color-success">
+                      <span><i class="far fa-check-circle mr:10px"></i></span>
+                      <div>{{ 'veda.newsletter.success' | t }}</div>
+                    </div>
+                  {% elsif form.posted_successfully? %}
+                    <div class="d:flex ai:center fz:14px p:10px m:10px_0 bgc:color-success.1 c:color-success">
+                      <span><i class="far fa-check-circle mr:10px"></i></span>
+                      <div>{{ 'veda.newsletter.success' | t }}</div>
+                    </div>
+                  {% endif %}
+
+                  <div class="d:flex w:100% h:48px c:color-gray9 bd:none bgc:transparent">
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <input
+                      class="w:100% h:100%! p:0_15px! bgc:color-gray2 c:color-gray7 c:color-gray6||ph fz:14px fz:14px||ph ff:font-primary! bd:none"
+                      type="email"
+                      name="contact[email]"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      placeholder="{{ 'veda.blogs.article.email' | t }}"
+                      data-css="{{ itemSidebar.VEDA_styleBox_20 }}"
+                    >
+                    <button
+                      class="d:inline-flex ai:center p:0_20px h:100% ff:font-secondary fw:500 trs:0.3s cur:pointer bgc:color-gray9 c:color-light bgc:color-primary|h c:color-light-freeze|h bd:1px_solid_color-gray9 bd:1px_solid_color-primary|h"
+                      type="submit"
+                      aria-label="submit"
+                      data-css="{{ itemSidebar.VEDA_styleBox_22 }}"
+                    >
+                      <span class="mr:10px" data-css="{{ itemSidebar.VEDA_styleBox_24 }}">
+                        <i class="far fa-paper-plane"></i>
+                      </span>
+                      <span>{{ 'veda.contact.ask-form.send' | t }}</span>
+                    </button>
+                  </div>
+                {% endform %}
+              {% when 'sidebar_collection' %}
+                {{ TitleSidebar }}
+
+                {% for block in section.blocks %}
+                  {% if block.type == 'veda_collections' %}
+                    {% assign itemCollection = block.settings %}
+
+                    <a
+                      data-css="{{ itemCollection.VEDA_styleBox_2 }}"
+                      class="d:flex ai:center c:color-gray7 fz:14px ff:font-secondary pt:6px pb:6px trs:0.3s"
+                      href="{{ itemCollection.veda_collections___link }}"
+                    >
+                      {{ itemCollection.veda_collections___label }}
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              {% when 'sidebar_tag' %}
+                {% liquid
+                  assign tagSize = blog.all_tags | size
+                %}
+                {% if tagSize > 0 %}
+                  {{ TitleSidebar }}
+                  <div class="d:flex fxw:wrap d:block*a p:3px_10px*a bd:1px_solid_color-gray3*a bgc:color-light*a mr:5px*a mb:5px*a trs:0.3s*a">
+                    {% for tag in blog.all_tags %}
+                      {{ tag | link_to_tag: tag }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              {% else %}
+
+            {% endcase %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+<section
+  data-id="{{ uniqueId }}"
+  class="veda-lazyload pos:relative z:1 bgz:cover bgp:center"
+  style="{{ backgroundColor }}{{ backgroundImage }}{{ sectionPadding }}{{ sectionSeparator }}"
+>
+  <div
+    class="{{ containerType }}"
+    {% if section.settings.VEDA_slider_1
+      or section.settings.VEDA_slider_1 == 0
+      or section.settings.section_settings___width
+      or section.settings.section_settings___width == 0
+    %}
+      style="{{ containerGap }}{{ containerWidth }}"
+    {% endif %}
+  >
+    <div class="d:flex@md jc:center">
+      {{ Content }}
+      {{ SideBar }}
+    </div>
+  </div>
+  {% if section.settings.VEDA_select_2 == 'video' and section.settings.VEDA_video_1 %}
+    <div data-veda-video="{{ section.settings["VEDA_video_1"] }}"></div>
+  {% endif %}
+  {% if section.settings.VEDA_switch_2 %}
+    <div
+      class="pos:absolute ins:0 z:-1"
+      style="background-color: {{ section.settings["VEDA_color_2"] }};backdrop-filter: blur({{ section.settings["VEDA_slider_3"] }}px)"
+    ></div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Blog 2",
+  "blocks": [
+    {
+      "type": "veda_collections",
+      "name": "Collections",
+      "settings": [
+        {
+          "label": "Collections > Label",
+          "id": "veda_collections___label",
+          "type": "liquid",
+          "default": "Label"
+        },
+        {
+          "label": "Collections > Link",
+          "id": "veda_collections___link",
+          "type": "url"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_1",
+          "info": "Please DON'T edit this field.",
+          "label": "Collections > Design > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_2",
+          "info": "Please DON'T edit this field.",
+          "label": "Collections > Design > Id"
+        }
+      ]
+    },
+    {
+      "type": "sidebar_collection",
+      "name": "Sidebar > Collection",
+      "settings": [
+        {
+          "label": "Sidebar > Enable",
+          "id": "sidebar___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Sidebar > Title",
+          "id": "sidebar___title",
+          "type": "liquid",
+          "default": "Title"
+        },
+        {
+          "label": "Sidebar > Description",
+          "id": "sidebar___description",
+          "type": "liquid"
+        },
+        {
+          "label": "Sidebar > Count",
+          "id": "sidebar___count",
+          "type": "number",
+          "default": 3
+        },
+        {
+          "type": "header",
+          "content": "Sidebar > Design"
+        }
+      ]
+    },
+    {
+      "type": "sidebar_posts",
+      "name": "Sidebar > Posts",
+      "settings": [
+        {
+          "label": "Sidebar > Enable",
+          "id": "sidebar___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Sidebar > Title",
+          "id": "sidebar___title",
+          "type": "liquid",
+          "default": "Title"
+        },
+        {
+          "label": "Sidebar > Description",
+          "id": "sidebar___description",
+          "type": "liquid"
+        },
+        {
+          "label": "Sidebar > Blog",
+          "id": "sidebar___blog_name",
+          "type": "blog"
+        },
+        {
+          "label": "Sidebar > Count",
+          "id": "sidebar___count",
+          "type": "number",
+          "default": 3
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_15",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Tag > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_16",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Tag > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_17",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Title > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_18",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Title > Id"
+        },
+        {
+          "label": "Sidebar > Aspect Ratio",
+          "id": "sidebar___aspect_ratio",
+          "type": "number"
+        },
+        {
+          "label": "Sidebar > Border Radius",
+          "id": "sidebar___border_radius",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "sidebar_image",
+      "name": "Sidebar > Image",
+      "settings": [
+        {
+          "label": "Sidebar > Enable",
+          "id": "sidebar___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Sidebar > Title",
+          "id": "sidebar___title",
+          "type": "liquid",
+          "default": "Title"
+        },
+        {
+          "label": "Sidebar > Description",
+          "id": "sidebar___description",
+          "type": "liquid"
+        },
+        {
+          "type": "number",
+          "id": "sidebar___image__height",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "sidebar___image__src",
+          "label": "Image"
+        },
+        {
+          "type": "number",
+          "id": "sidebar___image__width",
+          "label": "Image"
+        },
+        {
+          "label": "Sidebar > Link",
+          "id": "sidebar___link",
+          "type": "url"
+        },
+        {
+          "label": "Sidebar > Count",
+          "id": "sidebar___count",
+          "type": "number",
+          "default": 3
+        },
+        {
+          "label": "Sidebar > Border Radius",
+          "id": "sidebar___border_radius",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "sidebar_newsletter",
+      "name": "Sidebar > Newsletter",
+      "settings": [
+        {
+          "label": "Sidebar > Enable",
+          "id": "sidebar___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Sidebar > Title",
+          "id": "sidebar___title",
+          "type": "liquid",
+          "default": "Title"
+        },
+        {
+          "label": "Sidebar > Description",
+          "id": "sidebar___description",
+          "type": "liquid"
+        },
+        {
+          "label": "Sidebar > Count",
+          "id": "sidebar___count",
+          "type": "number",
+          "default": 3
+        },
+        {
+          "label": "Sidebar > Icon Position",
+          "id": "sidebar___icon_position",
+          "type": "radio",
+          "default": "right",
+          "options": [
+            {
+              "label": "Left",
+              "value": "left"
+            },
+            {
+              "label": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_19",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Input > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_20",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Input > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_21",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Button > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_22",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Button > Id"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_23",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Icon > Css"
+        },
+        {
+          "type": "text",
+          "id": "VEDA_styleBox_24",
+          "info": "Please DON'T edit this field.",
+          "label": "Sidebar > Icon > Id"
+        }
+      ]
+    },
+    {
+      "type": "sidebar_tag",
+      "name": "Sidebar > Tag",
+      "settings": [
+        {
+          "label": "Sidebar > Enable",
+          "id": "sidebar___enable",
+          "type": "checkbox",
+          "default": true
+        },
+        {
+          "label": "Sidebar > Title",
+          "id": "sidebar___title",
+          "type": "liquid",
+          "default": "Title"
+        },
+        {
+          "label": "Sidebar > Description",
+          "id": "sidebar___description",
+          "type": "liquid"
+        },
+        {
+          "label": "Sidebar > Count",
+          "id": "sidebar___count",
+          "type": "number",
+          "default": 3
+        },
+        {
+          "type": "header",
+          "content": "Sidebar > Design"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "label": "Section Settings > Container Width",
+      "id": "VEDA_select_1",
+      "type": "select",
+      "default": "boxed",
+      "options": [
+        {
+          "label": "Boxed",
+          "value": "boxed"
+        },
+        {
+          "label": "Full Width",
+          "value": "full_width"
+        },
+        {
+          "label": "Manual",
+          "value": "manual"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Width",
+      "id": "section_settings___width",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Container Gap",
+      "id": "VEDA_slider_1",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Column Gap",
+      "id": "VEDA_slider_2",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Background Type",
+      "id": "VEDA_select_2",
+      "type": "select",
+      "default": "none",
+      "options": [
+        {
+          "label": "Image",
+          "value": "image"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Video",
+          "value": "video"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_1",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_image_2",
+      "label": "Background Image"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_image_3",
+      "label": "Background Image"
+    },
+    {
+      "label": "Section Settings > Background Color",
+      "id": "VEDA_color_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Video",
+      "id": "VEDA_video_1",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Fixed",
+      "id": "VEDA_switch_1",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Size",
+      "id": "VEDA_select_3",
+      "type": "select",
+      "default": "cover",
+      "options": [
+        {
+          "label": "Cover",
+          "value": "cover"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "label": "Section Settings > Enable Background Overlay",
+      "id": "VEDA_switch_2",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Background Overlay Color",
+      "id": "VEDA_color_2",
+      "type": "text"
+    },
+    {
+      "label": "Section Settings > Background Overlay Blur",
+      "id": "VEDA_slider_3",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Enable Separator",
+      "id": "VEDA_switch_3",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "label": "Section Settings > Separator Top",
+      "id": "VEDA_slider_4",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Bottom",
+      "id": "VEDA_slider_5",
+      "type": "number"
+    },
+    {
+      "label": "Section Settings > Separator Color",
+      "id": "VEDA_color_3",
+      "type": "text",
+      "default": "var(--color-gray2)"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_1",
+      "label": "Section Settings > Padding > Bottom"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_2",
+      "label": "Section Settings > Padding > Left"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_3",
+      "label": "Section Settings > Padding > Right"
+    },
+    {
+      "type": "number",
+      "id": "VEDA_space_4",
+      "label": "Section Settings > Padding > Top"
+    },
+    {
+      "label": "Content > Quantity Displayed",
+      "id": "VEDA_slider_6",
+      "type": "number",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Content > Enable"
+    },
+    {
+      "label": "Content > Author",
+      "id": "content___enable_author",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Content > Date",
+      "id": "content___enable_date",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Content > Comment",
+      "id": "content___enable_comment",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Content > Tag",
+      "id": "content___enable_tag",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Content > Excerpt",
+      "id": "content___enable_excerpt",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Content > Design"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_3",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Title > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_4",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Title > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_5",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Author > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_6",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Author > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_7",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Date > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_8",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Date > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_9",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Comment > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_10",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Comment > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_11",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Tags > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_12",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Tags > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_13",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Excerpt > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_14",
+      "info": "Please DON'T edit this field.",
+      "label": "Content > Excerpt > Id"
+    },
+    {
+      "label": "Content > Aspect Ratio",
+      "id": "content___aspect_ratio",
+      "type": "number"
+    },
+    {
+      "label": "Content > Image Border Radius",
+      "id": "VEDA_slider_7",
+      "type": "number"
+    },
+    {
+      "label": "Pagination > Item Variant",
+      "id": "VEDA_select_4",
+      "type": "select",
+      "default": "circle_border",
+      "options": [
+        {
+          "label": "Custom",
+          "value": "custom"
+        },
+        {
+          "label": "Square Shadow",
+          "value": "square_shadow"
+        },
+        {
+          "label": "Square Border",
+          "value": "square_border"
+        },
+        {
+          "label": "Square Gray",
+          "value": "square_gray"
+        },
+        {
+          "label": "Circle Shadow",
+          "value": "circle_shadow"
+        },
+        {
+          "label": "Circle Border",
+          "value": "circle_border"
+        },
+        {
+          "label": "Circle Gray",
+          "value": "circle_gray"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_25",
+      "info": "Please DON'T edit this field.",
+      "label": "Pagination > Container Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_26",
+      "info": "Please DON'T edit this field.",
+      "label": "Pagination > Container Design > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_27",
+      "info": "Please DON'T edit this field.",
+      "label": "Pagination > Item Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_28",
+      "info": "Please DON'T edit this field.",
+      "label": "Pagination > Item Design > Id"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_29",
+      "info": "Please DON'T edit this field.",
+      "label": "Pagination > Active Item Design > Css"
+    },
+    {
+      "type": "text",
+      "id": "VEDA_styleBox_30",
+      "info": "Please DON'T edit this field.",
+      "label": "Pagination > Active Item Design > Id"
+    },
+    {
+      "label": "Layout > Enable Sidebar",
+      "id": "VEDA_switch_4",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "label": "Layout > Content Width (%)",
+      "id": "VEDA_slider_8",
+      "type": "number",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "default": 2,
+      "id": "VEDA_responsive_1",
+      "label": "Layout > Content Column > Large"
+    },
+    {
+      "type": "number",
+      "default": 2,
+      "id": "VEDA_responsive_2",
+      "label": "Layout > Content Column > Medium"
+    },
+    {
+      "type": "number",
+      "default": 1,
+      "id": "VEDA_responsive_3",
+      "label": "Layout > Content Column > Small"
+    },
+    {
+      "type": "number",
+      "default": 1,
+      "id": "VEDA_responsive_4",
+      "label": "Layout > Content Column > Extra small"
+    },
+    {
+      "label": "Layout > Content Position",
+      "id": "VEDA_radioGroup_1",
+      "type": "radio",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    }
+  ],
+  "tag": "div"
+}
+{% endschema %}

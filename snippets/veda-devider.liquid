@@ -1,0 +1,53 @@
+<div
+	class="pt:20px fz:0"
+	style="text-align: {{ align }}"
+>
+	{% if type == 'wave' %}
+		<div class="d:inline-block">
+			<svg
+				width="56px"
+				height="7px"
+				viewBox="0 0 56 7"
+				version="1.1"
+				xmlns="http://www.w3.org/2000/svg"
+				xmlns:xlink="http://www.w3.org/1999/xlink"
+				fill="none"
+			>
+				<g transform="translate(-288.000000, -4390.000000)" class="stk:color-gray3" style="stroke: {{ null }}">
+					<g transform="translate(135.000000, 4033.000000)">
+						<g transform="translate(0.000000, 48.000000)">
+							<g transform="translate(153.000000, 310.000000)">
+								<path d="M0,0 C4.64733427,0 4.65894638,2 9.33333333,2 C14.0077203,2 13.9400367,0 18.6666667,0 C23.3932966,0 23.3301172,2 28,2 C32.6698828,2 32.6447946,0 37.3333333,0 C42.0218721,0 41.9540981,2 46.6666667,2 C51.3792353,2 51.3554302,0 56,0"></path>
+								<path d="M0,3 C4.64733427,3 4.65894638,5 9.33333333,5 C14.0077203,5 13.9400367,3 18.6666667,3 C23.3932966,3 23.3301172,5 28,5 C32.6698828,5 32.6447946,3 37.3333333,3 C42.0218721,3 41.9540981,5 46.6666667,5 C51.3792353,5 51.3554302,3 56,3"></path>
+							</g>
+						</g>
+					</g>
+				</g>
+			</svg>
+		</div>
+	{% elsif type == 'mountain' %}
+		<div class="d:inline-block">
+			<svg
+				width="60px"
+				height="9px"
+				viewBox="0 0 60 9"
+				version="1.1"
+				xmlns="http://www.w3.org/2000/svg"
+				xmlns:xlink="http://www.w3.org/1999/xlink"
+			>
+				<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+					<g transform="translate(-3.000000, -47.000000)" stroke-width="2" class="stk:color-gray3" style="stroke: {{ null }}">
+						<g transform="translate(0.000000, 45.000000)">
+							<polyline points="4 9 9.8 4 15.6 9 21.4 4 27.2 9 33 4 38.8 9 44.6 4 50.4 9 56.2 4 62 9"></polyline>
+						</g>
+					</g>
+				</g>
+			</svg>
+		</div>
+	{% else %}
+		<div
+			class="d:inline-block! w:50px h:2px bgc:color-gray3"
+			style="background-color: {{ null }}"
+		></div>
+	{% endif %}
+</div>
